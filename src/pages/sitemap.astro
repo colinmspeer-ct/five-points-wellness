@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import { catalog, catalogGroups } from "../data/catalog";
+
+const title = "Sitemap | Five Points Wellness";
+const description =
+  "Every page on the Five Points Wellness site: acupuncture services, condition pages, and Philadelphia neighborhood pages for the Fishtown office.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Sitemap", href: "/sitemap" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <h1>Sitemap</h1>
+      <p class="lede">Every public page, grouped so you can reach it in one click from here and in two clicks from the homepage.</p>
+    </header>
+    {catalogGroups.map((group) => (
+      <section>
+        <h2>{group}</h2>
+        <ul class="checklist">
+          {catalog.filter((page) => page.group === group).map((page) => (
+            <li><a href={page.href}>{page.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p>Search engines can use <a href="/sitemap.xml">sitemap.xml</a>. Humans can use this page.</p>
+  </article>
+</Base>

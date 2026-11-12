@@ -1,0 +1,77 @@
+---
+import Base from "../layouts/Base.astro";
+import Hours from "../components/Hours.astro";
+import { practice } from "../data/site";
+
+const title = "Book Acupuncture in Philadelphia | Five Points Wellness";
+const description =
+  "Book acupuncture or microneedling at Five Points Wellness in Fishtown. Use the patient portal, or call or text (610) 742-5810. The calendar loads only when you open it.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Book", href: "/book-appointment" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">Patient portal · phone · text</p>
+      <h1>Book an appointment</h1>
+      <p class="lede">
+        Book online through the patient portal, or text, call, or email. A complimentary session is available if you want to ask questions before you commit.
+      </p>
+    </header>
+    <div class="actions">
+      <a class="btn btn-primary" href={`tel:${practice.phoneTel}`}>Call {practice.phoneDisplay}</a>
+      <a class="btn btn-secondary" href={`sms:${practice.phoneTel}`}>Text {practice.phoneDisplay}</a>
+      <a class="btn btn-secondary" href={`mailto:${practice.email}`}>Email the office</a>
+    </div>
+    <h2>Hours</h2>
+    <Hours />
+    <h2>Microneedling fees</h2>
+    <div class="grid cards">
+      <div class="card">
+        <h3>Single session</h3>
+        <p>50 minutes · $350</p>
+      </div>
+      <div class="card">
+        <h3>4-session package</h3>
+        <p>50 minutes each · 4 appointments · $1,200 · save $200</p>
+      </div>
+    </div>
+    <p>
+      A general acupuncture price is not published. The sports page lists a race-day package at $325, booked by phone or text only.
+      Choose microneedling as a single session or a package inside the portal.
+    </p>
+    <h2>Book online</h2>
+    <p>The AcuBliss calendar stays unloaded until you open it, so this page remains fast.</p>
+    <div class="note" data-booking>
+      <button type="button" class="btn btn-primary" data-load-booking>Load the booking calendar</button>
+      <p>
+        <a href={practice.bookingUrl}>Open the patient portal on its own page</a> if you would rather not load it here.
+      </p>
+    </div>
+    <noscript>
+      <p><a href={practice.bookingUrl}>Open the Five Points Wellness patient portal</a></p>
+    </noscript>
+  </article>
+  <script is:inline define:vars={{ src: practice.bookingUrl }}>
+    var button = document.querySelector("[data-load-booking]");
+    if (button) {
+      button.addEventListener("click", function () {
+        var slot = document.querySelector("[data-booking]");
+        if (!slot) return;
+        var frame = document.createElement("iframe");
+        frame.src = src;
+        frame.title = "Five Points Wellness patient portal for booking";
+        frame.loading = "lazy";
+        frame.width = "100%";
+        frame.height = "750";
+        frame.style.border = "0";
+        frame.style.width = "100%";
+        frame.style.minHeight = "750px";
+        slot.replaceChildren(frame);
+      });
+    }
+  </script>
+</Base>

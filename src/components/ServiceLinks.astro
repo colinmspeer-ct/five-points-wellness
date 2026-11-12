@@ -1,0 +1,23 @@
+---
+const links = [
+  { href: "/acupuncture", text: "acupuncture in Philadelphia" },
+  { href: "/acupuncture/dry-needling", text: "orthopedic dry needling" },
+  { href: "/moxibustion", text: "moxibustion" },
+  { href: "/gua-sha", text: "gua sha" },
+  { href: "/cupping", text: "cupping therapy" },
+  { href: "/facial-cupping", text: "facial cupping" },
+  { href: "/herbal-liniments", text: "herbal liniments" },
+  { href: "/tuina", text: "tuina" },
+  { href: "/nutrition", text: "traditional Chinese nutrition" },
+  { href: "/qigong", text: "qigong" },
+  { href: "/microneedling", text: "microneedling" },
+  { href: "/acupuncture/pediatric-acupuncture", text: "pediatric acupuncture and Shonishin" },
+];
+interface Props { except?: string }
+const { except } = Astro.props;
+---
+<ul class="checklist">
+  {links.filter((link) => link.href !== except).map((link) => (
+    <li><a href={link.href}>{link.text}</a></li>
+  ))}
+</ul>

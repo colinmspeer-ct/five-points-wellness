@@ -1,0 +1,77 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Picture from "../components/Picture.astro";
+import { addressLine, practice, testimonials, training } from "../data/site";
+
+const title = "About Cara Speer, L.Ac. | Five Points Wellness";
+const description =
+  "Cara Speer, M.Ac., L.Ac., is the licensed acupuncturist at Five Points Wellness LLC in Fishtown, Philadelphia. Read her training as the practice states it.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">{practice.name}</p>
+      <h1>About Cara Speer, M.Ac., L.Ac.</h1>
+      <p class="lede">
+        Cara Speer is the licensed acupuncturist at Five Points Wellness LLC in Fishtown, Philadelphia.
+      </p>
+      <Actions />
+    </header>
+    <div class="split">
+      <Picture
+        name="cara-speer-licensed-acupuncturist"
+        width="640"
+        height="640"
+        class="portrait"
+        alt="Close portrait of Cara Speer, licensed acupuncturist and owner of Five Points Wellness LLC in Philadelphia. Her blonde hair falls past her shoulders, and she wears a magenta top, a thin necklace, and a small rectangular pendant. Green foliage is visible behind the circular crop of the photo."
+      />
+      <div>
+        <h2>How she describes the work</h2>
+        <p>
+          As a licensed acupuncturist, Cara is committed to serving her community with integrity and compassion, staying rooted in the wisdom of Traditional Chinese Medicine while continuously learning from her patients and adapting to their ever changing needs.
+        </p>
+        <p>
+          The public biography on the current site is that paragraph. School, graduation year, and license number are not printed there, so they are not printed here.
+        </p>
+      </div>
+    </div>
+    <h2>Training the practice has published</h2>
+    <p>
+      The dry needling page describes the clinician's training. These are the lines the practice itself uses:
+    </p>
+    <ul class="checklist">
+      {training.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>
+      Styles named on the services page are Traditional Chinese Medicine, 5 Element acupuncture, and Kiiko-style, chosen depending on the patient. Immune and autoimmune care also mentions the Kiiko Matsumoto style, with abdominal diagnosis and palpation.
+    </p>
+    <h2>The office</h2>
+    <p>
+      <strong>{practice.name}</strong><br />
+      {addressLine}<br />
+      {practice.areaNote}<br />
+      <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> · call or text<br />
+      <a href={`mailto:${practice.email}`}>{practice.email}</a>
+    </p>
+    <p>{practice.parking}. {practice.response}.</p>
+    <p>
+      For the explanation of acupuncture, the 50-minute visit, and what happens on the table, read <a href="/acupuncture">acupuncture in Philadelphia</a>.
+      Directions from the neighborhood are on <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>.
+    </p>
+    <h2>Patients, in their own words</h2>
+    {testimonials.slice(0, 3).map((item) => (
+      <blockquote class="quote">
+        <p>{item.quote}</p>
+        <footer>— {item.author}</footer>
+      </blockquote>
+    ))}
+    <CtaBand heading="Book with Cara" />
+  </article>
+</Base>

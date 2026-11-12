@@ -1,0 +1,192 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import CtaBand from "../components/CtaBand.astro";
+import FaqList from "../components/FaqList.astro";
+import Picture from "../components/Picture.astro";
+import { practice } from "../data/site";
+
+const title = "Microneedling in Philadelphia | Five Points Wellness";
+const description =
+  "Microneedling in Fishtown, Philadelphia, at Five Points Wellness. Collagen induction with Cara Speer. $350 a session or $1,200 for four. Individual results vary.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Microneedling", href: "/microneedling" },
+];
+const concerns = [
+  "Fine lines and wrinkles",
+  "Loss of skin firmness and elasticity",
+  "Acne scarring",
+  "Hyperpigmentation and uneven skin tone",
+  "Enlarged pores",
+  "Sun damage and age spots",
+  "Dull or uneven skin texture",
+  "Stretch marks",
+];
+const areas = [
+  "Face, for full-face work or a targeted zone",
+  "Neck and décolletage",
+  "Scalp, for hair thinning support",
+  "Body, for scars, stretch marks, and texture",
+];
+const contraindications = [
+  "High blood pressure",
+  "Problems with bleeding or bruising",
+  "Severe migraine headaches",
+  "Parkinson's disease",
+  "Recent microdermabrasion",
+  "Diabetes mellitus",
+  "Cancer",
+  "AIDS",
+  "Recent laser treatments",
+  "Hepatitis",
+  "Vertigo",
+  "Hemophilia",
+  "Botox treatments",
+  "Dermal filler (Restylane, Juvederm, Radiesse, and similar products)",
+  "Any skin diseases, including poison ivy, eczema, and hives",
+  "Pregnancy",
+  "Cold or flu",
+  "Herpes outbreak",
+  "Allergic reactions",
+  "Extreme stress or tension",
+];
+const faqs = [
+  { q: "Is microneedling painful?", a: "A topical numbing cream is applied before treatment to minimize discomfort. Most patients describe the sensation as mild pressure or warmth rather than pain." },
+  { q: "How many sessions will I need?", a: "Most patients see optimal results with a series of 4–6 sessions. Maintenance treatments every 3–6 months help sustain results. The published package is four sessions." },
+  { q: "Is there downtime?", a: "Redness and mild swelling typically resolve within 24–48 hours. Most patients return to normal activities the following day. Use mineral sunscreen for one week after treatment whenever there is sun exposure." },
+  { q: "Can microneedling be combined with acupuncture?", a: "Yes. Combining acupuncture with microneedling is recommended for the internal factors that affect skin. Facial rejuvenation acupuncture and microneedling are not performed on the same day. If acupuncture is done the same day as microneedling, only body points are used." },
+  { q: "Who is a good candidate?", a: "Microneedling is suitable for most skin types and tones. A consultation reviews skin goals, health history, and the contraindications listed on this page." },
+];
+const extraGraph = [
+  {
+    "@type": "Service",
+    name: "Microneedling",
+    serviceType: "Microneedling",
+    url: `${practice.url}/microneedling`,
+    provider: { "@id": `${practice.url}/#practice` },
+    areaServed: { "@type": "City", name: "Philadelphia" },
+    offers: [
+      { "@type": "Offer", name: "Single microneedling session", price: "350", priceCurrency: "USD", description: "50 minutes" },
+      { "@type": "Offer", name: "4-session microneedling package", price: "1200", priceCurrency: "USD", description: "50 minutes each, four appointments" },
+    ],
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">Skin · collagen induction</p>
+      <h1>Microneedling in Philadelphia</h1>
+      <p class="lede">Collagen induction therapy for skin health and rejuvenation, with an acupuncture practice behind it.</p>
+      <Actions />
+    </header>
+    <h2>Results after 3 treatments</h2>
+    <p>Individual results vary. These are the practice's own before-and-after graphics, labeled before and after 3 treatments.</p>
+    <div class="photo-grid">
+      <figure>
+        <Picture
+          name="microneedling-before-after-front-view"
+          width="960"
+          height="640"
+          alt="Front-view microneedling comparison from Five Points Wellness. Two portraits of the same woman sit side by side, labeled Before and After 3 treatments. The before photo shows more visible lines and uneven tone; the after photo shows her with the hair lighter and the skin looking smoother. Individual results vary."
+        />
+        <figcaption>Front view, labeled before and after 3 treatments.</figcaption>
+      </figure>
+      <figure>
+        <Picture
+          name="microneedling-before-after-side-view"
+          width="960"
+          height="640"
+          alt="Side-view microneedling comparison from Five Points Wellness, labeled Before and After 3 treatments. The before profile shows cheek and jaw lines more clearly; the after profile shows the same woman turned slightly toward the camera with smoother-looking skin. Individual results vary, and lighting differs between the two photos."
+        />
+        <figcaption>Side view, labeled before and after 3 treatments.</figcaption>
+      </figure>
+    </div>
+    <h2>What microneedling is at this office</h2>
+    <p>
+      Microneedling, also called collagen induction therapy, is a minimally invasive skin treatment. Fine needles create controlled micro-channels in the skin. That process stimulates the body's healing response and the production of collagen and elastin, with the aim of smoother, firmer, more even-toned skin.
+    </p>
+    <p>
+      At Five Points Wellness, microneedling is done with an integrative view: the surface of the skin, and the health patterns underneath that affect skin quality, healing, and how skin looks.
+    </p>
+    <h2>How the treatment works</h2>
+    <p>A device with ultra-fine sterile needles makes many microscopic punctures in the treatment area. The practice says those micro-injuries trigger the skin's wound-healing cascade and stimulate:</p>
+    <ul class="checklist">
+      <li>New collagen and elastin</li>
+      <li>Cell turnover and skin renewal</li>
+      <li>Absorption of topical serums and nutrients</li>
+      <li>Circulation to the skin</li>
+      <li>Gradual remodeling of scar tissue and uneven texture</li>
+    </ul>
+    <h2>Skin concerns commonly treated</h2>
+    <ul class="checklist">
+      {concerns.map((item) => <li>{item}</li>)}
+    </ul>
+    <h2>Where it can be used</h2>
+    <ul class="checklist">
+      {areas.map((item) => <li>{item}</li>)}
+    </ul>
+    <h2>Microneedling with acupuncture</h2>
+    <p>
+      Skin is tied to the rest of the body. Hormones, stress, circulation, sleep, and nutrition all show up in how skin looks and heals. Microneedling here can be paired with acupuncture for those factors.
+    </p>
+    <ul class="checklist">
+      <li>Acupuncture for circulation and nervous system regulation</li>
+      <li>Hormonal balance support for acne-prone or aging skin</li>
+      <li>Stress reduction aimed at inflammation and cortisol-related skin concerns</li>
+      <li>Whole-body care meant to extend what a surface treatment can do</li>
+    </ul>
+    <p>
+      Facial rejuvenation acupuncture and microneedling are not performed on the same day. When acupuncture happens on a microneedling day, only body points are used.
+    </p>
+    <h2>During and after the session</h2>
+    <p>
+      A topical numbing cream is applied first. The device is then moved across the area. The practice says sessions typically last 30–60 minutes depending on the area. The booking card lists the appointment as 50 minutes. Both figures are what the current site publishes.
+    </p>
+    <p>After treatment you may have:</p>
+    <ul class="checklist">
+      <li>Mild redness and warmth, similar to a light sunburn</li>
+      <li>Minor swelling that typically settles within 24–48 hours</li>
+      <li>Skin that feels tighter or smoother within days</li>
+      <li>Texture and tone that keep changing over several weeks</li>
+    </ul>
+    <h2>What the practice says about results</h2>
+    <p>Results develop over time because the method relies on the skin's own repair. Most patients, in the practice's words, notice:</p>
+    <ul class="checklist">
+      <li>Smoother texture after the first session</li>
+      <li>Collagen remodeling that continues for 4–6 weeks</li>
+      <li>Best results from a series of 4–6 sessions, spaced 4–6 weeks apart</li>
+      <li>Longer-lasting change, up to 5 years, with periodic maintenance</li>
+    </ul>
+    <p>Individual results vary. The priced package is four sessions, while the series described for best results is 4–6.</p>
+    <h2>Published prices</h2>
+    <div class="grid cards">
+      <div class="card">
+        <h3>Single session</h3>
+        <p>$350 · listed as 50 minutes</p>
+      </div>
+      <div class="card">
+        <h3>4-session package</h3>
+        <p>$1,200 · 50 minutes each · save $200</p>
+      </div>
+    </div>
+    <FaqList items={faqs} />
+    <h2>Contraindications</h2>
+    <p>Microneedling is not appropriate for everyone. Please review this list before booking. If any item applies, contact the office before you schedule.</p>
+    <ul class="checklist">
+      {contraindications.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>Cosmetic acupuncture is a different service: <a href="/acupuncture/facial-rejuvenation-cosmetic">facial rejuvenation and cosmetic acupuncture</a>. Gentle suction for the face is <a href="/facial-cupping">facial cupping</a>.</p>
+    <CtaBand heading="Book microneedling" text="Book online, or schedule a complimentary session first if you want to talk through skin goals." />
+  </article>
+</Base>

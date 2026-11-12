@@ -1,0 +1,12 @@
+---
+import { hours } from "../data/site";
+---
+<dl class="hours">
+  {hours.map((row) => (
+    <div>
+      <dt>{row.day}</dt>
+      <dd>{row.time}</dd>
+    </div>
+  ))}
+</dl>
+<p class="fine">Hours are by appointment.</p>

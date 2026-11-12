@@ -1,0 +1,149 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { practice, hours, canonicalFor, type Crumb } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: Crumb[];
+  extraGraph?: Record<string, unknown>[];
+}
+
+const { title, description, crumbs = [], extraGraph = [] } = Astro.props;
+const canonical = canonicalFor(new URL(Astro.url.pathname, practice.url).pathname);
+const personId = `${practice.url}/about#cara`;
+const practiceId = `${practice.url}/#practice`;
+
+const graph: Record<string, unknown>[] = [
+  {
+    "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
+    "@id": practiceId,
+    name: practice.name,
+    url: `${practice.url}/`,
+    image: `${practice.url}/images/five-points-wellness-logo-social.jpg`,
+    logo: `${practice.url}/images/five-points-wellness-logo-social.jpg`,
+    telephone: "+1-610-742-5810",
+    email: practice.email,
+    description:
+      "Acupuncture and traditional Chinese medicine with licensed acupuncturist Cara Speer, M.Ac., L.Ac., at Five Points Wellness LLC in Fishtown, Philadelphia.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: practice.street,
+      addressLocality: practice.city,
+      addressRegion: practice.region,
+      postalCode: practice.postal,
+      addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: practice.lat,
+      longitude: practice.lng,
+    },
+    hasMap: practice.mapLink,
+    openingHoursSpecification: hours
+      .filter((row) => row.opens)
+      .map((row) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: `https://schema.org/${row.schemaDay}`,
+        opens: row.opens,
+        closes: row.closes,
+      })),
+    areaServed: [
+      { "@type": "City", name: "Philadelphia" },
+      ...[
+        "Fishtown",
+        "East Kensington",
+        "Kensington",
+        "Northern Liberties",
+        "Port Richmond",
+        "Olde Kensington",
+        "South Kensington",
+        "Old City",
+        "Society Hill",
+        "Center City",
+        "Rittenhouse",
+        "Graduate Hospital",
+        "Queen Village",
+        "Bella Vista",
+      ].map((name) => ({ "@type": "Place", name: `${name}, Philadelphia` })),
+    ],
+    employee: { "@id": personId },
+  },
+  {
+    "@type": "Person",
+    "@id": personId,
+    name: practice.practitioner,
+    honorificSuffix: practice.credentials,
+    jobTitle: practice.jobTitle,
+    url: `${practice.url}/about`,
+    image: `${practice.url}/images/cara-speer-licensed-acupuncturist.avif`,
+    worksFor: { "@id": practiceId },
+    description:
+      "Licensed acupuncturist at Five Points Wellness LLC in Philadelphia. Credentials stated by the practice: M.Ac., L.Ac., more than 2,000 hours of graduate-level education in acupuncture and Chinese medicine, and two national board examinations required for licensure.",
+  },
+];
+
+if (crumbs.length) {
+  graph.push({
+    "@type": "BreadcrumbList",
+    "@id": `${canonical}#breadcrumbs`,
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.href.startsWith("http") ? crumb.href : practice.url + crumb.href,
+    })),
+  });
+}
+
+graph.push(...extraGraph);
+
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#f4f0e6" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={`${practice.url}/images/five-points-wellness-logo-social.jpg`} />
+    <meta property="og:site_name" content={practice.name} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      {crumbs.length > 0 && (
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <ol class="wrap">
+            {crumbs.map((crumb, index) => (
+              <li>
+                {index < crumbs.length - 1 ? <a href={crumb.href}>{crumb.name}</a> : <span aria-current="page">{crumb.name}</span>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,16 @@
+# Canonical host. Do not change DNS from this file; Cloudflare applies it after the site is connected.
+https://www.fivepointswellness.com/* https://fivepointswellness.com/:splat 301
+
+# Aliases for names patients type. Existing live URLs are kept and are not redirected.
+/dry-needling /acupuncture/dry-needling 301
+/orthopedic-dry-needling /acupuncture/dry-needling 301
+/guasha /gua-sha 301
+/acupuncture/guasha /gua-sha 301
+/acupuncture/gua-sha /gua-sha 301
+/pediatric /acupuncture/pediatric-acupuncture 301
+/pediatric-acupuncture /acupuncture/pediatric-acupuncture 301
+/shonishin /acupuncture/pediatric-acupuncture 301
+/facial-acupuncture /acupuncture/facial-rejuvenation-cosmetic 301
+/cosmetic-acupuncture /acupuncture/facial-rejuvenation-cosmetic 301
+/home / 301
+/index.html / 301

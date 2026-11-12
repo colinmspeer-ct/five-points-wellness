@@ -1,0 +1,91 @@
+---
+import Picture from "./Picture.astro";
+import { conditionMeta, conditionOrder } from "../data/conditionMeta";
+import { locations } from "../data/locations";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const current = (href: string) => (path === href ? "page" : undefined);
+const logoAlt =
+  "Five Points Wellness logo: a circular yin-yang drawn as a fine black and white grid, with a ring of small marks around the edge. Choose it to return to the Fishtown acupuncture homepage.";
+---
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="/" aria-current={current("/")}>
+      <Picture
+        name="five-points-wellness-logo"
+        width="56"
+        height="56"
+        alt={logoAlt}
+        loading="eager"
+        class="logo"
+      />
+      <span>Five Points Wellness<small>Fishtown acupuncture</small></span>
+    </a>
+
+    <nav class="desktop" aria-label="Primary">
+      <a href="/about" aria-current={current("/about")}>About</a>
+      <a href="/services" aria-current={current("/services")}>Services</a>
+      <details class="menu">
+        <summary>Acupuncture</summary>
+        <div class="panel">
+          <a href="/acupuncture">Acupuncture in Philadelphia</a>
+          <a href="/acupuncture/dry-needling">Orthopedic dry needling</a>
+          {conditionOrder.map((slug) => (
+            <a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a>
+          ))}
+        </div>
+      </details>
+      <details class="menu">
+        <summary>Locations</summary>
+        <div class="panel">
+          <a href="/locations">Neighborhoods we serve</a>
+          {locations.map((loc) => (
+            <a href={`/${loc.slug}`}>Acupuncture in {loc.name}</a>
+          ))}
+        </div>
+      </details>
+      <a href="/contact" aria-current={current("/contact")}>Contact</a>
+      <a class="btn btn-primary" href="/book-appointment">Book now</a>
+    </nav>
+
+    <div class="mobile-tools">
+      <a class="btn btn-secondary" href="tel:+16107425810" aria-label="Call Five Points Wellness at 610-742-5810">Call</a>
+      <a class="btn btn-primary" href="/book-appointment">Book now</a>
+      <details class="burger">
+        <summary>Menu</summary>
+        <div class="mobile-panel">
+          <a href="/about">About Cara Speer</a>
+          <a href="/services">Services</a>
+          <a href="/acupuncture">Acupuncture</a>
+          <a href="/acupuncture/dry-needling">Orthopedic dry needling</a>
+          <a href="/microneedling">Microneedling</a>
+          <a href="/locations">Locations</a>
+          <a href="/contact">Contact</a>
+          <a href="sms:+16107425810">Text (610) 742-5810</a>
+          <details>
+            <summary>All acupuncture topics</summary>
+            <div>
+              {conditionOrder.map((slug) => (
+                <a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a>
+              ))}
+            </div>
+          </details>
+          <details>
+            <summary>Neighborhoods</summary>
+            <div>
+              {locations.map((loc) => (
+                <a href={`/${loc.slug}`}>{loc.name}</a>
+              ))}
+            </div>
+          </details>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .logo { width: 56px; height: 56px; }
+</style>

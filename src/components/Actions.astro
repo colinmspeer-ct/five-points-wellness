@@ -1,0 +1,13 @@
+---
+interface Props {
+  onDark?: boolean;
+}
+const { onDark = false } = Astro.props;
+const primary = onDark ? "btn btn-on-dark" : "btn btn-primary";
+const secondary = onDark ? "btn btn-on-dark" : "btn btn-secondary";
+---
+<div class="actions">
+  <a class={primary} href="/book-appointment">Book now</a>
+  <a class={secondary} href="tel:+16107425810">Call (610) 742-5810</a>
+  <a class={secondary} href="sms:+16107425810">Text (610) 742-5810</a>
+</div>

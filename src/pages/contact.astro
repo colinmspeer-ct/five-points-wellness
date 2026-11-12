@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import Hours from "../components/Hours.astro";
+import { addressLine, practice } from "../data/site";
+
+const title = "Contact Five Points Wellness in Fishtown | Acupuncture";
+const description =
+  "Contact Five Points Wellness LLC at 2137 E Huntingdon St, Philadelphia, PA 19125. Call or text (610) 742-5810 or email fivepointsphila@gmail.com.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Contact", href: "/contact" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">Fishtown, Philadelphia</p>
+      <h1>Contact Five Points Wellness</h1>
+      <p class="lede">We are here to answer your questions. Call, text, or email, or book in the patient portal.</p>
+      <Actions />
+    </header>
+    <h2>Office</h2>
+    <p>
+      <strong>{practice.name}</strong><br />
+      {practice.practitionerFull}, {practice.jobTitle}<br />
+      {addressLine}<br />
+      {practice.neighborhood} neighborhood, {practice.areaNote}<br />
+      {practice.parking}
+    </p>
+    <h2>Phone, text, and email</h2>
+    <p>
+      <a href={`tel:${practice.phoneTel}`}>Call {practice.phoneDisplay}</a><br />
+      <a href={`sms:${practice.phoneTel}`}>Text {practice.phoneDisplay}</a><br />
+      <a href={`mailto:${practice.email}`}>{practice.email}</a>
+    </p>
+    <p>{practice.response}.</p>
+    <h2>Hours</h2>
+    <Hours />
+    <h2>Finding the door</h2>
+    <p>
+      Huntingdon Station on the Market-Frankford Line is about half a mile west, at Kensington Avenue and Huntingdon Street. Walk east to the 2100 block.
+      Step-by-step notes for each neighborhood start on the <a href="/locations">locations</a> page. The page meant for the Google Business Profile is <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>.
+    </p>
+    <p>
+      Insurance and a general acupuncture fee are not listed on this website. Ask when you call if you need either number before you book. Microneedling prices are on the <a href="/microneedling">microneedling</a> page, and the race-day package price is on the <a href="/acupuncture/sports-performance-recovery">sports acupuncture</a> page.
+    </p>
+    <p><a href={practice.mapLink}>Open 2137 E Huntingdon St in Google Maps</a>. The map in the footer loads only after you ask for it.</p>
+  </article>
+</Base>

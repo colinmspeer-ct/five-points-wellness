@@ -1,0 +1,94 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Picture from "../components/Picture.astro";
+import ServiceLinks from "../components/ServiceLinks.astro";
+import LocationLinks from "../components/LocationLinks.astro";
+import { conditionMeta, conditionOrder } from "../data/conditionMeta";
+import { addressLine, practice, testimonials } from "../data/site";
+
+const title = "Acupuncture in Fishtown, Philadelphia | Five Points Wellness";
+const description =
+  "Licensed acupuncturist Cara Speer offers acupuncture and Chinese medicine at Five Points Wellness LLC, 2137 E Huntingdon St, Fishtown, Philadelphia. Call or text (610) 742-5810.";
+---
+
+<Base title={title} description={description}>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">{practice.name} · {practice.areaNote}</p>
+      <h1>Acupuncture in Fishtown, Philadelphia</h1>
+      <p class="lede">
+        Rooted in traditional Chinese medicine, <strong>Five Points Wellness LLC</strong> is committed to your journey towards balance and well-being.
+        Care is with <strong>{practice.practitionerFull}</strong>, a licensed acupuncturist, at <strong>{addressLine}</strong>.
+      </p>
+      <Actions />
+      <p>
+        Not sure yet? <a href="/book-appointment">Schedule a complimentary session</a> to ask questions before you commit.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap content">
+    <h2>A neighborhood acupuncture office</h2>
+    <p>
+      The office is on the <strong>Fishtown</strong> and <strong>East Kensington</strong> edge, a short walk east of <strong>Huntingdon Station</strong> on the Market-Frankford Line.
+      Hours are by appointment: Monday through Thursday 9 AM–7 PM, Friday 9 AM–3 PM,       Saturday 10 AM–2 PM, Sunday closed. {practice.parking}.
+    </p>
+    <p>
+      <a href="/acupuncture">Read how acupuncture works here</a>, or go straight to the <a href="/acupuncture-fishtown">Fishtown acupuncture page</a> for directions.
+    </p>
+
+    <h2>Acupuncture and Chinese medicine services</h2>
+    <p>
+      An acupuncture session is listed as 50 minutes. Traditional Chinese Medicine, 5 Element acupuncture, and Kiiko-style may be used depending on the patient.
+      The other hands-on methods are included in that visit when Cara decides they fit. Microneedling is booked on its own.
+    </p>
+    <ServiceLinks />
+
+    <h2>Concerns treated at the office</h2>
+    <div class="grid cards">
+      {conditionOrder.map((slug) => (
+        <a class="card" href={`/acupuncture/${slug}`}>
+          <h3>{conditionMeta[slug].label}</h3>
+          <p>{conditionMeta[slug].description}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="split" style="margin-top:2rem">
+      <Picture
+        name="cara-speer-licensed-acupuncturist"
+        width="640"
+        height="640"
+        class="portrait"
+        alt="Portrait of Cara Speer, M.Ac., L.Ac., the licensed acupuncturist at Five Points Wellness in Philadelphia. She has long blonde hair and wears a magenta top and a small gold pendant, photographed outdoors with trees behind her. The portrait introduces her on the practice homepage."
+      />
+      <div>
+        <h2>Meet Cara Speer, M.Ac., L.Ac.</h2>
+        <p>
+          As a licensed acupuncturist, Cara is committed to serving her community with integrity and compassion, staying rooted in the wisdom of Traditional Chinese Medicine while continuously learning from her patients and adapting to their ever changing needs.
+        </p>
+        <p><a href="/about">About Cara Speer</a></p>
+      </div>
+    </div>
+
+    <h2>What patients say</h2>
+    <p>These comments are published by the practice and signed with initials only.</p>
+    <div class="grid">
+      {testimonials.map((item) => (
+        <blockquote class="quote">
+          <p>{item.quote}</p>
+          <footer>— {item.author}</footer>
+        </blockquote>
+      ))}
+    </div>
+
+    <h2>Acupuncture for nearby Philadelphia neighborhoods</h2>
+    <p>
+      The practice has one office. These pages explain the trip from each neighborhood: distance, the El or the driving route, ZIP codes, and landmarks.
+    </p>
+    <LocationLinks />
+    <CtaBand />
+  </section>
+</Base>

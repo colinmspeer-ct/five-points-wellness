@@ -1,0 +1,52 @@
+---
+import Base from "../layouts/Base.astro";
+import { addressLine, practice } from "../data/site";
+
+const title = "Terms of Use | Five Points Wellness LLC";
+const description =
+  "Terms for using the Five Points Wellness website, booking an acupuncture visit in Fishtown, and understanding that site content is not emergency medical care.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Terms", href: "/terms" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <h1>Terms of use</h1>
+      <p class="fine">Last updated November 12, 2026. These terms cover the website. They are not a patient consent form.</p>
+    </header>
+    <h2>Who this site belongs to</h2>
+    <p>
+      This website is published by <strong>{practice.name}</strong>, {addressLine}. Care is provided by <strong>{practice.practitionerFull}</strong>, a licensed acupuncturist. Phone and text: <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>. Email: <a href={`mailto:${practice.email}`}>{practice.email}</a>.
+    </p>
+    <h2>Not emergency care, and not a diagnosis</h2>
+    <p>
+      Pages on this site explain how the practice describes acupuncture and related care. They are general information. They do not diagnose you, create a provider-patient relationship, or replace your physician. If you may be having a medical emergency, call 911. Acupuncture here is complementary care.
+    </p>
+    <p>Individual results vary, including the before-and-after photos on the microneedling and dry needling pages.</p>
+    <h2>Appointments and published fees</h2>
+    <p>
+      Appointments are by the hours posted on this site: Monday through Thursday 9 AM–7 PM, Friday 9 AM–3 PM, Saturday 10 AM–2 PM, Sunday closed. You can request a time in the patient portal, or call or text the office. A complimentary session is offered for questions before you commit. That offer is the practice's, as stated on the site.
+    </p>
+    <p>
+      Fees the practice has published are the microneedling prices ($350 for one session and $1,200 for four) and the race-day acupuncture package ($325), which is booked by phone or text. A general acupuncture fee is not published here. Ask the office for any fee that is not on the page for the service you want. A cancellation window is also not published. Ask when you book.
+    </p>
+    <h2>The patient portal</h2>
+    <p>
+      Online booking opens an AcuBliss portal at fivepointswellness.acubliss.app. That portal is a separate service with its own terms. Clinical records stay there. This website does not store chart notes.
+    </p>
+    <h2>Your use of the site</h2>
+    <p>
+      You may read these pages and share links to them. You may not copy the practice's text or photos for your own commercial site, and you may not present them as your own. The photos of patients are published by the practice for this site.
+    </p>
+    <h2>Privacy</h2>
+    <p>How contact information from this website and from lead forms is handled is in the <a href="/privacy-policy">privacy policy</a>.</p>
+    <h2>Changes</h2>
+    <p>The practice may update these terms by posting a new version on this page. The date at the top will change when that happens.</p>
+    <p class="fine">
+      An attorney has not reviewed this page. It was written so the new site would have terms where the previous site had none. Ask the office if you need a signed policy for a specific use.
+    </p>
+  </article>
+</Base>

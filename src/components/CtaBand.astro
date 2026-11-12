@@ -1,0 +1,13 @@
+---
+import Actions from "./Actions.astro";
+interface Props { heading?: string; text?: string }
+const {
+  heading = "Book acupuncture in Fishtown",
+  text = "Schedule online, or call or text Five Points Wellness LLC. A complimentary session is available if you want to ask questions before you commit.",
+} = Astro.props;
+---
+<section class="cta-band">
+  <h2>{heading}</h2>
+  <p>{text}</p>
+  <Actions onDark={true} />
+</section>

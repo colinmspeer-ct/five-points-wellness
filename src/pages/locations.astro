@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import { locations } from "../data/locations";
+import { addressLine, practice } from "../data/site";
+
+const title = "Acupuncture Near You in Philadelphia | Five Points Wellness";
+const description =
+  "One acupuncture office in Fishtown, with directions from Northern Liberties, Kensington, Center City, and other nearby Philadelphia neighborhoods. 2137 E Huntingdon St.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Locations", href: "/locations" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">One office · many neighborhoods</p>
+      <h1>Acupuncture near Philadelphia neighborhoods</h1>
+      <p class="lede">
+        {practice.name} has one treatment room, at {addressLine}, in {practice.areaNote}. These pages are for people who will travel to that door. Each one has a distance, a SEPTA or driving route, ZIP codes, and landmarks.
+      </p>
+      <Actions />
+    </header>
+    <p>
+      Neighborhood lines in this part of the city are informal. Fishtown and East Kensington in particular overlap at the office. The page the Google Business Profile should link to is <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>.
+    </p>
+    <div class="grid cards">
+      {locations.map((loc) => (
+        <a class="card" href={`/${loc.slug}`}>
+          <h2>Acupuncture in {loc.name}</h2>
+          <p>{loc.distance} ZIPs: {loc.zips}.</p>
+        </a>
+      ))}
+    </div>
+    <h2>What these pages are not</h2>
+    <p>
+      They are not a second clinic. There is no other Five Points Wellness address on this site. If your neighborhood is not listed, you can still book. Call or text {practice.phoneDisplay} and come to Huntingdon Street.
+    </p>
+  </article>
+</Base>

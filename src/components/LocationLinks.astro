@@ -1,0 +1,11 @@
+---
+import { locations } from "../data/locations";
+interface Props { except?: string }
+const { except } = Astro.props;
+---
+<ul class="checklist">
+  <li><a href="/locations">All Philadelphia neighborhoods we serve</a></li>
+  {locations.filter((loc) => loc.slug !== except).map((loc) => (
+    <li><a href={`/${loc.slug}`}>Acupuncture in {loc.name}</a></li>
+  ))}
+</ul>

@@ -1,0 +1,66 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { conditionMeta, conditionOrder } from "../data/conditionMeta";
+import { modalities } from "../data/modalities";
+import { practice } from "../data/site";
+
+const title = "Acupuncture Services in Philadelphia | Five Points Wellness";
+const description =
+  "Acupuncture, dry needling, cupping, gua sha, tuina, moxibustion, qigong, and microneedling at Five Points Wellness in Fishtown. Most techniques are included in a session at Cara's discretion.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">{practice.name}</p>
+      <h1>Acupuncture services in Philadelphia</h1>
+      <p class="lede">
+        All of the hands-on methods below acupuncture are included in an acupuncture session at the practitioner's discretion. Microneedling is the exception with its own visit and published prices.
+      </p>
+      <Actions />
+    </header>
+    <div class="grid cards">
+      <a class="card" href="/acupuncture">
+        <h2>Acupuncture</h2>
+        <p>50-minute session. Needle therapy on the meridian system. TCM, 5 Element, and Kiiko-style may be used depending on the patient.</p>
+      </a>
+      <a class="card" href="/acupuncture/dry-needling">
+        <h2>Orthopedic dry needling</h2>
+        <p>Motor points and trigger points for musculoskeletal pain, sports injuries, and movement restrictions.</p>
+      </a>
+      {modalities.map((item) => (
+        <a class="card" href={`/${item.slug}`}>
+          <h2>{item.name}</h2>
+          <p>{item.lede}</p>
+        </a>
+      ))}
+      <a class="card" href="/microneedling">
+        <h2>Microneedling</h2>
+        <p>Collagen induction for skin. Single session $350. Four sessions $1,200. Booked separately from a regular acupuncture visit.</p>
+      </a>
+      <a class="card" href="/acupuncture/pediatric-acupuncture">
+        <h2>Pediatric acupuncture and Shonishin</h2>
+        <p>Gentle care for children. For children under 7, or a child who is anxious or not comfortable with needles, needles are not used.</p>
+      </a>
+    </div>
+    <h2>Concerns the office treats</h2>
+    <div class="grid cards">
+      {conditionOrder.map((slug) => (
+        <a class="card" href={`/acupuncture/${slug}`}>
+          <h3>{conditionMeta[slug].label}</h3>
+        </a>
+      ))}
+    </div>
+    <h2>A complimentary conversation</h2>
+    <p>
+      Have questions before committing? Use the portal to schedule a complimentary session to talk through what you are dealing with and whether acupuncture is a good fit.
+    </p>
+    <CtaBand />
+  </article>
+</Base>

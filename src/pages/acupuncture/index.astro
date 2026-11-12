@@ -1,0 +1,85 @@
+---
+import Base from "../../layouts/Base.astro";
+import Actions from "../../components/Actions.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import ServiceLinks from "../../components/ServiceLinks.astro";
+import { conditionsTreated, practice, visitSteps } from "../../data/site";
+
+const title = "Acupuncture in Philadelphia | Five Points Wellness LLC";
+const description =
+  "Acupuncture in Philadelphia with Cara Speer, M.Ac., L.Ac. Traditional Chinese medicine at Five Points Wellness, 2137 E Huntingdon St in Fishtown. Sessions are 50 minutes.";
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Acupuncture", href: "/acupuncture" },
+];
+const extraGraph = [
+  {
+    "@type": "Service",
+    name: "Acupuncture",
+    serviceType: "Acupuncture",
+    url: `${practice.url}/acupuncture`,
+    provider: { "@id": `${practice.url}/#practice` },
+    areaServed: { "@type": "City", name: "Philadelphia" },
+    description:
+      "Needle therapy along the meridian system. Traditional Chinese Medicine, 5 Element acupuncture, and Kiiko-style may be used. Sessions are 50 minutes.",
+  },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">{practice.practitionerFull} · Fishtown</p>
+      <h1>Acupuncture in Philadelphia</h1>
+      <p class="lede">
+        Acupuncture is an ancient healing practice rooted in Traditional Chinese Medicine that promotes natural healing and improved functioning of the body's systems.
+      </p>
+      <Actions />
+    </header>
+    <h2>How acupuncture is practiced here</h2>
+    <p>
+      Acupuncture therapy involves the gentle insertion of very thin, sterile needles into specific points on the body to stimulate the flow of qi (pronounced "chee"), your body's vital energy. By restoring balance to your energy pathways, acupuncture helps activate your body's natural healing abilities.
+    </p>
+    <p>
+      Modern research has shown that acupuncture triggers the release of endorphins, improves circulation, and helps regulate the nervous system, making it an effective complement to modern medical care.
+    </p>
+    <p>
+      On the services list, acupuncture is needle therapy that stimulates specific points along the body's meridian system to restore natural energy flow, promote healing, and address health conditions. <strong>Traditional Chinese Medicine (TCM)</strong>, <strong>5 Element acupuncture</strong>, and <strong>Kiiko-style</strong> may be used depending on the patient. A session is <strong>50 minutes</strong>.
+    </p>
+    <h2>Benefits named by the practice</h2>
+    <ul class="checklist">
+      <li>Pain relief</li>
+      <li>Stress reduction</li>
+      <li>Improved energy</li>
+      <li>Holistic wellness</li>
+    </ul>
+    <h2>Conditions treated and managed</h2>
+    <p>Acupuncture can address a wide range of health concerns, from acute conditions to chronic disorders. Each line below opens the page that goes into that concern.</p>
+    <ul class="checklist">
+      {conditionsTreated.map((item) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+    <h2>What to expect at your acupuncture visit</h2>
+    <p>Your visit is built around your own symptoms, lifestyle, and goals.</p>
+    <ol class="steps">
+      {visitSteps.map((step) => (
+        <li>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </li>
+      ))}
+    </ol>
+    <h2>Techniques that may be added</h2>
+    <p>
+      Moxibustion, gua sha, cupping, facial cupping, herbal liniments, tuina, nutrition guidance, and qigong are included in an acupuncture session at the practitioner's discretion. Orthopedic dry needling and pediatric acupuncture, including Shonishin, have their own pages because patients ask for them by name.
+    </p>
+    <ServiceLinks except="/acupuncture" />
+    <h2>Where to come for acupuncture</h2>
+    <p>
+      <strong>{practice.name}</strong>, {practice.street}, {practice.city}, {practice.region} {practice.postal}.
+      Start with <a href="/acupuncture-fishtown">acupuncture in Fishtown</a> if you are nearby, or the <a href="/locations">neighborhood guide</a> if you are coming from elsewhere in Philadelphia.
+    </p>
+    <CtaBand heading="Book an acupuncture session" />
+  </article>
+</Base>
