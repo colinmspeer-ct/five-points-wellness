@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# source archive from the previous site; not part of the new build
+uploads/
 # generated types
 .astro/
 
