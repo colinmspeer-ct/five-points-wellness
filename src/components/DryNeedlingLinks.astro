@@ -1,0 +1,11 @@
+---
+import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
+interface Props { except?: string }
+const { except } = Astro.props;
+---
+<ul class="checklist">
+  {except !== "dry-needling" && <li><a href="/dry-needling">Orthopedic dry needling in Philadelphia</a></li>}
+  {dryNeedlingPlaces.filter((place) => place.slug !== except).map((place) => (
+    <li><a href={`/${place.slug}`}>Dry needling in {place.name}</a></li>
+  ))}
+</ul>

@@ -1,0 +1,98 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "./Actions.astro";
+import CtaBand from "./CtaBand.astro";
+import DryNeedlingLinks from "./DryNeedlingLinks.astro";
+import FaqList from "./FaqList.astro";
+import Hours from "./Hours.astro";
+import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
+import { locations } from "../data/locations";
+import { addressLine, practice } from "../data/site";
+
+interface Props { slug: string }
+const { slug } = Astro.props;
+const page = dryNeedlingPlaces.find((item) => item.slug === slug);
+if (!page) throw new Error(`Missing dry needling place ${slug}`);
+const acupunctureSlug = page.slug.replace("dry-needling-", "acupuncture-");
+const area = locations.find((item) => item.slug === acupunctureSlug);
+
+const url = `${practice.url}/${page.slug}`;
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Dry needling", href: "/dry-needling" },
+  { name: page.name, href: `/${page.slug}` },
+];
+const extraGraph = [
+  {
+    "@type": "Service",
+    name: `Dry needling in ${page.name}`,
+    serviceType: "Dry needling",
+    url,
+    provider: { "@id": `${practice.url}/#practice` },
+    areaServed: { "@type": "Place", name: `${page.name}, Philadelphia, PA` },
+    description:
+      "Orthopedic dry needling for trigger points, motor points, muscular pain, and movement restrictions at Five Points Wellness LLC in Fishtown.",
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: page.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<Base title={page.title} description={page.description} crumbs={crumbs} extraGraph={extraGraph}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">Five Points Wellness LLC · {addressLine}</p>
+      <h1>{page.h1}</h1>
+      <p class="lede">{page.lede}</p>
+      <Actions />
+    </header>
+    <p>
+      <strong>{practice.name}</strong>, <strong>{addressLine}</strong>. Phone <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>, call or text.
+      {area && <> <strong>{area.distance}</strong> ZIP codes for this trip: <strong>{area.zips}</strong>. The office ZIP code is <strong>19125</strong>.</>}
+    </p>
+    <h2>Getting to dry needling from {page.name}</h2>
+    {page.trip.map((paragraph) => <p>{paragraph}</p>)}
+    {area && (
+      <>
+        <h2>Landmarks in {page.name}</h2>
+        <ul class="checklist">
+          {area.landmarks.map((item) => <li>{item}</li>)}
+        </ul>
+      </>
+    )}
+    <h2>What dry needling is at this office</h2>
+    <p>
+      Dry needling treats muscular pain, trigger points, and movement dysfunction with fine, sterile needles. The practice describes it as one application of the same tools and principles used in acupuncture, done inside integrative musculoskeletal care.
+    </p>
+    <p>
+      The services list calls it orthopedic dry needling aimed at motor points, trigger points, and areas of tension for chronic pain, sports injuries, and movement restrictions. A separate price is not published.
+    </p>
+    <h3>Concerns named on the dry needling page</h3>
+    <ul class="checklist">
+      <li>Neck and shoulder pain</li>
+      <li>Back pain and postural tension</li>
+      <li>Sciatica and nerve-related pain patterns</li>
+      <li>Hip, knee, and joint dysfunction</li>
+      <li>Sports injuries and overuse</li>
+      <li>Muscle tightness and chronic tension</li>
+      <li>Headaches and TMJ-related pain</li>
+      <li>Restricted mobility</li>
+    </ul>
+    <p>
+      The full explanation, training notes, and the range-of-motion photos are on <a href="/dry-needling">orthopedic dry needling in Philadelphia</a>.
+      Acupuncture directions for this same trip are on <a href={`/${acupunctureSlug}`}>acupuncture in {page.name}</a>.
+    </p>
+    <h2>Hours</h2>
+    <Hours />
+    <h2>Dry needling in other neighborhoods</h2>
+    <DryNeedlingLinks except={page.slug} />
+    <FaqList items={page.faqs} heading={`Questions about dry needling in ${page.name}`} />
+    <CtaBand heading={`Book dry needling from ${page.name}`} text={`The office is ${addressLine}. Call or text ${practice.phoneDisplay}.`} />
+  </article>
+</Base>

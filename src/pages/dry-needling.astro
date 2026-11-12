@@ -1,18 +1,18 @@
 ---
-import Base from "../../layouts/Base.astro";
-import Actions from "../../components/Actions.astro";
-import CtaBand from "../../components/CtaBand.astro";
-import FaqList from "../../components/FaqList.astro";
-import Picture from "../../components/Picture.astro";
-import { practice, training } from "../../data/site";
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import CtaBand from "../components/CtaBand.astro";
+import DryNeedlingLinks from "../components/DryNeedlingLinks.astro";
+import FaqList from "../components/FaqList.astro";
+import Picture from "../components/Picture.astro";
+import { practice, training } from "../data/site";
 
 const title = "Orthopedic Dry Needling in Philadelphia | Five Points Wellness";
 const description =
   "Orthopedic dry needling and motor-point therapy for pain and movement with Cara Speer, L.Ac., at Five Points Wellness in Fishtown, Philadelphia.";
 const crumbs = [
   { name: "Home", href: "/" },
-  { name: "Acupuncture", href: "/acupuncture" },
-  { name: "Dry needling", href: "/acupuncture/dry-needling" },
+  { name: "Dry needling", href: "/dry-needling" },
 ];
 const faqs = [
   { q: "Does dry needling hurt?", a: "Most patients tolerate treatment well. Sensations vary and may include a brief twitch, pressure, or dull ache when a trigger point is stimulated." },
@@ -26,7 +26,7 @@ const extraGraph = [
     "@type": "Service",
     name: "Orthopedic dry needling",
     serviceType: "Dry needling",
-    url: `${practice.url}/acupuncture/dry-needling`,
+    url: `${practice.url}/dry-needling`,
     provider: { "@id": `${practice.url}/#practice` },
     areaServed: { "@type": "City", name: "Philadelphia" },
     description: "Needling of motor points and trigger points for musculoskeletal pain, sports injuries, and movement restrictions.",
@@ -132,6 +132,11 @@ const extraGraph = [
     </p>
     <p>The shorter services-list description calls it orthopedic dry needling aimed at motor points, trigger points, and areas of tension for chronic pain, sports injuries, and movement restrictions.</p>
     <FaqList items={faqs} />
+    <h2>Dry needling by Philadelphia neighborhood</h2>
+    <p>
+      The office is <strong>Five Points Wellness LLC</strong>, <strong>2137 E Huntingdon St, Philadelphia, PA 19125</strong>. Call or text <strong>(610) 742-5810</strong>. These pages use the same trip details as the acupuncture neighborhood pages, for people searching dry needling from a nearby neighborhood.
+    </p>
+    <DryNeedlingLinks except="dry-needling" />
     <p>Pain care more broadly is on the <a href="/acupuncture/pain-injury-recovery">pain and injury acupuncture</a> page. Athletes can also read <a href="/acupuncture/sports-performance-recovery">sports acupuncture</a>.</p>
     <CtaBand heading="Book dry needling" text="If you have pain, muscle tightness, or restricted movement, book a session at the Fishtown office." />
   </article>

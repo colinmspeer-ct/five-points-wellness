@@ -1,6 +1,7 @@
 ---
 import Picture from "./Picture.astro";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
+import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
 import { locations } from "../data/locations";
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -27,11 +28,12 @@ const logoAlt =
     <nav class="desktop" aria-label="Primary">
       <a href="/about" aria-current={current("/about")}>About</a>
       <a href="/services" aria-current={current("/services")}>Services</a>
+      <a href="/dry-needling" aria-current={current("/dry-needling")}>Dry needling</a>
       <details class="menu">
         <summary>Acupuncture</summary>
         <div class="panel">
           <a href="/acupuncture">Acupuncture in Philadelphia</a>
-          <a href="/acupuncture/dry-needling">Orthopedic dry needling</a>
+          <a href="/dry-needling">Orthopedic dry needling</a>
           {conditionOrder.map((slug) => (
             <a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a>
           ))}
@@ -59,7 +61,7 @@ const logoAlt =
           <a href="/about">About Cara Speer</a>
           <a href="/services">Services</a>
           <a href="/acupuncture">Acupuncture</a>
-          <a href="/acupuncture/dry-needling">Orthopedic dry needling</a>
+          <a href="/dry-needling">Dry needling</a>
           <a href="/microneedling">Microneedling</a>
           <a href="/locations">Locations</a>
           <a href="/contact">Contact</a>
@@ -77,6 +79,14 @@ const logoAlt =
             <div>
               {locations.map((loc) => (
                 <a href={`/${loc.slug}`}>{loc.name}</a>
+              ))}
+            </div>
+          </details>
+          <details>
+            <summary>Dry needling by neighborhood</summary>
+            <div>
+              {dryNeedlingPlaces.map((place) => (
+                <a href={`/${place.slug}`}>{place.name}</a>
               ))}
             </div>
           </details>

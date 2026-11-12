@@ -2,8 +2,8 @@
 https://www.fivepointswellness.com/* https://fivepointswellness.com/:splat 301
 
 # Aliases for names patients type. Existing live URLs are kept and are not redirected.
-/dry-needling /acupuncture/dry-needling 301
-/orthopedic-dry-needling /acupuncture/dry-needling 301
+/acupuncture/dry-needling /dry-needling 301
+/orthopedic-dry-needling /dry-needling 301
 /guasha /gua-sha 301
 /acupuncture/guasha /gua-sha 301
 /acupuncture/gua-sha /gua-sha 301

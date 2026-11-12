@@ -1,12 +1,15 @@
 ---
+import DryNeedlingLocationView from "../components/DryNeedlingLocationView.astro";
 import LocationView from "../components/LocationView.astro";
 import ModalityView from "../components/ModalityView.astro";
+import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
 import { locations } from "../data/locations";
 import { modalities } from "../data/modalities";
 
 export function getStaticPaths() {
   return [
     ...locations.map((page) => ({ params: { slug: page.slug }, props: { kind: "location" as const } })),
+    ...dryNeedlingPlaces.map((page) => ({ params: { slug: page.slug }, props: { kind: "dry-needling" as const } })),
     ...modalities.map((page) => ({ params: { slug: page.slug }, props: { kind: "modality" as const } })),
   ];
 }
@@ -15,4 +18,6 @@ const { kind } = Astro.props;
 const slug = Astro.params.slug ?? "";
 ---
 
-{kind === "location" ? <LocationView slug={slug} /> : <ModalityView slug={slug} />}
+{kind === "location" && <LocationView slug={slug} />}
+{kind === "dry-needling" && <DryNeedlingLocationView slug={slug} />}
+{kind === "modality" && <ModalityView slug={slug} />}

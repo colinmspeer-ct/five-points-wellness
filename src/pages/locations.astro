@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Actions from "../components/Actions.astro";
+import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
 import { locations } from "../data/locations";
 import { addressLine, practice } from "../data/site";
 
@@ -31,6 +32,18 @@ const crumbs = [
         <a class="card" href={`/${loc.slug}`}>
           <h2>Acupuncture in {loc.name}</h2>
           <p>{loc.distance} ZIPs: {loc.zips}.</p>
+        </a>
+      ))}
+    </div>
+    <h2>Dry needling from the same neighborhoods</h2>
+    <p>
+      Orthopedic dry needling is the same office and the same trips. Each neighborhood has its own page.
+    </p>
+    <div class="grid cards">
+      {dryNeedlingPlaces.map((place) => (
+        <a class="card" href={`/${place.slug}`}>
+          <h2>Dry needling in {place.name}</h2>
+          <p>{place.lede}</p>
         </a>
       ))}
     </div>

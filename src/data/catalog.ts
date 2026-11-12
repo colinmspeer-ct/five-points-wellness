@@ -1,4 +1,5 @@
 import { conditionMeta, conditionOrder } from "./conditionMeta";
+import { dryNeedlingPlaces } from "./dryNeedlingPlaces";
 import { locations } from "./locations";
 import { modalities } from "./modalities";
 
@@ -14,7 +15,7 @@ export const catalog: IndexPage[] = [
   { href: "/terms", title: "Terms", group: "Practice" },
   { href: "/sitemap", title: "HTML sitemap", group: "Practice" },
   { href: "/acupuncture", title: "Acupuncture in Philadelphia", group: "Services" },
-  { href: "/acupuncture/dry-needling", title: "Orthopedic dry needling", group: "Services" },
+  { href: "/dry-needling", title: "Orthopedic dry needling", group: "Services" },
   { href: "/microneedling", title: "Microneedling", group: "Services" },
   ...modalities.map((item) => ({ href: `/${item.slug}`, title: item.name, group: "Services" })),
   ...conditionOrder.map((slug) => ({
@@ -28,6 +29,11 @@ export const catalog: IndexPage[] = [
     title: `Acupuncture in ${loc.name}`,
     group: "Locations",
   })),
+  ...dryNeedlingPlaces.map((place) => ({
+    href: `/${place.slug}`,
+    title: `Dry needling in ${place.name}`,
+    group: "Dry needling",
+  })),
 ];
 
-export const catalogGroups = ["Practice", "Services", "Conditions", "Locations"];
+export const catalogGroups = ["Practice", "Services", "Conditions", "Locations", "Dry needling"];
