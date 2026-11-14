@@ -116,10 +116,9 @@ export type Crumb = { name: string; href: string };
 
 export function canonicalFor(pathname: string) {
   let clean = pathname || "/";
-  if (clean.endsWith("/index.html")) clean = clean.slice(0, -"/index.html".length) || "/";
+  if (clean.endsWith("/index.html")) clean = clean.slice(0, -"index.html".length) || "/";
   if (clean.endsWith(".html")) clean = clean.slice(0, -".html".length);
-  if (clean.length > 1 && clean.endsWith("/")) clean = clean.slice(0, -1);
   if (!clean.startsWith("/")) clean = `/${clean}`;
-  if (clean === "/sitemap") return `${practice.url}/sitemap/`;
-  return practice.url + (clean === "/" ? "/" : clean);
+  if (clean !== "/" && !clean.endsWith("/")) clean = `${clean}/`;
+  return practice.url + clean;
 }

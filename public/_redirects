@@ -3,7 +3,6 @@ https://www.fivepointswellness.com/* https://fivepointswellness.com/:splat 301
 
 # Aliases for names patients type. Existing live URLs are kept and are not redirected.
 /acupuncture/dry-needling /dry-needling 301
-/acupuncture-fishtown /fishtown/acupuncture 301
 /acupuncture-east-kensington /east-kensington/acupuncture 301
 /acupuncture-kensington /kensington/acupuncture 301
 /acupuncture-northern-liberties /northern-liberties/acupuncture 301

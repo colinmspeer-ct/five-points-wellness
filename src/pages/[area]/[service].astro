@@ -94,7 +94,6 @@ const extraGraph = [
     <ul class="checklist">
       {service.points.map((item) => <li>{item}</li>)}
     </ul>
-    {service.caveat && <p class="note">{service.caveat}</p>}
     <p>
       The main {service.name.toLowerCase()} page is <a href={mainServiceHref(service.slug)}>{service.h1Name} in Philadelphia</a>.
       More about this area is on <a href={`/${area.slug}`}>{area.name}</a>.

@@ -8,9 +8,9 @@ const SITE = 'https://fivepointswellness.com';
 export default defineConfig({
   site: SITE,
   output: 'static',
-  trailingSlash: 'never',
+  trailingSlash: 'always',
   build: {
-    format: 'file',
+    format: 'directory',
   },
   integrations: [
     {
@@ -20,13 +20,13 @@ export default defineConfig({
           const locs = pages
             .map((page) => {
               let pathname = typeof page.pathname === 'string' ? page.pathname : '';
-              if (pathname === '' || pathname === '/' || pathname === 'index') pathname = '/';
+              if (pathname === '' || pathname === '/' || pathname === 'index' || pathname === '/index.html') pathname = '/';
               if (!pathname.startsWith('/')) pathname = `/${pathname}`;
-              if (pathname.endsWith('/index')) pathname = pathname.slice(0, -'index'.length);
-              if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
+              if (pathname.endsWith('/index.html')) pathname = pathname.slice(0, -'index.html'.length);
+              if (pathname.endsWith('.html')) pathname = pathname.slice(0, -'.html'.length);
               if (pathname.includes('404')) return '';
-              if (pathname === '/sitemap') return `${SITE}/sitemap/`;
-              return SITE + (pathname === '/' ? '/' : pathname);
+              if (pathname !== '/' && !pathname.endsWith('/')) pathname = `${pathname}/`;
+              return SITE + pathname;
             })
             .filter(Boolean);
           const unique = [...new Set(locs)].sort((a, b) => a.localeCompare(b));
@@ -49,22 +49,7 @@ export default defineConfig({
           fs.writeFileSync(path.join(outDir, 'sitemap-0.xml'), urlset);
           fs.writeFileSync(path.join(outDir, 'sitemap.xml'), urlset);
           fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), index);
-          const htmlSitemap = path.join(outDir, 'sitemap.html');
-          if (fs.existsSync(htmlSitemap)) {
-            const sitemapDir = path.join(outDir, 'sitemap');
-            fs.mkdirSync(sitemapDir, { recursive: true });
-            fs.copyFileSync(htmlSitemap, path.join(sitemapDir, 'index.html'));
-          }
-          const htmlRedirects = unique
-            .map((loc) => {
-              const route = loc.slice(SITE.length) || '/';
-              if (route === '/sitemap/') return '/sitemap.html /sitemap/ 301';
-              const file = route === '/' ? '/index.html' : `${route}.html`;
-              return `${file} ${route} 301`;
-            })
-            .join('\n');
-          fs.appendFileSync(path.join(outDir, '_redirects'), `\n${htmlRedirects}\n`);
-          console.log(`Wrote sitemap.xml with ${unique.length} URLs`);
+          console.log(`Wrote sitemap-index.xml and sitemap-0.xml with ${unique.length} URLs`);
         },
       },
     },

@@ -54,6 +54,7 @@ export const offeredServices: OfferedService[] = [
       "The shorter services-list line calls it orthopedic dry needling aimed at motor points, trigger points, and areas of tension for chronic pain, sports injuries, and movement restrictions. Like the other hands-on methods on that list, it is included in an acupuncture session at the practitioner’s discretion. No separate dry needling fee is published.",
       "Trigger points are described as tight, overactive spots that can contribute to localized pain, stiffness, reduced range of motion, and pain that travels. A needle in one of those spots may cause a brief twitch. The practice describes that as a way to help reset abnormal muscle activity, improve circulation, and reduce localized tension. Motor-point work uses the place where a nerve enters a muscle, so one point can affect the whole muscle.",
       "A session starts with posture, movement, and the painful area. Treatment typically lasts 20 to 60 minutes and may be combined with acupuncture, cupping, or manual work. Many patients notice a change during or soon after treatment. Chronic problems often need a series. Mild soreness like a workout can last 24 to 48 hours. The practice has published before-and-after photos from one 20-minute session showing shoulder range of motion. Individual results vary.",
+      "The practice states this care is given by a licensed acupuncturist with more than 2,000 hours of graduate education in acupuncture and Chinese medicine, study of anatomy, physiology, and pathology, orthopedic assessment, a clinical focus on trigger points and motor points, supervised practice, and two national board exams required for licensure.",
     ],
     points: [
       "Neck, shoulder, and back pain",
@@ -72,8 +73,6 @@ export const offeredServices: OfferedService[] = [
         a: "No price is published for dry needling alone. The services list includes it in an acupuncture session at the practitioner’s discretion.",
       },
     ],
-    caveat:
-      "Training stated on the dry needling page: more than 2,000 hours of graduate education in acupuncture and Chinese medicine, anatomy and orthopedic assessment, a clinical focus on trigger points and motor points, supervised practice, and two national board exams required for licensure. School name and license number are not printed.",
   },
   {
     slug: "moxibustion",
@@ -102,8 +101,6 @@ export const offeredServices: OfferedService[] = [
         a: "Dried mugwort, burned on acupuncture points.",
       },
     ],
-    caveat:
-      "[COLIN/CARA: fill in whether moxa is applied on the skin or held near it, and whether smoke is part of the visit. The current site does not say.]",
   },
   {
     slug: "gua-sha",
@@ -160,8 +157,6 @@ export const offeredServices: OfferedService[] = [
         a: "A standalone cupping price is not published. It is included in an acupuncture session at Cara’s discretion.",
       },
     ],
-    caveat:
-      "[COLIN/CARA: fill in how long cupping marks usually last, if you want that on the page. The current site does not say.]",
   },
   {
     slug: "facial-cupping",
@@ -218,8 +213,6 @@ export const offeredServices: OfferedService[] = [
         a: "The site does not say liniments are sold. Ask the office if you want something between visits.",
       },
     ],
-    caveat:
-      "[COLIN/CARA: fill in formula names or a take-home policy if you want them published. The current site has neither.]",
   },
   {
     slug: "tuina",
@@ -304,8 +297,6 @@ export const offeredServices: OfferedService[] = [
         a: "A separate qigong fee is not published.",
       },
     ],
-    caveat:
-      "[COLIN/CARA: fill in a class schedule if one exists. The current site does not publish class days or times.]",
   },
   {
     slug: "microneedling",
@@ -336,8 +327,6 @@ export const offeredServices: OfferedService[] = [
         a: "Yes, for body points on the same day. Facial rejuvenation acupuncture and microneedling are not performed on the same day.",
       },
     ],
-    caveat:
-      "[COLIN/CARA: fill in the device name if you want it published. The current site does not name a device.]",
   },
   {
     slug: "pediatric-acupuncture",

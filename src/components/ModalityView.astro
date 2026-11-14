@@ -59,7 +59,6 @@ const extraGraph = [
     </p>
     <h2>Other services at the same office</h2>
     <ServiceLinks except={`/${page.slug}`} />
-    {page.notice && <p class="note">{page.notice}</p>}
     <FaqList items={page.faqs} />
     <CtaBand />
   </article>

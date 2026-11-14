@@ -26,6 +26,7 @@ export const catalog: IndexPage[] = [
     group: "Services",
   })),
   { href: "/locations", title: "All areas", group: "Area hubs" },
+  { href: "/acupuncture-fishtown", title: "Acupuncture in Fishtown", group: "Area hubs" },
   ...areas.map((area) => ({ href: `/${area.slug}`, title: `${area.name} area hub`, group: "Area hubs" })),
   ...locations
     .filter((loc) => loc.slug === "acupuncture-bella-vista")
