@@ -8,6 +8,7 @@ export type Modality = {
   lede: string;
   sections: { heading: string; paragraphs: string[]; items?: string[] }[];
   faqs: { q: string; a: string }[];
+  notice?: string;
 };
 
 const discretion =
@@ -59,6 +60,8 @@ export const modalities: Modality[] = [
         a: "Use the patient portal on the booking page, or call or text (610) 742-5810.",
       },
     ],
+    notice:
+      "[COLIN/CARA: fill in whether moxa is applied on the skin or held near it, and whether smoke is part of the visit. The current site does not say.]",
   },
   {
     slug: "gua-sha",
@@ -151,6 +154,8 @@ export const modalities: Modality[] = [
         a: "At Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125.",
       },
     ],
+    notice:
+      "[COLIN/CARA: fill in how long cupping marks usually last, if you want that on the page. The current site does not say.]",
   },
   {
     slug: "facial-cupping",
@@ -241,6 +246,8 @@ export const modalities: Modality[] = [
         a: "The published service is external liniment only. Internal herbal prescriptions are not described on the site.",
       },
     ],
+    notice:
+      "[COLIN/CARA: fill in formula names or a take-home policy if you want them published. The current site has neither.]",
   },
   {
     slug: "tuina",
@@ -378,5 +385,7 @@ export const modalities: Modality[] = [
         a: "At Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125, if it is part of your visit.",
       },
     ],
+    notice:
+      "[COLIN/CARA: fill in a class schedule if one exists. The current site does not publish class days or times.]",
   },
 ];

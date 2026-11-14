@@ -1,0 +1,114 @@
+---
+import Base from "../../layouts/Base.astro";
+import Actions from "../../components/Actions.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import FaqList from "../../components/FaqList.astro";
+import Hours from "../../components/Hours.astro";
+import { areas, areaBySlug } from "../../data/areas";
+import { offeredServices } from "../../data/offeredServices";
+import { addressLine, practice } from "../../data/site";
+
+export function getStaticPaths() {
+  return areas.map((area) => ({ params: { area: area.slug } }));
+}
+
+const slug = Astro.params.area ?? "";
+const area = areaBySlug.get(slug);
+if (!area) throw new Error(`Missing area ${slug}`);
+
+const nearby = area.nearby.map((item) => areaBySlug.get(item)).filter((item) => item != null);
+const title = area.atStudio
+  ? `Acupuncture in ${area.h1Place} | Five Points Wellness`
+  : `Acupuncture for ${area.h1Place} | Five Points Wellness`;
+const description = area.atStudio
+  ? `Acupuncture and the rest of Cara Speer’s services in ${area.h1Place}. Five Points Wellness LLC, ${addressLine}. ${practice.phoneDisplay}.`
+  : `Acupuncture for ${area.name} residents who travel to Five Points Wellness in Fishtown. No office in ${area.name}. ${addressLine}. ${practice.phoneDisplay}.`;
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: area.name, href: `/${area.slug}` },
+];
+const faqs = [
+  {
+    q: area.atStudio
+      ? `Is the studio in ${area.name}?`
+      : `Is there a Five Points office in ${area.name}?`,
+    a: area.atStudio
+      ? `Yes. The only studio is ${addressLine}, on the Fishtown and East Kensington edge.`
+      : `No. ${area.name} residents are seen at ${addressLine}. ${area.distance}`,
+  },
+  {
+    q: `How do people from ${area.name} get to the studio?`,
+    a: `${area.transit} ${area.drive}`,
+  },
+  {
+    q: "What is the phone number?",
+    a: `Call or text ${practice.phoneDisplay}. Email ${practice.email}.`,
+  },
+];
+const extraGraph = [
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">{practice.name} · {addressLine}</p>
+      <h1>{area.atStudio ? `Acupuncture in ${area.h1Place}` : `Acupuncture for ${area.h1Place}`}</h1>
+      <p class="lede">
+        {area.atStudio
+          ? `This is the area page for ${area.name}. The studio is here: ${addressLine}. Phone ${practice.phoneDisplay}.`
+          : `There is no Five Points Wellness office in ${area.name}. Residents are seen at the Fishtown studio, ${addressLine}. Phone ${practice.phoneDisplay}.`}
+      </p>
+      <Actions />
+    </header>
+    {!area.atStudio && (
+      <p class="note">[COLIN/CARA: fill in whether a future office is planned for {area.name}. This page only describes travel to the Fishtown studio.]</p>
+    )}
+    <h2>{area.name} and the trip to East Huntingdon Street</h2>
+    <p>{area.character}</p>
+    <p><strong>{area.distance}</strong></p>
+    <h3>Getting there</h3>
+    <p>{area.commute}</p>
+    <p>{area.drive}</p>
+    <p>{area.transit}</p>
+    <h3>Landmarks people use for {area.name}</h3>
+    <ul class="checklist">
+      {area.landmarks.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>ZIP codes associated with this area: {area.zips}. The studio ZIP is 19125.</p>
+    <h2>Services at the Fishtown studio for {area.name}</h2>
+    <p>
+      Dry needling is one of the practice’s main service pages. Every service below is one Cara already offers. Each link stays inside {area.name} and opens that service’s own page.
+    </p>
+    <ul class="checklist">
+      {offeredServices.map((service) => (
+        <li><a href={`/${area.slug}/${service.slug}`}>{service.h1Name} in {area.h1Place}</a></li>
+      ))}
+    </ul>
+    <h2>Hours at the studio</h2>
+    <Hours />
+    {nearby.length > 0 && (
+      <>
+        <h2>Nearby area pages</h2>
+        <ul class="checklist">
+          {nearby.map((item) => (
+            <li><a href={`/${item.slug}`}>{item.name}</a></li>
+          ))}
+        </ul>
+      </>
+    )}
+    <FaqList items={faqs} heading={`Questions about coming from ${area.name}`} />
+    <CtaBand
+      heading={area.atStudio ? `Book in ${area.name}` : `Book from ${area.name}`}
+      text={`The only studio is ${addressLine}. Call or text ${practice.phoneDisplay}.`}
+    />
+  </article>
+</Base>

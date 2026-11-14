@@ -1,11 +1,21 @@
 ---
-import { locations } from "../data/locations";
+import { areas } from "../data/areas";
 interface Props { except?: string }
 const { except } = Astro.props;
+const groups = [
+  { label: "Philadelphia", items: areas.filter((area) => area.group === "philadelphia") },
+  { label: "Main Line", items: areas.filter((area) => area.group === "main-line") },
+  { label: "Nearby towns that travel to the studio", items: areas.filter((area) => area.group === "nearby") },
+];
 ---
-<ul class="checklist">
-  <li><a href="/locations">All Philadelphia neighborhoods we serve</a></li>
-  {locations.filter((loc) => loc.slug !== except).map((loc) => (
-    <li><a href={`/${loc.slug}`}>Acupuncture in {loc.name}</a></li>
-  ))}
-</ul>
+<p><a href="/locations">All areas on one page</a></p>
+{groups.map((group) => (
+  <div>
+    <h3>{group.label}</h3>
+    <ul class="checklist">
+      {group.items.filter((area) => area.slug !== except).map((area) => (
+        <li><a href={`/${area.slug}`}>{area.name}</a></li>
+      ))}
+    </ul>
+  </div>
+))}

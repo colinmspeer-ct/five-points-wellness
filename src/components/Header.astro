@@ -1,8 +1,7 @@
 ---
 import Picture from "./Picture.astro";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
-import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
-import { locations } from "../data/locations";
+import { areas } from "../data/areas";
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const current = (href: string) => (path === href ? "page" : undefined);
@@ -42,9 +41,9 @@ const logoAlt =
       <details class="menu">
         <summary>Locations</summary>
         <div class="panel">
-          <a href="/locations">Neighborhoods we serve</a>
-          {locations.map((loc) => (
-            <a href={`/${loc.slug}`}>Acupuncture in {loc.name}</a>
+          <a href="/locations">All areas</a>
+          {areas.map((area) => (
+            <a href={`/${area.slug}`}>{area.name}</a>
           ))}
         </div>
       </details>
@@ -77,16 +76,16 @@ const logoAlt =
           <details>
             <summary>Neighborhoods</summary>
             <div>
-              {locations.map((loc) => (
-                <a href={`/${loc.slug}`}>{loc.name}</a>
+              {areas.map((area) => (
+                <a href={`/${area.slug}`}>{area.name}</a>
               ))}
             </div>
           </details>
           <details>
             <summary>Dry needling by neighborhood</summary>
             <div>
-              {dryNeedlingPlaces.map((place) => (
-                <a href={`/${place.slug}`}>{place.name}</a>
+              {areas.map((area) => (
+                <a href={`/${area.slug}/dry-needling`}>{area.name}</a>
               ))}
             </div>
           </details>

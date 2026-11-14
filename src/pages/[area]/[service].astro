@@ -1,0 +1,129 @@
+---
+import Base from "../../layouts/Base.astro";
+import Actions from "../../components/Actions.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import FaqList from "../../components/FaqList.astro";
+import Hours from "../../components/Hours.astro";
+import { areas, areaBySlug } from "../../data/areas";
+import { mainServiceHref, offeredServices } from "../../data/offeredServices";
+import { bridge, lede, pageDescription, pageTitle, pairEssay, pairFaq } from "../../lib/areaPageCopy";
+import { addressLine, practice } from "../../data/site";
+
+export function getStaticPaths() {
+  return areas.flatMap((area) =>
+    offeredServices.map((service) => ({
+      params: { area: area.slug, service: service.slug },
+    })),
+  );
+}
+
+const area = areaBySlug.get(Astro.params.area ?? "");
+const service = offeredServices.find((item) => item.slug === Astro.params.service);
+if (!area || !service) throw new Error("Missing area service page");
+
+const nearby = area.nearby.map((item) => areaBySlug.get(item)).filter((item) => item != null);
+const siblings = offeredServices.filter((item) => item.slug !== service.slug);
+const h1 = `${service.h1Name} in ${area.h1Place}`;
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: area.name, href: `/${area.slug}` },
+  { name: service.h1Name, href: `/${area.slug}/${service.slug}` },
+];
+const faqs = [
+  ...service.faqs,
+  pairFaq(area, service),
+  {
+    q: area.atStudio
+      ? `Where is ${service.name.toLowerCase()} in ${area.name}?`
+      : `Do you have a ${service.name.toLowerCase()} office in ${area.name}?`,
+    a: area.atStudio
+      ? `${practice.name} is at ${addressLine}. ${area.transit}`
+      : `No. ${service.h1Name} for ${area.name} is at ${addressLine}. ${area.distance}`,
+  },
+];
+const extraGraph = [
+  {
+    "@type": "Service",
+    name: h1,
+    serviceType: service.serviceType,
+    url: `${practice.url}/${area.slug}/${service.slug}`,
+    provider: { "@id": `${practice.url}/#practice` },
+    areaServed: { "@type": "Place", name: area.h1Place },
+    description: service.summary,
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<Base title={pageTitle(area, service)} description={pageDescription(area, service)} crumbs={crumbs} extraGraph={extraGraph}>
+  <article class="wrap content">
+    <header class="page-hero">
+      <p class="eyebrow">{practice.name} · {practice.phoneDisplay}</p>
+      <h1>{h1}</h1>
+      <p class="lede">{lede(area, service)}</p>
+      <Actions />
+    </header>
+    <h2>{service.h1Name} and the trip from {area.name}</h2>
+    <p>{bridge(area, service)}</p>
+    <h3>Planning {service.h1Name.toLowerCase()} from {area.name}</h3>
+    <p>{pairEssay(area, service)}</p>
+    <h2>What {area.name} is like on the way to the studio</h2>
+    <p>{area.character}</p>
+    <h3>Distance</h3>
+    <p>{area.distance}</p>
+    <h3>Commute from {area.name}</h3>
+    <p>{area.commute}</p>
+    <p>{area.drive}</p>
+    <h3>Transit</h3>
+    <p>{area.transit}</p>
+    <h3>Landmarks in {area.name}</h3>
+    <ul class="checklist">
+      {area.landmarks.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>ZIP codes associated with {area.name}: {area.zips}. The studio is {addressLine}.</p>
+    <h2>What {service.name.toLowerCase()} means at Five Points Wellness</h2>
+    {service.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <h3>Published details</h3>
+    <ul class="checklist">
+      {service.points.map((item) => <li>{item}</li>)}
+    </ul>
+    {service.caveat && <p class="note">{service.caveat}</p>}
+    <p>
+      The main {service.name.toLowerCase()} page is <a href={mainServiceHref(service.slug)}>{service.h1Name} in Philadelphia</a>.
+      More about this area is on <a href={`/${area.slug}`}>{area.name}</a>.
+    </p>
+    <h2>Hours and phone</h2>
+    <p>Call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>. Email <a href={`mailto:${practice.email}`}>{practice.email}</a>.</p>
+    <Hours />
+    <h2>Other services for {area.name}</h2>
+    <ul class="checklist">
+      {siblings.map((item) => (
+        <li><a href={`/${area.slug}/${item.slug}`}>{item.h1Name} in {area.h1Place}</a></li>
+      ))}
+    </ul>
+    {nearby.length > 0 && (
+      <>
+        <h2>{service.h1Name} from nearby areas</h2>
+        <ul class="checklist">
+          {nearby.map((item) => (
+            <li><a href={`/${item.slug}/${service.slug}`}>{service.h1Name} in {item.h1Place}</a></li>
+          ))}
+        </ul>
+      </>
+    )}
+    <FaqList items={faqs} heading={`${service.h1Name} questions from ${area.name}`} />
+    <CtaBand
+      heading={`Book ${service.name.toLowerCase()}`}
+      text={area.atStudio
+        ? `The studio is ${addressLine}. Call or text ${practice.phoneDisplay}.`
+        : `Come to the Fishtown studio at ${addressLine}. There is no office in ${area.name}. Call or text ${practice.phoneDisplay}.`}
+    />
+  </article>
+</Base>

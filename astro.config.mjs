@@ -32,7 +32,7 @@ export default defineConfig({
           const xml = [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-            ...unique.map((loc) => `  <url><loc>${loc}</loc></url>`),
+            ...unique.map((loc) => `  <url><loc>${loc}</loc><lastmod>2026-11-14</lastmod></url>`),
             '</urlset>',
             '',
           ].join('\n');

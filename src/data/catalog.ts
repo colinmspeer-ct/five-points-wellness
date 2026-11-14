@@ -1,7 +1,9 @@
+import { areas } from "./areas";
 import { conditionMeta, conditionOrder } from "./conditionMeta";
 import { dryNeedlingPlaces } from "./dryNeedlingPlaces";
 import { locations } from "./locations";
 import { modalities } from "./modalities";
+import { offeredServices } from "./offeredServices";
 
 export type IndexPage = { href: string; title: string; group: string };
 
@@ -23,17 +25,29 @@ export const catalog: IndexPage[] = [
     title: conditionMeta[slug].label,
     group: "Conditions",
   })),
-  { href: "/locations", title: "Philadelphia neighborhoods", group: "Locations" },
-  ...locations.map((loc) => ({
-    href: `/${loc.slug}`,
-    title: `Acupuncture in ${loc.name}`,
-    group: "Locations",
-  })),
-  ...dryNeedlingPlaces.map((place) => ({
-    href: `/${place.slug}`,
-    title: `Dry needling in ${place.name}`,
-    group: "Dry needling",
-  })),
+  { href: "/locations", title: "All areas", group: "Locations" },
+  ...locations
+    .filter((loc) => loc.slug === "acupuncture-bella-vista")
+    .map((loc) => ({
+      href: `/${loc.slug}`,
+      title: `Acupuncture in ${loc.name}`,
+      group: "Locations",
+    })),
+  ...dryNeedlingPlaces
+    .filter((place) => place.slug === "dry-needling-bella-vista")
+    .map((place) => ({
+      href: `/${place.slug}`,
+      title: `Dry needling in ${place.name}`,
+      group: "Locations",
+    })),
+  ...areas.flatMap((area) => [
+    { href: `/${area.slug}`, title: `${area.name} area hub`, group: area.name },
+    ...offeredServices.map((service) => ({
+      href: `/${area.slug}/${service.slug}`,
+      title: `${service.h1Name} in ${area.h1Place}`,
+      group: area.name,
+    })),
+  ]),
 ];
 
-export const catalogGroups = ["Practice", "Services", "Conditions", "Locations", "Dry needling"];
+export const catalogGroups = ["Practice", "Services", "Conditions", "Locations", ...areas.map((area) => area.name)];

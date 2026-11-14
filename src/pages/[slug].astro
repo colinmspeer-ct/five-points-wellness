@@ -2,14 +2,20 @@
 import DryNeedlingLocationView from "../components/DryNeedlingLocationView.astro";
 import LocationView from "../components/LocationView.astro";
 import ModalityView from "../components/ModalityView.astro";
+import { areas } from "../data/areas";
 import { dryNeedlingPlaces } from "../data/dryNeedlingPlaces";
 import { locations } from "../data/locations";
 import { modalities } from "../data/modalities";
 
 export function getStaticPaths() {
+  const replaced = new Set(areas.map((area) => area.slug));
   return [
-    ...locations.map((page) => ({ params: { slug: page.slug }, props: { kind: "location" as const } })),
-    ...dryNeedlingPlaces.map((page) => ({ params: { slug: page.slug }, props: { kind: "dry-needling" as const } })),
+    ...locations
+      .filter((page) => !replaced.has(page.slug.replace(/^acupuncture-/, "")))
+      .map((page) => ({ params: { slug: page.slug }, props: { kind: "location" as const } })),
+    ...dryNeedlingPlaces
+      .filter((page) => !replaced.has(page.slug.replace(/^dry-needling-/, "")))
+      .map((page) => ({ params: { slug: page.slug }, props: { kind: "dry-needling" as const } })),
     ...modalities.map((page) => ({ params: { slug: page.slug }, props: { kind: "modality" as const } })),
   ];
 }

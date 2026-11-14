@@ -3,6 +3,32 @@ https://www.fivepointswellness.com/* https://fivepointswellness.com/:splat 301
 
 # Aliases for names patients type. Existing live URLs are kept and are not redirected.
 /acupuncture/dry-needling /dry-needling 301
+/acupuncture-fishtown /fishtown/acupuncture 301
+/acupuncture-east-kensington /east-kensington/acupuncture 301
+/acupuncture-kensington /kensington/acupuncture 301
+/acupuncture-northern-liberties /northern-liberties/acupuncture 301
+/acupuncture-port-richmond /port-richmond/acupuncture 301
+/acupuncture-olde-kensington /olde-kensington/acupuncture 301
+/acupuncture-south-kensington /south-kensington/acupuncture 301
+/acupuncture-old-city /old-city/acupuncture 301
+/acupuncture-society-hill /society-hill/acupuncture 301
+/acupuncture-center-city /center-city/acupuncture 301
+/acupuncture-rittenhouse /rittenhouse/acupuncture 301
+/acupuncture-graduate-hospital /graduate-hospital/acupuncture 301
+/acupuncture-queen-village /queen-village/acupuncture 301
+/dry-needling-fishtown /fishtown/dry-needling 301
+/dry-needling-east-kensington /east-kensington/dry-needling 301
+/dry-needling-kensington /kensington/dry-needling 301
+/dry-needling-northern-liberties /northern-liberties/dry-needling 301
+/dry-needling-port-richmond /port-richmond/dry-needling 301
+/dry-needling-olde-kensington /olde-kensington/dry-needling 301
+/dry-needling-south-kensington /south-kensington/dry-needling 301
+/dry-needling-old-city /old-city/dry-needling 301
+/dry-needling-society-hill /society-hill/dry-needling 301
+/dry-needling-center-city /center-city/dry-needling 301
+/dry-needling-rittenhouse /rittenhouse/dry-needling 301
+/dry-needling-graduate-hospital /graduate-hospital/dry-needling 301
+/dry-needling-queen-village /queen-village/dry-needling 301
 /orthopedic-dry-needling /dry-needling 301
 /guasha /gua-sha 301
 /acupuncture/guasha /gua-sha 301
