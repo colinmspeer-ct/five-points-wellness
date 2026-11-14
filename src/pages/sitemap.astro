@@ -1,32 +1,79 @@
 ---
 import Base from "../layouts/Base.astro";
-import { catalog, catalogGroups } from "../data/catalog";
+import { areas } from "../data/areas";
+import { catalog } from "../data/catalog";
 
 const title = "Sitemap | Five Points Wellness";
 const description =
-  "Every page on the Five Points Wellness site: acupuncture services, condition pages, and Philadelphia neighborhood pages for the Fishtown office.";
+  "HTML sitemap of every indexable Five Points Wellness page: services, area hubs, service-by-area pages, and about and contact.";
 const crumbs = [
   { name: "Home", href: "/" },
-  { name: "Sitemap", href: "/sitemap" },
+  { name: "Sitemap", href: "/sitemap/" },
 ];
+
+const about = catalog.filter((page) => page.group === "About and contact");
+const services = catalog.filter((page) => page.group === "Services");
+const hubs = catalog.filter((page) => page.group === "Area hubs");
+const byArea = catalog.filter((page) => page.group === "Service by area");
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
   <article class="wrap content">
     <header class="page-hero">
       <h1>Sitemap</h1>
-      <p class="lede">Every public page, grouped so you can reach it in one click from here and in two clicks from the homepage.</p>
+      <p class="lede">
+        Every indexable page, in the HTML. Search engines use <a href="/sitemap-index.xml">sitemap-index.xml</a>.
+      </p>
     </header>
-    {catalogGroups.map((group) => (
-      <section>
-        <h2>{group}</h2>
-        <ul class="checklist">
-          {catalog.filter((page) => page.group === group).map((page) => (
-            <li><a href={page.href}>{page.title}</a></li>
-          ))}
-        </ul>
-      </section>
-    ))}
-    <p>Search engines can use <a href="/sitemap.xml">sitemap.xml</a>. Humans can use this page.</p>
+
+    <section>
+      <h2>About and contact</h2>
+      <ul class="checklist">
+        {about.map((page) => (
+          <li><a href={page.href}>{page.title}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Services</h2>
+      <ul class="checklist">
+        {services.map((page) => (
+          <li><a href={page.href}>{page.title}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Area hubs</h2>
+      <ul class="checklist">
+        {hubs.map((page) => (
+          <li><a href={page.href}>{page.title}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Service by area</h2>
+      {areas.map((area) => {
+        const pages = byArea.filter((page) => page.href.startsWith(`/${area.slug}/`));
+        return (
+          <div>
+            <h3>{area.name}</h3>
+            <ul class="checklist">
+              {pages.map((page) => (
+                <li><a href={page.href}>{page.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+      <h3>Bella Vista</h3>
+      <ul class="checklist">
+        {byArea.filter((page) => page.href === "/dry-needling-bella-vista").map((page) => (
+          <li><a href={page.href}>{page.title}</a></li>
+        ))}
+      </ul>
+    </section>
   </article>
 </Base>

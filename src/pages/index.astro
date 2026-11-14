@@ -8,6 +8,11 @@ import LocationLinks from "../components/LocationLinks.astro";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
 import { addressLine, practice, testimonials } from "../data/site";
 
+const mapEmbed =
+  "https://www.google.com/maps?q=Five+Points+Wellness+LLC,+2137+E+Huntingdon+St,+Philadelphia,+PA+19125&output=embed";
+const reviewsUrl =
+  "https://www.google.com/maps/search/?api=1&query=Five+Points+Wellness+LLC+2137+E+Huntingdon+St+Philadelphia+PA+19125";
+
 const title = "Acupuncture in Fishtown, Philadelphia | Five Points Wellness";
 const description =
   "Licensed acupuncturist Cara Speer offers acupuncture and Chinese medicine at Five Points Wellness LLC, 2137 E Huntingdon St, Fishtown, Philadelphia. Call or text (610) 742-5810.";
@@ -89,6 +94,24 @@ const description =
       The practice has one office, at 2137 E Huntingdon St. Philadelphia neighborhood pages start there. Main Line and nearby town pages are for residents who travel to that studio. There is no second office.
     </p>
     <LocationLinks />
+
+    <section id="find-us">
+      <h2>Find us on Google</h2>
+      <p>
+        <strong>Five Points Wellness LLC</strong><br />
+        2137 E Huntingdon St, Philadelphia, PA 19125<br />
+        <a href="tel:+16107425810">(610) 742-5810</a>
+      </p>
+      <div class="map-embed">
+        <iframe
+          src={mapEmbed}
+          title="Google Map of Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p><a href={reviewsUrl}>Read our reviews on Google</a></p>
+    </section>
+
     <CtaBand />
   </section>
 </Base>

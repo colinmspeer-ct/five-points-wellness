@@ -120,5 +120,6 @@ export function canonicalFor(pathname: string) {
   if (clean.endsWith(".html")) clean = clean.slice(0, -".html".length);
   if (clean.length > 1 && clean.endsWith("/")) clean = clean.slice(0, -1);
   if (!clean.startsWith("/")) clean = `/${clean}`;
+  if (clean === "/sitemap") return `${practice.url}/sitemap/`;
   return practice.url + (clean === "/" ? "/" : clean);
 }

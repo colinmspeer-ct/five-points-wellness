@@ -332,6 +332,16 @@ h3 { font-size: 1.25rem; margin-top: 1.4rem; }
   gap: 0.6rem;
 }
 .map-facade iframe { width: 100%; height: 280px; border: 0; border-radius: 8px; background: #fff; }
+.map-embed {
+  width: 100%;
+  max-width: 52rem;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.map-embed iframe { width: 100%; height: 100%; border: 0; }
 .map-pin { width: 2rem; height: 2rem; }
 
 .legal { font-size: 0.95rem; color: #cfc8bb; }

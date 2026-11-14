@@ -25,22 +25,40 @@ export default defineConfig({
               if (pathname.endsWith('/index')) pathname = pathname.slice(0, -'index'.length);
               if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
               if (pathname.includes('404')) return '';
+              if (pathname === '/sitemap') return `${SITE}/sitemap/`;
               return SITE + (pathname === '/' ? '/' : pathname);
             })
             .filter(Boolean);
           const unique = [...new Set(locs)].sort((a, b) => a.localeCompare(b));
-          const xml = [
+          const lastmod = '2026-11-14';
+          const urlset = [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-            ...unique.map((loc) => `  <url><loc>${loc}</loc><lastmod>2026-11-14</lastmod></url>`),
+            ...unique.map((loc) => `  <url><loc>${loc}</loc><lastmod>${lastmod}</lastmod></url>`),
             '</urlset>',
             '',
           ].join('\n');
+          const index = [
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+            `  <sitemap><loc>${SITE}/sitemap-0.xml</loc><lastmod>${lastmod}</lastmod></sitemap>`,
+            '</sitemapindex>',
+            '',
+          ].join('\n');
           const outDir = dir.pathname;
-          fs.writeFileSync(path.join(outDir, 'sitemap.xml'), xml);
+          fs.writeFileSync(path.join(outDir, 'sitemap-0.xml'), urlset);
+          fs.writeFileSync(path.join(outDir, 'sitemap.xml'), urlset);
+          fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), index);
+          const htmlSitemap = path.join(outDir, 'sitemap.html');
+          if (fs.existsSync(htmlSitemap)) {
+            const sitemapDir = path.join(outDir, 'sitemap');
+            fs.mkdirSync(sitemapDir, { recursive: true });
+            fs.copyFileSync(htmlSitemap, path.join(sitemapDir, 'index.html'));
+          }
           const htmlRedirects = unique
             .map((loc) => {
               const route = loc.slice(SITE.length) || '/';
+              if (route === '/sitemap/') return '/sitemap.html /sitemap/ 301';
               const file = route === '/' ? '/index.html' : `${route}.html`;
               return `${file} ${route} 301`;
             })
