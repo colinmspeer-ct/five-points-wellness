@@ -25,6 +25,7 @@ export default defineConfig({
               if (pathname.endsWith('/index.html')) pathname = pathname.slice(0, -'index.html'.length);
               if (pathname.endsWith('.html')) pathname = pathname.slice(0, -'.html'.length);
               if (pathname.includes('404')) return '';
+              if (pathname.replace(/\/$/, '') === '/acupuncture/dry-needling') return '';
               if (pathname !== '/' && !pathname.endsWith('/')) pathname = `${pathname}/`;
               return SITE + pathname;
             })
