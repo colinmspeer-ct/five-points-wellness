@@ -1,0 +1,400 @@
+---
+import Base from "../layouts/Base.astro";
+import Actions from "../components/Actions.astro";
+import CtaBand from "../components/CtaBand.astro";
+import FaqList from "../components/FaqList.astro";
+import Hours from "../components/Hours.astro";
+import { areaBySlug } from "../data/areas";
+import { offeredServices } from "../data/offeredServices";
+import { addressLine, hours, practice, testimonials, training } from "../data/site";
+
+const area = areaBySlug.get("fishtown");
+if (!area) throw new Error("Missing Fishtown");
+
+const nearby = area.nearby.map((slug) => areaBySlug.get(slug)).filter((item) => item != null);
+
+const title = "Acupuncture in Fishtown, Philadelphia | Five Points Wellness, E Huntingdon St";
+const description =
+  "Acupuncture in Fishtown at Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125. Cara Speer, M.Ac., L.Ac. Call or text (610) 742-5810.";
+
+const crumbs = [
+  { name: "Home", href: "/" },
+  { name: "Fishtown", href: "/fishtown" },
+];
+
+const faqs = [
+  {
+    q: "Where is the acupuncture office in Fishtown?",
+    a: "Five Points Wellness LLC is at 2137 E Huntingdon St, Philadelphia, PA 19125. The door is on the edge neighbors call both Fishtown and East Kensington. There is one studio, not a second office.",
+  },
+  {
+    q: "Is there parking at the Fishtown studio?",
+    a: "The practice says free street parking is readily available around 2137 E Huntingdon St. Signs on a given block still control street cleaning and any permit rules. An off-street lot reserved for patients is not listed.",
+  },
+  {
+    q: "Which SEPTA stop is closest?",
+    a: "Huntingdon Station on the Market-Frankford Line is about half a mile west, at Kensington Avenue and Huntingdon Street. The practice says the station is ADA accessible and has no parking lot of its own. Walk east on Huntingdon Street to the 2100 block.",
+  },
+  {
+    q: "How close is the studio to Northern Liberties?",
+    a: "Northern Liberties is southwest of the studio. The site puts the trip at about 1.3 miles from the Piazza and from 2nd Street and Girard Avenue. On the El, Girard Station is the Northern Liberties stop. Ride toward Frankford through Berks and York-Dauphin and get off at Huntingdon, then walk east. Northern Liberties is mainly ZIP 19123. The studio is in 19125. There is no Five Points office in Northern Liberties.",
+  },
+  {
+    q: "How close is the studio to Kensington?",
+    a: "Kensington, in the sense of Somerset and Allegheny, is north of the studio. The site says Somerset is about half a mile away, and Kensington and Allegheny is a little over a mile. From Somerset Station, ride one stop south to Huntingdon or walk south and then east on Huntingdon Street. East Kensington is the other direction of the name: the studio door itself sits on the Fishtown and East Kensington edge.",
+  },
+  {
+    q: "What are the hours?",
+    a: "By appointment: Monday through Thursday 9 AM–7 PM, Friday 9 AM–3 PM, Saturday 10 AM–2 PM. Sunday the studio is closed.",
+  },
+  {
+    q: "Do you take insurance?",
+    a: "Insurance participation is not published on this website. Ask the office before you book if you need to know whether a plan is billed. [FILL-IN: insurance participation and which plans, if any, are billed]",
+  },
+  {
+    q: "How much does a visit cost?",
+    a: "A general acupuncture fee is not published. Microneedling is listed at $350 for one session and $1,200 for four. The race-day acupuncture package is listed at $325 and is booked by phone or text. Other services are not given separate prices. [FILL-IN: general acupuncture fee and the cancellation window]",
+  },
+];
+
+const pageUrl = `${practice.url}/fishtown/`;
+const localBusiness = {
+  "@type": ["MedicalBusiness", "HealthAndBeautyBusiness"],
+  "@id": `${pageUrl}#localbusiness`,
+  name: practice.name,
+  url: `${practice.url}/`,
+  mainEntityOfPage: pageUrl,
+  image: `${practice.url}/images/five-points-wellness-logo-social.jpg`,
+  telephone: "+1-610-742-5810",
+  email: practice.email,
+  description:
+    "Acupuncture and traditional Chinese medicine with Cara Speer, M.Ac., L.Ac., at the Five Points Wellness LLC studio in Fishtown, Philadelphia.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: practice.street,
+    addressLocality: practice.city,
+    addressRegion: practice.region,
+    postalCode: practice.postal,
+    addressCountry: "US",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: practice.lat,
+    longitude: practice.lng,
+  },
+  hasMap: practice.mapLink,
+  openingHoursSpecification: hours
+    .filter((row) => row.opens)
+    .map((row) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: `https://schema.org/${row.schemaDay}`,
+      opens: row.opens,
+      closes: row.closes,
+    })),
+  areaServed: {
+    "@type": "Place",
+    name: "Fishtown",
+    containedInPlace: {
+      "@type": "City",
+      name: "Philadelphia",
+    },
+  },
+  employee: {
+    "@type": "Person",
+    name: practice.practitioner,
+    honorificSuffix: practice.credentials,
+    jobTitle: practice.jobTitle,
+  },
+};
+
+const extraGraph = [
+  localBusiness,
+  {
+    "@type": "FAQPage",
+    "@id": `${pageUrl}#faq`,
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+];
+---
+
+<Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
+  <article class="wrap content fishtown-page">
+    <header class="page-hero">
+      <p class="eyebrow">{practice.name} · Fishtown, Philadelphia</p>
+      <h1>Acupuncture in Fishtown, Philadelphia</h1>
+      <p class="hero-phone">
+        <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>
+        <span> · call or text</span>
+      </p>
+      <p class="lede">
+        The studio is at {addressLine}, on the Fishtown and East Kensington edge. Cara Speer, {practice.credentials}, sees patients by appointment. This is the only Five Points Wellness office.
+      </p>
+      <Actions />
+      <p>
+        Prefer email? <a href={`mailto:${practice.email}`}>{practice.email}</a>.
+        The online book link opens the patient portal. A complimentary session is available if you want to ask questions before you commit.
+      </p>
+    </header>
+
+    <nav class="jump" aria-label="On this page">
+      <a href="#intro">Intro</a>
+      <a href="#trust">Credentials and reviews</a>
+      <a href="#services">Services</a>
+      <a href="#why">Why Fishtown</a>
+      <a href="#getting-here">Getting here</a>
+      <a href="#who">Who comes in</a>
+      <a href="#visit">Visit, insurance, price</a>
+      <a href="#about">About Fishtown</a>
+      <a href="#faq">Questions</a>
+      <a href="#nearby">Nearby</a>
+    </nav>
+
+    <section id="intro">
+      <h2>The Fishtown studio on East Huntingdon Street</h2>
+      <p>
+        Five Points Wellness LLC is the acupuncture office at 2137 E Huntingdon St, Philadelphia, PA 19125. The door is in Fishtown, on the edge neighbors also call East Kensington. There is one studio, not a second room in Northern Liberties or on Girard Avenue. Cara Speer, M.Ac., L.Ac., is the licensed acupuncturist. Call or text (610) 742-5810, or email fivepointsphila@gmail.com.
+      </p>
+      <p>
+        This is the neighborhood guide: how to reach East Huntingdon Street, which services are actually offered, what a visit is like, and which prices are published. A shorter directions page stays at <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>. Each service keeps its own URL. If a fact is not on the site, it is marked FILL-IN instead of guessed.
+      </p>
+      <p>
+        Hours are by appointment: Monday through Thursday 9 AM–7 PM, Friday 9 AM–3 PM, Saturday 10 AM–2 PM. Sunday the studio is closed. Book in the patient portal, or call or text. A complimentary session is a conversation before you commit, not a treatment menu.
+      </p>
+    </section>
+
+    <section id="trust">
+      <h2>Cara Speer’s credentials, and the reviews already on this site</h2>
+      <p>
+        These are the credentials the practice already states.
+      </p>
+      <ul class="checklist">
+        {training.map((item) => <li>{item}</li>)}
+      </ul>
+      <p>
+        Google’s listing shows 5.0 from 17 reviews. <a href={practice.mapLink}>Read the reviews on Google</a>. The comments below are the testimonials already on this site, signed with initials. They are not a paste of all 17 Google reviews.
+      </p>
+      {testimonials.map((item) => (
+        <blockquote class="review">
+          <p>{item.quote}</p>
+          <p><cite>{item.author}</cite></p>
+        </blockquote>
+      ))}
+    </section>
+
+    <section id="services">
+      <h2>Services at this studio</h2>
+      <p>
+        These jump to the notes below. Each note links to the main service page and to the Fishtown version of that service.
+      </p>
+      <ul class="checklist">
+        {offeredServices.map((service) => (
+          <li><a href={`#${service.slug}`}>{service.name}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section id="why">
+      <h2>Why a Fishtown acupuncturist</h2>
+      <p>
+        Naming a Fishtown acupuncturist is about the address, not a claim that the medicine changes at the neighborhood line. Five Points Wellness is on East Huntingdon Street, east of Frankford Avenue. People on these blocks are not crossing the city for a Center City suite. Neighbors who call the same door East Kensington are describing one studio. The Google Business Profile home neighborhood used here is Fishtown.
+      </p>
+      <p>
+        Frankford Avenue is the commercial spine to the south, and Girard Avenue, about 1.2 miles away, is the busier end. The office is the quieter 2100 block of East Huntingdon, not a storefront on that corner. Monday through Thursday the studio is open until 7 PM, which fits someone leaving a shift near Girard or stepping off the El. Care happens at this address.
+      </p>
+      <h3 id="getting-here">How to get to 2137 E Huntingdon St</h3>
+      <p>
+        From Frankford Avenue near Girard, go north to Huntingdon and turn east. The 2100 block is a few blocks east of Frankford. From Penn Treaty Park or the river side, you are still in Fishtown, south and east of that intersection, and you finish the same way.
+      </p>
+      <p>
+        <strong>Transit and the walk.</strong> Huntingdon Station on the Market-Frankford Line is about half a mile west, at Kensington Avenue and Huntingdon Street. From Girard, ride toward Frankford through Berks and York-Dauphin and get off at Huntingdon. Berks and Girard are too far south. Somerset is one stop north. The practice says the station is ADA accessible and has no lot. The rest is a walk east on Huntingdon, about half a mile. From Frankford Avenue itself the door is only a few blocks. A Walk Score and a timed walk are not published. <span class="fill-in">[FILL-IN: numeric walk score and a timed walk from Huntingdon Station]</span> Step-free entry at the studio is also unpublished. <span class="fill-in">[FILL-IN: step-free entrance and restroom access at 2137 E Huntingdon St]</span>
+      </p>
+      <p>
+        <strong>Parking.</strong> The practice says free street parking is readily available. Posted signs still control street cleaning and permits. No patient garage is listed. <span class="fill-in">[FILL-IN: any off-street lot the practice wants patients to use]</span>
+      </p>
+      <p>
+        <strong>Northern Liberties and Kensington.</strong> Northern Liberties is about 1.3 miles southwest. There is no office there. Ride Girard Station to Huntingdon, or drive Girard east, Frankford north, then east on Huntingdon. Somerset is about half a mile north. Kensington and Allegheny is a little over a mile. East Kensington means the blocks around this same door. If you are already on East Huntingdon Street, you are walking.
+      </p>
+    </section>
+
+    <section id="who">
+      <h2>Who lives and works in Fishtown, and what they ask about</h2>
+      <p>
+        Fishtown here means row houses, the Frankford Avenue rooms south of this block, and the El on Kensington Avenue. The studio does not publish a census of its patients. What follows is the problem list the practice already uses, set against how people actually use this neighborhood. It is not a claim that 19125 has a special rate of any diagnosis.
+      </p>
+      <p>
+        Desk time and long shifts show up as the neck, shoulder, and back pain on the dry-needling page. ES’s testimonial names shin splints and lower back pain. The practice treats sports injuries and does not publish a count of runners. Stress, anxiety, and sleep are on the condition list. CS and RF describe anxiety and stress in the reviews above. Fertility, menstrual pain, PMS, and menopause are on the women’s health page. Pediatric care, including needle-free Shonishin, is for a child. Acupuncture is described as a complement to medical care, not a replacement for a physician or emergency care.
+      </p>
+
+      <h3 id="acupuncture">Acupuncture</h3>
+      <p>
+        Neighbors who want the full visit, not one technique off a menu, book acupuncture. The practice describes very thin sterile needles used to stimulate qi, pronounced “chee,” to support the body’s own healing. It names pain relief, stress reduction, improved energy, and holistic wellness, and says research has shown effects on endorphins, circulation, and the nervous system. Traditional Chinese Medicine, 5 Element, and Kiiko-style may be used. A listed session is about 50 minutes. Evenings until 7 PM Monday through Thursday fit an El commute home. <a href="/acupuncture">Acupuncture</a> · <a href="/fishtown/acupuncture">in Fishtown</a>.
+      </p>
+
+      <h3 id="dry-needling">Dry needling</h3>
+      <p>
+        This is what people on these blocks ask for when a muscle will not let go: desk neck and shoulder pain, a long shift, or a training ache. The office treats trigger points and movement problems with fine sterile needles, inside acupuncture-based care. It names sports injuries, headaches, and TMJ-related pain. A brief twitch can happen. Soreness like a workout may last 24 to 48 hours. Treatment is typically 20 to 60 minutes. One published photo set is a 20-minute shoulder session. Individual results vary. No separate fee is published. <a href="/dry-needling">Dry needling</a> · <a href="/fishtown/dry-needling">in Fishtown</a>.
+      </p>
+
+      <h3 id="moxibustion">Moxibustion</h3>
+      <p>
+        Moxibustion is heat from dried mugwort on acupuncture points. It is not a walk-in heat stop on Frankford Avenue. You book acupuncture, and Cara decides whether heat belongs in that plan. The published line stops at “various effects.” The site does not say whether the herb touches the skin. There is no separate price. <a href="/moxibustion">Moxibustion</a> · <a href="/fishtown/moxibustion">in Fishtown</a>.
+      </p>
+
+      <h3 id="gua-sha">Gua sha</h3>
+      <p>
+        Gua sha is the scraping tool, not cups and not face needles. The services list spells it guasha: a smooth-edged tool and gentle pressure to release muscle tension, improve circulation, and, in the practice’s words, promote detoxification. People who train or stand through a shift ask about it for tight tissue. Redness is common. How long it lasts is not published. It is included in an acupuncture visit at Cara’s discretion. <a href="/gua-sha">Gua sha</a> · <a href="/fishtown/gua-sha">in Fishtown</a>.
+      </p>
+
+      <h3 id="cupping">Cupping</h3>
+      <p>
+        Cupping is suction that the practice says draws blood to an area to ease deep muscle tension, support circulation, and reduce pain. Round marks can follow, which matters if you have a shift, a show at the south end of the neighborhood, or a race the next day. The site does not say how long marks last. The sports page says cupping may be added around an event. It is not its own priced menu. <a href="/cupping">Cupping</a> · <a href="/fishtown/cupping">in Fishtown</a>.
+      </p>
+
+      <h3 id="facial-cupping">Facial cupping</h3>
+      <p>
+        Facial cupping is gentle suction for drainage or lifting of the face and neck. It is not cosmetic acupuncture, not microneedling, and not body cupping. No price or photo set is published. The face photos on the site are microneedling. It may be folded into a visit. <a href="/facial-cupping">Facial cupping</a> · <a href="/fishtown/facial-cupping">in Fishtown</a>.
+      </p>
+
+      <h3 id="herbal-liniments">Herbal liniments</h3>
+      <p>
+        Liniments are external. They are applied to ease pain, calm inflammation, and support recovery. They are not teas, pills, or a shop on Frankford Avenue. Formula names are not listed. <span class="fill-in">[FILL-IN: liniment formula names, if the practice wants them public]</span> Nothing says bottles go home. They can be part of an acupuncture visit and are not a substitute for a physician’s instructions. <a href="/herbal-liniments">Herbal liniments</a> · <a href="/fishtown/herbal-liniments">in Fishtown</a>.
+      </p>
+
+      <h3 id="tuina">Tuina</h3>
+      <p>
+        Tuina is Chinese therapeutic massage to harmonize qi, release blockages, and restore balance. People sometimes ask for it as a standalone spa hour. The site does not publish a massage fee or promise hands-on work in every visit. Ask whether it belongs in the acupuncture plan. Pediatric tuina, on the children’s page, is the gentle version used when needles are not. <a href="/tuina">Tuina</a> · <a href="/fishtown/tuina">in Fishtown</a>.
+      </p>
+
+      <h3 id="nutrition">Chinese nutrition</h3>
+      <p>
+        Nutrition here is food-as-medicine guidance from a constitutional look and the season, not a meal-plan shop. Someone cooking at home in a row house nearby can bring a diet a physician already ordered. The site does not say this replaces a registered dietitian, and it does not sell supplements. It is included when Cara uses it in the same assessment as acupuncture. <a href="/nutrition">Chinese nutrition</a> · <a href="/fishtown/nutrition">in Fishtown</a>.
+      </p>
+
+      <h3 id="qigong">Qigong</h3>
+      <p>
+        Qigong is gentle movement, breathing, and meditation to cultivate and balance life energy. The practice says it supports physical vitality, mental clarity, and spiritual well-being. There is no weekly class, rental, or drop-in hour posted for East Huntingdon Street. <span class="fill-in">[FILL-IN: public qigong class time, if the practice runs one]</span> Until a schedule exists, read it as something that may be part of a visit. <a href="/qigong">Qigong</a> · <a href="/fishtown/qigong">in Fishtown</a>.
+      </p>
+
+      <h3 id="microneedling">Microneedling</h3>
+      <p>
+        Microneedling is its own appointment for neighbors who want skin work rather than a meridian visit. The practice calls it collagen induction and says it stimulates collagen and elastin for smoother, firmer, more even-toned skin. Named concerns include fine lines, acne scarring, tone, pores, sun damage, texture, and stretch marks. Published prices are $350, or $1,200 for four. Photos are labeled before and after 3 treatments. Individual results vary. Numbing cream is used, and redness often settles in 24 to 48 hours. It is not done the same day as facial acupuncture. <a href="/microneedling">Microneedling</a> · <a href="/fishtown/microneedling">in Fishtown</a>.
+      </p>
+
+      <h3 id="pediatric-acupuncture">Pediatric acupuncture</h3>
+      <p>
+        Families in these blocks book this when the patient is a child, so the visit is not a Center City errand. Care can include Shonishin, a non-needle Japanese technique, plus acupressure, moxibustion, cupping, and pediatric tuina. For a child under 7, or a child who is anxious or not comfortable with needles, needles are not used. Infants through adolescents can be seen. Named concerns include sleep, stomach aches, colds, allergies, growing pains, headaches, and attention challenges. A separate pediatric price is not published. <a href="/acupuncture/pediatric-acupuncture">Pediatric acupuncture</a> · <a href="/fishtown/pediatric-acupuncture">in Fishtown</a>.
+      </p>
+    </section>
+
+    <section id="visit">
+      <h2>What to expect at a visit, insurance, and pricing</h2>
+      <h3>What a published acupuncture visit includes</h3>
+      <ol>
+        <li><strong>Initial consultation.</strong> A health assessment that covers your symptoms, lifestyle, and treatment goals.</li>
+        <li><strong>Treatment planning.</strong> A plan designed for your health needs. Traditional Chinese Medicine, 5 Element acupuncture, and Kiiko-style may be used depending on the patient.</li>
+        <li><strong>Needle insertion and other modalities.</strong> Fine, sterile needles are gently inserted at specific points. Most patients find this comfortable. Other techniques may be added at the practitioner’s discretion.</li>
+        <li><strong>Rest on the table.</strong> You rest for 15–40 minutes while the needles work. Depending on the plan, some needles may be inserted and removed immediately.</li>
+        <li><strong>Follow-up care.</strong> Later sessions and lifestyle recommendations are used to maintain progress.</li>
+      </ol>
+      <p>
+        An acupuncture session is listed as 50 minutes, with about 15 to 40 minutes on the table. Dry needling is listed as 20 to 60 minutes. Both figures are published. Microneedling’s own timing is on that page.
+      </p>
+      <h3>Hours</h3>
+      <Hours />
+      <h3>Insurance</h3>
+      <p>
+        This website does not say whether Five Points Wellness bills insurance, which plans it is in network for, or whether patients are given a receipt to submit themselves. Contact the office if you need that answer before you book. <span class="fill-in">[FILL-IN: insurance participation, in-network plans, and whether a superbill is offered]</span>
+      </p>
+      <h3>Pricing</h3>
+      <p>
+        A general acupuncture fee is not published. Ask the office for any fee that is not on the page for the service you want. A cancellation window is also not published. Ask when you book.
+      </p>
+      <ul class="checklist">
+        <li>Microneedling: $350 for one session, $1,200 for four. The package is described as a $200 savings. Individual results vary.</li>
+        <li>Race-day acupuncture package: $325 for the published 3-session package, described as a $408 value. It is booked by phone or text. The session breakdown is on the sports page.</li>
+        <li>Dry needling, cupping, gua sha, facial cupping, tuina, moxibustion, liniments, nutrition, qigong, and pediatric acupuncture have no separate published fee.</li>
+      </ul>
+      <p>
+        <span class="fill-in">[FILL-IN: general acupuncture fee, and the cancellation window]</span>
+        Related condition pages: <a href="/acupuncture/pain-injury-recovery">pain and injury</a>, <a href="/acupuncture/stress-sleep-wellness">stress and sleep</a>, <a href="/acupuncture/womens-health-fertility">women’s health and fertility</a>, <a href="/acupuncture/sports-performance-recovery">sports</a>, <a href="/acupuncture/digestive-support">digestion</a>, <a href="/acupuncture/surgical-recovery-scar-treatment">surgical recovery</a>.
+      </p>
+    </section>
+
+    <section id="about">
+      <h2>About Fishtown</h2>
+      <p>
+        Fishtown is a neighborhood of the City of Philadelphia, not its own town. Mail for the studio uses Philadelphia, PA 19125. The same blocks are also called East Kensington. The practice treats 2137 E Huntingdon St as one door and uses Fishtown as the Google Business Profile neighborhood.
+      </p>
+      <p>
+        The name belongs to the river-ward community tied to the old Delaware shad fishery. Penn Treaty Park, on the practice’s landmark list, is the waterfront park associated with William Penn’s traditional meeting with the Lenape. The Fillmore Philadelphia and Johnny Brenda’s mark Frankford and Girard, about 1.2 miles south of the studio. The office is north of that cluster.
+      </p>
+      <p>
+        The El runs on Kensington Avenue, and I-95 is the highway east of these blocks, toward Port Richmond. Distances and the station walk are in the directions above. The studio ZIP is 19125. Northern Liberties is mainly 19123. Kensington farther north is often 19134.
+      </p>
+      <p>
+        A population count and a numeric walk score are not on this site. <span class="fill-in">[FILL-IN: Fishtown population and a numeric walk score]</span> Street parking is the published instruction: free and readily available, with posted signs controlling street cleaning and permits.
+      </p>
+    </section>
+
+    <div id="faq">
+      <FaqList items={faqs} heading="Questions from Fishtown" />
+    </div>
+
+    <section id="nearby">
+      <h2>Nearby neighborhood pages and service pages</h2>
+      <p>
+        These neighborhoods are the ones the site already links from Fishtown. East Kensington shares the door. The others are trips to this studio, not additional offices.
+      </p>
+      <ul class="checklist">
+        {nearby.map((item) => (
+          <li>
+            <a href={`/${item.slug}`}>{item.name}</a>
+            {item.atStudio ? " · same studio" : ` · ${item.distance}`}
+          </li>
+        ))}
+      </ul>
+      <p>
+        Service hubs from here: <a href="/services">all services</a>, <a href="/acupuncture">acupuncture</a>, <a href="/dry-needling">dry needling</a>, <a href="/microneedling">microneedling</a>, and <a href="/acupuncture/pediatric-acupuncture">pediatric acupuncture</a>. The shorter Fishtown directions page is <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>. To book, use the buttons below, or the <a href="/book-appointment">booking page</a> and the <a href="/contact">contact page</a>.
+      </p>
+    </section>
+
+    <CtaBand
+      heading="Book at the Fishtown studio"
+      text={`The only studio is ${addressLine}. Call or text ${practice.phoneDisplay}. A complimentary session is available if you want to ask questions first.`}
+    />
+  </article>
+</Base>
+
+<style>
+  .hero-phone {
+    font-size: 1.45rem;
+    margin: 0.2rem 0 0.8rem;
+  }
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1rem;
+    margin: 0 0 1.5rem;
+  }
+  .jump a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .review {
+    margin: 0 0 1rem;
+    padding: 0.15rem 0 0.15rem 0.9rem;
+    border-left: 3px solid var(--green);
+  }
+  .review p { margin: 0 0 0.35rem; }
+  .fill-in {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.92em;
+    background: #f3ead2;
+    padding: 0.05em 0.28em;
+  }
+  .fishtown-page :global(.faq) { margin-top: 0.5rem; }
+</style>
