@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import CtaBand from "../components/CtaBand.astro";
 import PageHero from "../components/PageHero.astro";
@@ -61,7 +62,7 @@ const crumbs = [
         Call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>, or email <a href={`mailto:${practice.email}`}>{practice.email}</a>.
       </p>
       <p>
-        To learn how a visit works, read <a href="/acupuncture">acupuncture in Philadelphia</a>. For directions, see <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>.
+        To learn how a visit works, read <a href={href("/acupuncture")}>acupuncture in Philadelphia</a>. For directions, see <a href={href("/acupuncture-fishtown")}>acupuncture in Fishtown</a>.
       </p>
     </div>
   </section>

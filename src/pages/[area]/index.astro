@@ -1,4 +1,5 @@
 ---
+import { href } from "../../lib/legacy";
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
@@ -84,7 +85,7 @@ const extraGraph = [
       <p>Every service below is offered at our Fishtown studio.</p>
       <ul class="chips">
         {offeredServices.map((service) => (
-          <li><a href={`/${area.slug}/${service.slug}`}>{service.h1Name} in {area.name}</a></li>
+          <li><a href={href(`/${area.slug}/${service.slug}`)}>{service.h1Name} in {area.name}</a></li>
         ))}
       </ul>
       <h2>Hours</h2>
@@ -96,9 +97,9 @@ const extraGraph = [
           <p class="subhead">Nearby Areas</p>
           <ul class="chips">
             {nearby.map((item) => (
-              <li><a href={`/${item.slug}`}>{item.name}</a></li>
+              <li><a href={href(`/${item.slug}`)}>{item.name}</a></li>
             ))}
-            <li><a href="/locations">All areas</a></li>
+            <li><a href={href("/locations")}>All areas</a></li>
           </ul>
         </>
       )}

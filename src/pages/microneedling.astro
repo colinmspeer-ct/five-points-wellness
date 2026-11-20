@@ -1,4 +1,5 @@
 ---
+import { absUrl, href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
@@ -63,7 +64,7 @@ const extraGraph = [
     "@type": "Service",
     name: "Microneedling",
     serviceType: "Microneedling",
-    url: `${practice.url}/microneedling`,
+    url: absUrl("/microneedling"),
     provider: { "@id": `${practice.url}/#practice` },
     areaServed: { "@type": "City", name: "Philadelphia" },
     offers: [
@@ -206,7 +207,7 @@ const extraGraph = [
         <p class="fine" style="margin:1.25rem 0 0">If you have any of the above conditions, please contact us before scheduling so we can advise on the most appropriate treatment for you.</p>
       </div>
       <p class="fine" style="text-align:center;margin-top:2rem">
-        Looking for something gentler? See <a href="/acupuncture/facial-rejuvenation-cosmetic">facial rejuvenation and cosmetic acupuncture</a> or <a href="/facial-cupping">facial cupping</a>.
+        Looking for something gentler? See <a href={href("/acupuncture/facial-rejuvenation-cosmetic")}>facial rejuvenation and cosmetic acupuncture</a> or <a href={href("/facial-cupping")}>facial cupping</a>.
       </p>
     </div>
   </section>

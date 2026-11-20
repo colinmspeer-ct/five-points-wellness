@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
@@ -22,12 +23,12 @@ const crumbs = [
   <section class="band">
     <article class="narrow prose">
       <p>
-        Our home neighborhood is <a href="/fishtown">Fishtown</a>, and the page for acupuncture there is <a href="/fishtown/acupuncture">acupuncture in Fishtown</a>. Each page below covers the trip from that area.
+        Our home neighborhood is <a href={href("/fishtown")}>Fishtown</a>, and the page for acupuncture there is <a href={href("/fishtown/acupuncture")}>acupuncture in Fishtown</a>. Each page below covers the trip from that area.
       </p>
       <LocationLinks showAll={false} />
       <p class="subhead">Bella Vista</p>
       <p>
-        Our earlier Bella Vista pages are still here: <a href="/acupuncture-bella-vista">acupuncture in Bella Vista</a> and <a href="/dry-needling-bella-vista">dry needling in Bella Vista</a>.
+        Our earlier Bella Vista pages are still here: <a href={href("/acupuncture-bella-vista")}>acupuncture in Bella Vista</a> and <a href={href("/dry-needling-bella-vista")}>dry needling in Bella Vista</a>.
       </p>
       <p class="subhead">Don't see your town?</p>
       <p>You can still book. Call or text {practice.phoneDisplay} and come to Huntingdon Street.</p>

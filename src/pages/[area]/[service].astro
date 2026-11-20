@@ -1,4 +1,5 @@
 ---
+import { absUrl, href } from "../../lib/legacy";
 import Base from "../../layouts/Base.astro";
 import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
@@ -99,7 +100,7 @@ const extraGraph = [
     "@type": "Service",
     name: h1,
     serviceType: service.serviceType,
-    url: `${practice.url}/${area.slug}/${service.slug}`,
+    url: absUrl(`/${area.slug}/${service.slug}`),
     provider: { "@id": `${practice.url}/#practice` },
     areaServed: { "@type": "Place", name: area.h1Place },
     description: service.summary,
@@ -131,7 +132,7 @@ const extraGraph = [
         </ul>
       )}
       <p>
-        Read more on our main <a href={mainServiceHref(service.slug)}>{service.h1Name.toLowerCase()} in Philadelphia</a> page.
+        Read more on our main <a href={href(mainServiceHref(service.slug))}>{service.h1Name.toLowerCase()} in Philadelphia</a> page.
       </p>
       <h2>Getting Here from {area.name}</h2>
       <p>{area.commute}</p>
@@ -141,7 +142,7 @@ const extraGraph = [
       <ul class="checklist cols">
         {area.landmarks.map((item) => <li>{item}</li>)}
       </ul>
-      <p>More about the area is on our <a href={`/${area.slug}`}>{area.name}</a> page.</p>
+      <p>More about the area is on our <a href={href(`/${area.slug}`)}>{area.name}</a> page.</p>
       <h2>Hours</h2>
       <p>Call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>, or email <a href={`mailto:${practice.email}`}>{practice.email}</a>.</p>
       <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>
@@ -150,7 +151,7 @@ const extraGraph = [
       <p class="subhead">Other Services for {area.name}</p>
       <ul class="chips">
         {siblings.map((item) => (
-          <li><a href={`/${area.slug}/${item.slug}`}>{item.h1Name}</a></li>
+          <li><a href={href(`/${area.slug}/${item.slug}`)}>{item.h1Name}</a></li>
         ))}
       </ul>
       {nearby.length > 0 && (
@@ -158,7 +159,7 @@ const extraGraph = [
           <p class="subhead">{service.h1Name} from Nearby Areas</p>
           <ul class="chips">
             {nearby.map((item) => (
-              <li><a href={`/${item.slug}/${service.slug}`}>{item.name}</a></li>
+              <li><a href={href(`/${item.slug}/${service.slug}`)}>{item.name}</a></li>
             ))}
           </ul>
         </>

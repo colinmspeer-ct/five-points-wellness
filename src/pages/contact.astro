@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import Hours from "../components/Hours.astro";
 import PageHero from "../components/PageHero.astro";
@@ -36,7 +37,7 @@ const crumbs = [
             <p>Huntingdon Station on the Market-Frankford Line is about half a mile west, at Kensington Avenue and Huntingdon Street. Walk east to the 2100 block.</p>
             <div class="actions">
               <a class="btn btn-outline btn-sm" href={practice.mapLink}>Open in Google Maps</a>
-              <a class="btn btn-outline btn-sm" href="/locations">Directions from your neighborhood</a>
+              <a class="btn btn-outline btn-sm" href={href("/locations")}>Directions from your neighborhood</a>
             </div>
           </div>
         </div>
@@ -73,7 +74,7 @@ const crumbs = [
             <p>By Appointment</p>
             <div style="max-width:20rem;margin-top:0.5rem"><Hours note={false} compact /></div>
             <div class="actions">
-              <a class="btn btn-primary btn-sm" href="/book-appointment">Book Appointment</a>
+              <a class="btn btn-primary btn-sm" href={href("/book-appointment")}>Book Appointment</a>
             </div>
           </div>
         </div>
@@ -81,7 +82,7 @@ const crumbs = [
 
       <p class="fine" style="text-align:center;margin-top:2.5rem">
         Insurance and a general acupuncture fee are not listed on this website, so please ask when you call if you need either before you book.
-        Microneedling prices are on the <a href="/microneedling">microneedling</a> page.
+        Microneedling prices are on the <a href={href("/microneedling")}>microneedling</a> page.
       </p>
     </div>
   </section>

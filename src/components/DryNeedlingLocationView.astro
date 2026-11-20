@@ -1,4 +1,5 @@
 ---
+import { absUrl, href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import PageHero from "./PageHero.astro";
 import CtaBand from "./CtaBand.astro";
@@ -16,10 +17,10 @@ if (!page) throw new Error(`Missing dry needling place ${slug}`);
 const acupunctureSlug = page.slug.replace("dry-needling-", "acupuncture-");
 const area = locations.find((item) => item.slug === acupunctureSlug);
 
-const url = `${practice.url}/${page.slug}`;
+const url = absUrl(`/${page.slug}`);
 const crumbs = [
   { name: "Home", href: "/" },
-  { name: "Dry needling", href: "/dry-needling" },
+  { name: "Dry needling", href: "/acupuncture/dry-needling" },
   { name: page.name, href: `/${page.slug}` },
 ];
 const extraGraph = [
@@ -80,7 +81,7 @@ const extraGraph = [
         <li>Restricted mobility or movement imbalance</li>
       </ul>
       <p>
-        Read more on the main <a href="/dry-needling">orthopedic dry needling</a> page, including the before and after range-of-motion photos. For acupuncture from the same area, see <a href={`/${acupunctureSlug}`}>acupuncture in {page.name}</a>.
+        Read more on the main <a href={href("/acupuncture/dry-needling")}>orthopedic dry needling</a> page, including the before and after range-of-motion photos. For acupuncture from the same area, see <a href={href(`/${acupunctureSlug}`)}>acupuncture in {page.name}</a>.
       </p>
       <h2>Hours</h2>
       <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>

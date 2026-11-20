@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import { areas } from "../data/areas";
 interface Props { except?: string; showAll?: boolean }
 const { except, showAll = true } = Astro.props;
@@ -13,9 +14,9 @@ const groups = [
     <p class="subhead">{group.label}</p>
     <ul class="chips">
       {group.items.filter((area) => area.slug !== except).map((area) => (
-        <li><a href={`/${area.slug}`}>{area.name}</a></li>
+        <li><a href={href(`/${area.slug}`)}>{area.name}</a></li>
       ))}
     </ul>
   </div>
 ))}
-{showAll && <p style="margin-top:1.25rem"><a class="text-link" href="/locations">All areas on one page <span aria-hidden="true">→</span></a></p>}
+{showAll && <p style="margin-top:1.25rem"><a class="text-link" href={href("/locations")}>All areas on one page <span aria-hidden="true">→</span></a></p>}

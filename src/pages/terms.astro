@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import { addressLine, practice } from "../data/site";
@@ -42,7 +43,7 @@ const crumbs = [
       You may read these pages and share links to them. You may not copy the practice's text or photos for your own commercial site, and you may not present them as your own. The photos of patients are published by the practice for this site.
     </p>
     <h2>Privacy</h2>
-    <p>How contact information from this website and from lead forms is handled is in the <a href="/privacy-policy">privacy policy</a>.</p>
+    <p>How contact information from this website and from lead forms is handled is in the <a href={href("/privacy-policy")}>privacy policy</a>.</p>
     <h2>Changes</h2>
     <p>The practice may update these terms by posting a new version on this page. The date at the top will change when that happens.</p>
     <p class="fine">

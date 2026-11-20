@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import { areas } from "../data/areas";
 import { catalog } from "../data/catalog";
@@ -22,12 +23,12 @@ const byArea = catalog.filter((page) => page.group === "Service by area");
   <PageHero>Sitemap</PageHero>
   <section class="band">
     <article class="narrow prose">
-      <p>Every page on the site. Search engines can use <a href="/sitemap-index.xml">sitemap-index.xml</a>.</p>
+      <p>Every page on the site. Search engines can use <a href={href("/sitemap-index.xml")}>sitemap-index.xml</a>.</p>
       <section>
         <h2>About and contact</h2>
         <ul class="dots">
           {about.map((page) => (
-            <li><a href={page.href}>{page.title}</a></li>
+            <li><a href={href(page.href)}>{page.title}</a></li>
           ))}
         </ul>
       </section>
@@ -35,7 +36,7 @@ const byArea = catalog.filter((page) => page.group === "Service by area");
         <h2>Services</h2>
         <ul class="dots">
           {services.map((page) => (
-            <li><a href={page.href}>{page.title}</a></li>
+            <li><a href={href(page.href)}>{page.title}</a></li>
           ))}
         </ul>
       </section>
@@ -43,7 +44,7 @@ const byArea = catalog.filter((page) => page.group === "Service by area");
         <h2>Area hubs</h2>
         <ul class="dots cols">
           {hubs.map((page) => (
-            <li><a href={page.href}>{page.title}</a></li>
+            <li><a href={href(page.href)}>{page.title}</a></li>
           ))}
         </ul>
       </section>
@@ -56,7 +57,7 @@ const byArea = catalog.filter((page) => page.group === "Service by area");
               <h3>{area.name}</h3>
               <ul class="dots cols">
                 {pages.map((page) => (
-                  <li><a href={page.href}>{page.title}</a></li>
+                  <li><a href={href(page.href)}>{page.title}</a></li>
                 ))}
               </ul>
             </div>
@@ -65,7 +66,7 @@ const byArea = catalog.filter((page) => page.group === "Service by area");
         <h3>Bella Vista</h3>
         <ul class="dots">
           {byArea.filter((page) => page.href === "/dry-needling-bella-vista").map((page) => (
-            <li><a href={page.href}>{page.title}</a></li>
+            <li><a href={href(page.href)}>{page.title}</a></li>
           ))}
         </ul>
       </section>

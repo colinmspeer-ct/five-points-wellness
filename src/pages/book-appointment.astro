@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import BookingPanel from "../components/BookingPanel.astro";
 import Hours from "../components/Hours.astro";
@@ -59,7 +60,7 @@ const crumbs = [
       </div>
       <p class="fine" style="text-align:center;margin-top:1.25rem">
         You can also book microneedling through our online portal above, where you can choose between a single session or package.
-        A general acupuncture price is not published here. The race-day package on the <a href="/acupuncture/sports-performance-recovery">sports page</a> is $325, booked by phone or text only.
+        A general acupuncture price is not published here. The race-day package on the <a href={href("/acupuncture/sports-performance-recovery")}>sports page</a> is $325, booked by phone or text only.
       </p>
     </div>
   </section>

@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import fs from 'node:fs';
 import path from 'node:path';
+import { LEGACY_PATHS, MOVED_TO_LEGACY, canonicalPath } from './src/lib/legacy.ts';
 
 const SITE = 'https://fivepointswellness.com';
 
@@ -17,17 +18,27 @@ export default defineConfig({
       name: 'sitemap-xml',
       hooks: {
         'astro:build:done': async ({ dir, pages }) => {
+          const outDir = dir.pathname;
+
+          // Original-site URLs are served as files (about.html) so GitHub Pages answers
+          // /about with a 200 instead of a 301 to /about/.
+          for (const legacy of LEGACY_PATHS) {
+            const folder = path.join(outDir, legacy);
+            const from = path.join(folder, 'index.html');
+            const to = `${folder}.html`;
+            if (!fs.existsSync(from)) throw new Error(`Legacy page not built: ${legacy}`);
+            fs.renameSync(from, to);
+            if (fs.readdirSync(folder).length) throw new Error(`Directory left beside legacy page: ${legacy}/`);
+            fs.rmdirSync(folder);
+          }
+
           const locs = pages
             .map((page) => {
-              let pathname = typeof page.pathname === 'string' ? page.pathname : '';
-              if (pathname === '' || pathname === '/' || pathname === 'index' || pathname === '/index.html') pathname = '/';
-              if (!pathname.startsWith('/')) pathname = `/${pathname}`;
-              if (pathname.endsWith('/index.html')) pathname = pathname.slice(0, -'index.html'.length);
-              if (pathname.endsWith('.html')) pathname = pathname.slice(0, -'.html'.length);
-              if (pathname.includes('404')) return '';
-              if (pathname.replace(/\/$/, '') === '/acupuncture/dry-needling') return '';
-              if (pathname !== '/' && !pathname.endsWith('/')) pathname = `${pathname}/`;
-              return SITE + pathname;
+              const raw = typeof page.pathname === 'string' ? page.pathname : '';
+              if (raw.includes('404')) return '';
+              const bare = `/${raw}`.replace(/\/index\.html$/, '').replace(/\.html$/, '').replace(/\/+$/, '');
+              if (MOVED_TO_LEGACY[bare]) return '';
+              return SITE + canonicalPath(raw);
             })
             .filter(Boolean);
           const unique = [...new Set(locs)].sort((a, b) => a.localeCompare(b));
@@ -46,7 +57,6 @@ export default defineConfig({
             '</sitemapindex>',
             '',
           ].join('\n');
-          const outDir = dir.pathname;
           fs.writeFileSync(path.join(outDir, 'sitemap-0.xml'), urlset);
           fs.writeFileSync(path.join(outDir, 'sitemap.xml'), urlset);
           fs.writeFileSync(path.join(outDir, 'sitemap-index.xml'), index);

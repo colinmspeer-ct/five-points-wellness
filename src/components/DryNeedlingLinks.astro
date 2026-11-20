@@ -1,11 +1,12 @@
 ---
+import { href } from "../lib/legacy";
 import { areas } from "../data/areas";
 interface Props { except?: string }
 const { except } = Astro.props;
 ---
 <ul class="chips">
-  {except !== "dry-needling" && <li><a href="/dry-needling">Dry needling in Philadelphia</a></li>}
+  {except !== "dry-needling" && <li><a href={href("/acupuncture/dry-needling")}>Dry needling in Philadelphia</a></li>}
   {areas.filter((area) => `${area.slug}/dry-needling` !== except).map((area) => (
-    <li><a href={`/${area.slug}/dry-needling`}>{area.name}</a></li>
+    <li><a href={href(`/${area.slug}/dry-needling`)}>{area.name}</a></li>
   ))}
 </ul>

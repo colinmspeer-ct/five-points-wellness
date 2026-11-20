@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import BookingPanel from "../components/BookingPanel.astro";
 import PageHero from "../components/PageHero.astro";
@@ -23,7 +24,7 @@ const services = [
   },
   {
     name: "Orthopedic \"Dry\" Needling",
-    href: "/dry-needling",
+    href: "/acupuncture/dry-needling",
     text: "Needling technique focused on musculoskeletal conditions, targeting motor and trigger points and areas of tension to provide relief from chronic pain, sports injuries and movement restrictions.",
   },
   {
@@ -83,7 +84,7 @@ const services = [
       <div class="service-grid">
         {services.map((item) => (
           <article class="card service-card">
-            <h2><a href={item.href}>{item.name}</a></h2>
+            <h2><a href={href(item.href)}>{item.name}</a></h2>
             {item.meta && (
               <p class="meta">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
@@ -99,12 +100,12 @@ const services = [
       <p class="fine" style="text-align:center;margin:0 auto 1.5rem;max-width:34rem">These have their own visits rather than being part of a regular acupuncture session.</p>
       <div class="service-grid">
         <article class="card service-card">
-          <h2><a href="/microneedling">Microneedling</a></h2>
+          <h2><a href={href("/microneedling")}>Microneedling</a></h2>
           <p class="meta">50 minutes · $350, or $1,200 for four sessions</p>
           <p>Collagen induction therapy for skin health and rejuvenation, performed with an integrative perspective.</p>
         </article>
         <article class="card service-card">
-          <h2><a href="/acupuncture/pediatric-acupuncture">Pediatric Acupuncture &amp; Shonishin</a></h2>
+          <h2><a href={href("/acupuncture/pediatric-acupuncture")}>Pediatric Acupuncture &amp; Shonishin</a></h2>
           <p>Gentle care for children. For children under 7, or a child who is anxious or not comfortable with needles, needles are not used.</p>
         </article>
       </div>
@@ -113,7 +114,7 @@ const services = [
         <h2 class="subhead" style="font-size:1.5rem;margin-top:0">Conditions We <span class="accent">Treat</span></h2>
         <ul class="chips center">
           {conditionOrder.map((slug) => (
-            <li><a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a></li>
+            <li><a href={href(`/acupuncture/${slug}`)}>{conditionMeta[slug].label}</a></li>
           ))}
         </ul>
       </div>

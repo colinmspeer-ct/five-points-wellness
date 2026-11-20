@@ -1,23 +1,35 @@
 ---
+import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import Actions from "../components/Actions.astro";
 import PageHero from "../components/PageHero.astro";
+import { LEGACY_PATHS } from "../lib/legacy";
 
 const title = "Page not found | Five Points Wellness";
 const description = "That page is not on the Five Points Wellness site. Go back to acupuncture in Fishtown, the services list, or booking.";
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} noindex>
+  <script slot="head" is:inline define:vars={{ legacy: LEGACY_PATHS }}>
+    // Original-site pages live at /about, not /about/. Pages can't serve both, so send the slash form on.
+    (function () {
+      var path = location.pathname;
+      if (path.length > 1 && path.charAt(path.length - 1) === "/") {
+        var bare = path.replace(/\/+$/, "");
+        if (legacy.indexOf(bare) !== -1) location.replace(bare + location.search + location.hash);
+      }
+    })();
+  </script>
   <PageHero eyebrow="Page not found" lede="The address may have changed when the site was rebuilt. The office has not moved.">That page is <span class="accent">not here</span></PageHero>
   <section class="band">
     <div class="narrow" style="text-align:center">
       <Actions />
       <ul class="chips center" style="margin-top:2rem">
-        <li><a href="/">Acupuncture in Fishtown</a></li>
-        <li><a href="/services">Services</a></li>
-        <li><a href="/locations">Neighborhoods</a></li>
-        <li><a href="/book-appointment">Book an appointment</a></li>
-        <li><a href="/sitemap">Sitemap</a></li>
+        <li><a href={href("/")}>Acupuncture in Fishtown</a></li>
+        <li><a href={href("/services")}>Services</a></li>
+        <li><a href={href("/locations")}>Neighborhoods</a></li>
+        <li><a href={href("/book-appointment")}>Book an appointment</a></li>
+        <li><a href={href("/sitemap")}>Sitemap</a></li>
       </ul>
     </div>
   </section>

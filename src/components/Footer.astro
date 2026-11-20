@@ -1,4 +1,5 @@
 ---
+import { href } from "../lib/legacy";
 import Hours from "./Hours.astro";
 import { areas } from "../data/areas";
 import { practice } from "../data/site";
@@ -27,13 +28,13 @@ const cityAreas = areas.filter((area) => area.group === "philadelphia");
       <div>
         <h2>Quick Links</h2>
         <ul class="foot-links">
-          <li><a href="/about">About Cara Speer</a></li>
-          <li><a href="/services">Our Services</a></li>
-          <li><a href="/acupuncture">Acupuncture</a></li>
-          <li><a href="/dry-needling">Dry Needling</a></li>
-          <li><a href="/microneedling">Microneedling</a></li>
-          <li><a href="/book-appointment">Book an Appointment</a></li>
-          <li><a href="/contact">Contact Us</a></li>
+          <li><a href={href("/about")}>About Cara Speer</a></li>
+          <li><a href={href("/services")}>Our Services</a></li>
+          <li><a href={href("/acupuncture")}>Acupuncture</a></li>
+          <li><a href={href("/acupuncture/dry-needling")}>Dry Needling</a></li>
+          <li><a href={href("/microneedling")}>Microneedling</a></li>
+          <li><a href={href("/book-appointment")}>Book an Appointment</a></li>
+          <li><a href={href("/contact")}>Contact Us</a></li>
         </ul>
       </div>
 
@@ -50,19 +51,19 @@ const cityAreas = areas.filter((area) => area.group === "philadelphia");
       <span class="label">Neighborhoods we serve:</span>
       <ul>
         {cityAreas.map((area) => (
-          <li><a href={`/${area.slug}`}>{area.name}</a></li>
+          <li><a href={href(`/${area.slug}`)}>{area.name}</a></li>
         ))}
-        <li><a href="/locations">All areas</a></li>
+        <li><a href={href("/locations")}>All areas</a></li>
       </ul>
     </div>
 
     <div class="legal">
       <p>&copy; {year} Five Points Wellness, LLC. All rights reserved.</p>
       <ul>
-        <li><a href="/privacy-policy">Privacy Policy</a></li>
-        <li><a href="/terms">Terms</a></li>
-        <li><a href="/locations">Locations</a></li>
-        <li><a href="/sitemap/">Sitemap</a></li>
+        <li><a href={href("/privacy-policy")}>Privacy Policy</a></li>
+        <li><a href={href("/terms")}>Terms</a></li>
+        <li><a href={href("/locations")}>Locations</a></li>
+        <li><a href={href("/sitemap/")}>Sitemap</a></li>
       </ul>
       <p class="disclaimer">Acupuncture is complementary care and does not replace emergency or primary medical care.</p>
     </div>

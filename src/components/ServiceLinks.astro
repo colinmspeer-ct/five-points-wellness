@@ -1,7 +1,8 @@
 ---
+import { href } from "../lib/legacy";
 const links = [
   { href: "/acupuncture", text: "Acupuncture" },
-  { href: "/dry-needling", text: "Orthopedic Dry Needling" },
+  { href: "/acupuncture/dry-needling", text: "Orthopedic Dry Needling" },
   { href: "/moxibustion", text: "Moxibustion" },
   { href: "/gua-sha", text: "Gua Sha" },
   { href: "/cupping", text: "Cupping" },
@@ -18,6 +19,6 @@ const { except, center = false } = Astro.props;
 ---
 <ul class:list={["chips", { center }]}>
   {links.filter((link) => link.href !== except).map((link) => (
-    <li><a href={link.href}>{link.text}</a></li>
+    <li><a href={href(link.href)}>{link.text}</a></li>
   ))}
 </ul>

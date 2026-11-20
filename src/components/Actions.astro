@@ -1,10 +1,11 @@
 ---
+import { href } from "../lib/legacy";
 interface Props { onDark?: boolean; size?: "lg" | "md"; note?: boolean }
 const { onDark = false, size = "md", note = true } = Astro.props;
 const sizeClass = size === "lg" ? "btn-lg" : "";
 ---
 <div class="actions">
-  <a class:list={["btn", onDark ? "btn-on-dark" : "btn-primary", sizeClass]} href="/book-appointment">Book an Appointment</a>
+  <a class:list={["btn", onDark ? "btn-on-dark" : "btn-primary", sizeClass]} href={href("/book-appointment")}>Book an Appointment</a>
   <a class:list={["btn", "btn-outline", sizeClass]} href="tel:+16107425810">Call (610) 742-5810</a>
 </div>
 {note && <p class="actions-note">Prefer to text? <a href="sms:+16107425810">Text (610) 742-5810</a>.</p>}

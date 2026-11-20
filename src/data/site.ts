@@ -1,3 +1,5 @@
+import { absUrl } from "../lib/legacy";
+
 export const practice = {
   name: "Five Points Wellness LLC",
   shortName: "Five Points Wellness",
@@ -114,11 +116,7 @@ export const visitSteps = [
 
 export type Crumb = { name: string; href: string };
 
+// Canonical URL for a built page path. Legacy pages have no trailing slash; see src/lib/legacy.ts.
 export function canonicalFor(pathname: string) {
-  let clean = pathname || "/";
-  if (clean.endsWith("/index.html")) clean = clean.slice(0, -"index.html".length) || "/";
-  if (clean.endsWith(".html")) clean = clean.slice(0, -".html".length);
-  if (!clean.startsWith("/")) clean = `/${clean}`;
-  if (clean !== "/" && !clean.endsWith("/")) clean = `${clean}/`;
-  return practice.url + clean;
+  return absUrl(pathname);
 }

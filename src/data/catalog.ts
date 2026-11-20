@@ -17,7 +17,7 @@ export const catalog: IndexPage[] = [
   { href: "/sitemap/", title: "HTML sitemap", group: "About and contact" },
   { href: "/services", title: "Services overview", group: "Services" },
   { href: "/acupuncture", title: "Acupuncture in Philadelphia", group: "Services" },
-  { href: "/dry-needling", title: "Orthopedic dry needling", group: "Services" },
+  { href: "/acupuncture/dry-needling", title: "Orthopedic dry needling", group: "Services" },
   { href: "/microneedling", title: "Microneedling", group: "Services" },
   ...modalities.map((item) => ({ href: `/${item.slug}`, title: item.name, group: "Services" })),
   ...conditionOrder.map((slug) => ({

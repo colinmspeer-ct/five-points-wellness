@@ -1,4 +1,5 @@
 ---
+import { absUrl, href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
 import PageHero from "./PageHero.astro";
 import CtaBand from "./CtaBand.astro";
@@ -14,7 +15,7 @@ const page = modalities.find((item) => item.slug === slug);
 if (!page) throw new Error(`Missing modality ${slug}`);
 const copy = modalityCopy[slug] ?? { lede: page.lede, sections: page.sections };
 
-const url = `${practice.url}/${page.slug}`;
+const url = absUrl(`/${page.slug}`);
 const crumbs = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
@@ -55,7 +56,7 @@ const extraGraph = [
       <CtaBand />
       <p class="subhead">Where to Find Us</p>
       <p>
-        {page.name} is offered at <strong>{practice.name}</strong>, {addressLine}, with {practice.practitionerFull}. See <a href="/acupuncture-fishtown">acupuncture in Fishtown</a> for parking, the El stop, and hours, or start from your own neighborhood on the <a href="/locations">locations</a> page.
+        {page.name} is offered at <strong>{practice.name}</strong>, {addressLine}, with {practice.practitionerFull}. See <a href={href("/acupuncture-fishtown")}>acupuncture in Fishtown</a> for parking, the El stop, and hours, or start from your own neighborhood on the <a href={href("/locations")}>locations</a> page.
       </p>
       <p class="subhead">Other Services</p>
       <ServiceLinks except={`/${page.slug}`} />
