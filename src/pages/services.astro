@@ -1,10 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "../components/Actions.astro";
-import CtaBand from "../components/CtaBand.astro";
+import BookingPanel from "../components/BookingPanel.astro";
+import PageHero from "../components/PageHero.astro";
+import YinYang from "../components/YinYang.astro";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
-import { modalities } from "../data/modalities";
-import { practice } from "../data/site";
 
 const title = "Acupuncture Services in Philadelphia | Five Points Wellness";
 const description =
@@ -13,54 +12,115 @@ const crumbs = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
 ];
+
+/* Her original service descriptions, word for word. */
+const services = [
+  {
+    name: "Acupuncture",
+    href: "/acupuncture",
+    meta: "50 minute session",
+    text: "Needle therapy that stimulates specific points along the body's meridian system to restore natural energy flow, promote healing and address various health conditions. Traditional Chinese Medicine (TCM), 5 Element Acupuncture, and Kiiko-style may be used depending on the patient.",
+  },
+  {
+    name: "Orthopedic \"Dry\" Needling",
+    href: "/dry-needling",
+    text: "Needling technique focused on musculoskeletal conditions, targeting motor and trigger points and areas of tension to provide relief from chronic pain, sports injuries and movement restrictions.",
+  },
+  {
+    name: "Moxibustion",
+    href: "/moxibustion",
+    text: "Traditional heat therapy using dried mugwort burned on acupuncture points for various effects.",
+  },
+  {
+    name: "Gua Sha",
+    href: "/gua-sha",
+    text: "Ancient scraping technique using a smooth-edged tool to release muscle tension, improve circulation and promote detoxification through gentle pressure along the skin's surface.",
+  },
+  {
+    name: "Cupping",
+    href: "/cupping",
+    text: "Therapeutic suction therapy that draws blood to targeted areas, helping to release deep muscle tension and improve circulation to reduce pain.",
+  },
+  {
+    name: "Facial Cupping",
+    href: "/facial-cupping",
+    text: "Gentle suction therapy specifically designed for drainage or lifting of the face and neck.",
+  },
+  {
+    name: "Herbal Liniments",
+    href: "/herbal-liniments",
+    text: "External-use herbal liniments applied to areas of the body to reduce inflammation, ease pain and promote recovery.",
+  },
+  {
+    name: "Tuina",
+    href: "/tuina",
+    text: "Traditional Chinese therapeutic massage to harmonize qi flow, release blockages and restore balance throughout the body.",
+  },
+  {
+    name: "Nutrition",
+    href: "/nutrition",
+    text: "Traditional Chinese nutrition therapy focusing on food as medicine, providing personalized dietary guidance based on constitutional assessment and seasonal principles to support optimal health and healing.",
+  },
+  {
+    name: "Qigong",
+    href: "/qigong",
+    text: "Ancient practice combining gentle movements, breathing techniques and meditation to cultivate and balance life energy, promoting physical vitality, mental clarity, and spiritual well-being through mindful exercise.",
+  },
+];
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">{practice.name}</p>
-      <h1>Acupuncture services in Philadelphia</h1>
-      <p class="lede">
-        All of the hands-on methods below acupuncture are included in an acupuncture session at the practitioner's discretion. Microneedling is the exception with its own visit and published prices.
-      </p>
-      <Actions />
-    </header>
-    <div class="grid cards">
-      <a class="card" href="/acupuncture">
-        <h2>Acupuncture</h2>
-        <p>50-minute session. Needle therapy on the meridian system. TCM, 5 Element, and Kiiko-style may be used depending on the patient.</p>
-      </a>
-      <a class="card" href="/dry-needling">
-        <h2>Orthopedic dry needling</h2>
-        <p>Motor points and trigger points for musculoskeletal pain, sports injuries, and movement restrictions.</p>
-      </a>
-      {modalities.map((item) => (
-        <a class="card" href={`/${item.slug}`}>
-          <h2>{item.name}</h2>
-          <p>{item.lede}</p>
-        </a>
-      ))}
-      <a class="card" href="/microneedling">
-        <h2>Microneedling</h2>
-        <p>Collagen induction for skin. Single session $350. Four sessions $1,200. Booked separately from a regular acupuncture visit.</p>
-      </a>
-      <a class="card" href="/acupuncture/pediatric-acupuncture">
-        <h2>Pediatric acupuncture and Shonishin</h2>
-        <p>Gentle care for children. For children under 7, or a child who is anxious or not comfortable with needles, needles are not used.</p>
-      </a>
+  <div style="position:relative">
+    <YinYang size={130} style="top:3.5rem;left:2.5%" />
+    <PageHero
+      eyebrow="Acupuncture services in Philadelphia"
+      lede="All services listed below are included in an acupuncture session at the practitioner's discretion."
+    >Our <span class="accent">Services</span></PageHero>
+  </div>
+
+  <section class="band">
+    <div class="wrap" style="max-width:62rem">
+      <div class="service-grid">
+        {services.map((item) => (
+          <article class="card service-card">
+            <h2><a href={item.href}>{item.name}</a></h2>
+            {item.meta && (
+              <p class="meta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                {item.meta}
+              </p>
+            )}
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <h2 class="subhead" style="text-align:center;margin-top:4rem;font-size:1.5rem">Booked <span class="accent">Separately</span></h2>
+      <p class="fine" style="text-align:center;margin:0 auto 1.5rem;max-width:34rem">These have their own visits rather than being part of a regular acupuncture session.</p>
+      <div class="service-grid">
+        <article class="card service-card">
+          <h2><a href="/microneedling">Microneedling</a></h2>
+          <p class="meta">50 minutes · $350, or $1,200 for four sessions</p>
+          <p>Collagen induction therapy for skin health and rejuvenation, performed with an integrative perspective.</p>
+        </article>
+        <article class="card service-card">
+          <h2><a href="/acupuncture/pediatric-acupuncture">Pediatric Acupuncture &amp; Shonishin</a></h2>
+          <p>Gentle care for children. For children under 7, or a child who is anxious or not comfortable with needles, needles are not used.</p>
+        </article>
+      </div>
+
+      <div style="text-align:center;margin-top:4rem">
+        <h2 class="subhead" style="font-size:1.5rem;margin-top:0">Conditions We <span class="accent">Treat</span></h2>
+        <ul class="chips center">
+          {conditionOrder.map((slug) => (
+            <li><a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mid" style="margin-top:4.5rem;width:100%;max-width:48rem">
+        <BookingPanel id="book-consultation" />
+      </div>
     </div>
-    <h2>Concerns the office treats</h2>
-    <div class="grid cards">
-      {conditionOrder.map((slug) => (
-        <a class="card" href={`/acupuncture/${slug}`}>
-          <h3>{conditionMeta[slug].label}</h3>
-        </a>
-      ))}
-    </div>
-    <h2>A complimentary conversation</h2>
-    <p>
-      Have questions before committing? Use the portal to schedule a complimentary session to talk through what you are dealing with and whether acupuncture is a good fit.
-    </p>
-    <CtaBand />
-  </article>
+  </section>
 </Base>

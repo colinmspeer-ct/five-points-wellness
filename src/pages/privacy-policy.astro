@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
 import { addressLine, practice } from "../data/site";
 
 const title = "Privacy Policy | Five Points Wellness LLC";
@@ -12,18 +13,17 @@ const crumbs = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <h1>Privacy policy</h1>
-      <p class="fine">Originally dated March 2025. Office address updated November 2026 to 2137 E Huntingdon St.</p>
-    </header>
+  <PageHero eyebrow="Five Points Wellness LLC">Privacy policy</PageHero>
+  <section class="band">
+  <article class="narrow prose">
+    <p class="fine">Originally dated March 2025. Office address updated November 2026 to 2137 E Huntingdon St.</p>
     <h2>Overview</h2>
     <p>
       Five Points Wellness LLC ("we," "us," or "our") is committed to protecting your privacy. This privacy policy describes how we collect, use, and safeguard personal information when you visit our website, submit a contact or inquiry form, or interact with our advertisements, including lead forms on Facebook and Instagram.
     </p>
     <h2>Information we collect</h2>
     <p>We may collect the following types of personal information:</p>
-    <ul class="checklist">
+    <ul class="dots">
       <li><strong>Contact information.</strong> Name, phone number, and email address submitted through our website or Facebook Lead Ads forms.</li>
       <li><strong>Inquiry details.</strong> Information you provide about your health interests or the services you are seeking.</li>
       <li><strong>Usage data.</strong> Browser type, pages visited, and general location data collected automatically when you visit our website.</li>
@@ -33,7 +33,7 @@ const crumbs = [
     </p>
     <h2>How we use your information</h2>
     <p>Information collected through this website and our lead forms is used solely to:</p>
-    <ul class="checklist">
+    <ul class="dots">
       <li>Respond to inquiries and schedule appointments.</li>
       <li>Provide information about our services.</li>
       <li>Send appointment reminders or follow-up communications, where applicable.</li>
@@ -54,7 +54,7 @@ const crumbs = [
     </p>
     <h2>Your rights</h2>
     <p>You have the right to:</p>
-    <ul class="checklist">
+    <ul class="dots">
       <li>Access the personal information we hold about you.</li>
       <li>Request correction of inaccurate information.</li>
       <li>Request deletion of your personal information.</li>
@@ -77,4 +77,5 @@ const crumbs = [
       Email: <a href={`mailto:${practice.email}`}>{practice.email}</a>
     </p>
   </article>
+  </section>
 </Base>

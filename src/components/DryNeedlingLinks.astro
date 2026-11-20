@@ -3,9 +3,9 @@ import { areas } from "../data/areas";
 interface Props { except?: string }
 const { except } = Astro.props;
 ---
-<ul class="checklist">
-  {except !== "dry-needling" && <li><a href="/dry-needling">Orthopedic dry needling in Philadelphia</a></li>}
+<ul class="chips">
+  {except !== "dry-needling" && <li><a href="/dry-needling">Dry needling in Philadelphia</a></li>}
   {areas.filter((area) => `${area.slug}/dry-needling` !== except).map((area) => (
-    <li><a href={`/${area.slug}/dry-needling`}>Dry needling in {area.h1Place}</a></li>
+    <li><a href={`/${area.slug}/dry-needling`}>{area.name}</a></li>
   ))}
 </ul>

@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "./Actions.astro";
+import PageHero from "./PageHero.astro";
 import CtaBand from "./CtaBand.astro";
 import DryNeedlingLinks from "./DryNeedlingLinks.astro";
 import FaqList from "./FaqList.astro";
@@ -45,54 +45,49 @@ const extraGraph = [
 ---
 
 <Base title={page.title} description={page.description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Five Points Wellness LLC · {addressLine}</p>
-      <h1>{page.h1}</h1>
-      <p class="lede">{page.lede}</p>
-      <Actions />
-    </header>
-    <p>
-      <strong>{practice.name}</strong>, <strong>{addressLine}</strong>. Phone <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>, call or text.
-      {area && <> <strong>{area.distance}</strong> ZIP codes for this trip: <strong>{area.zips}</strong>. The office ZIP code is <strong>19125</strong>.</>}
-    </p>
-    <h2>Getting to dry needling from {page.name}</h2>
-    {page.trip.map((paragraph) => <p>{paragraph}</p>)}
-    {area && (
-      <>
-        <h2>Landmarks in {page.name}</h2>
-        <ul class="checklist">
-          {area.landmarks.map((item) => <li>{item}</li>)}
-        </ul>
-      </>
-    )}
-    <h2>What dry needling is at this office</h2>
-    <p>
-      Dry needling treats muscular pain, trigger points, and movement dysfunction with fine, sterile needles. The practice describes it as one application of the same tools and principles used in acupuncture, done inside integrative musculoskeletal care.
-    </p>
-    <p>
-      The services list calls it orthopedic dry needling aimed at motor points, trigger points, and areas of tension for chronic pain, sports injuries, and movement restrictions. A separate price is not published.
-    </p>
-    <h3>Concerns named on the dry needling page</h3>
-    <ul class="checklist">
-      <li>Neck and shoulder pain</li>
-      <li>Back pain and postural tension</li>
-      <li>Sciatica and nerve-related pain patterns</li>
-      <li>Hip, knee, and joint dysfunction</li>
-      <li>Sports injuries and overuse</li>
-      <li>Muscle tightness and chronic tension</li>
-      <li>Headaches and TMJ-related pain</li>
-      <li>Restricted mobility</li>
-    </ul>
-    <p>
-      The full explanation, training notes, and the range-of-motion photos are on <a href="/dry-needling">orthopedic dry needling in Philadelphia</a>.
-      Acupuncture directions for this same trip are on <a href={`/${acupunctureSlug}`}>acupuncture in {page.name}</a>.
-    </p>
-    <h2>Hours</h2>
-    <Hours />
-    <h2>Dry needling in other neighborhoods</h2>
-    <DryNeedlingLinks except={page.slug} />
-    <FaqList items={page.faqs} heading={`Questions about dry needling in ${page.name}`} />
-    <CtaBand heading={`Book dry needling from ${page.name}`} text={`The office is ${addressLine}. Call or text ${practice.phoneDisplay}.`} />
-  </article>
+  <PageHero eyebrow={`Dry Needling · ${practice.street}`} lede={page.lede}>{page.h1}</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      {area && (
+        <dl class="facts card" style="padding:1.25rem 1.5rem">
+          <div><dt>Distance</dt><dd>{area.distance}</dd></div>
+          <div><dt>ZIP codes</dt><dd>{area.zips} · studio 19125</dd></div>
+        </dl>
+      )}
+      <h2>Getting Here from {page.name}</h2>
+      {page.trip.map((paragraph) => <p>{paragraph}</p>)}
+      {area && (
+        <>
+          <h2>Landmarks in {page.name}</h2>
+          <ul class="checklist cols">
+            {area.landmarks.map((item) => <li>{item}</li>)}
+          </ul>
+        </>
+      )}
+      <h2>About Dry Needling</h2>
+      <p>
+        Dry needling is a technique used to treat muscular pain, trigger points, and movement dysfunction using fine, sterile needles. At Five Points Wellness, it is performed within the broader framework of acupuncture and integrative musculoskeletal care.
+      </p>
+      <p>Dry needling is commonly used for:</p>
+      <ul class="checklist cols">
+        <li>Neck and shoulder pain</li>
+        <li>Back pain and postural tension</li>
+        <li>Sciatica and nerve-related pain patterns</li>
+        <li>Hip, knee, and joint dysfunction</li>
+        <li>Sports injuries and overuse conditions</li>
+        <li>Muscle tightness and chronic tension</li>
+        <li>Headaches and TMJ-related pain</li>
+        <li>Restricted mobility or movement imbalance</li>
+      </ul>
+      <p>
+        Read more on the main <a href="/dry-needling">orthopedic dry needling</a> page, including the before and after range-of-motion photos. For acupuncture from the same area, see <a href={`/${acupunctureSlug}`}>acupuncture in {page.name}</a>.
+      </p>
+      <h2>Hours</h2>
+      <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>
+      <FaqList items={page.faqs} heading={`Questions about dry needling in ${page.name}`} />
+      <CtaBand heading="Book a Session" text={`We're at ${addressLine}. Call or text ${practice.phoneDisplay}, or book online.`} />
+      <p class="subhead">Dry Needling in Other Neighborhoods</p>
+      <DryNeedlingLinks except={page.slug} />
+    </article>
+  </section>
 </Base>

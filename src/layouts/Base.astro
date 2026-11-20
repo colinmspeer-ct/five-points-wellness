@@ -111,7 +111,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#f4f0e6" />
+    <meta name="theme-color" content="#fcfcfa" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -123,8 +123,8 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" href="/fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/source-serif-4-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
     <slot name="head" />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
@@ -133,7 +133,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <main id="main">
       {crumbs.length > 0 && (
         <nav class="crumbs" aria-label="Breadcrumb">
-          <ol class="wrap">
+          <ol class="narrow">
             {crumbs.map((crumb, index) => (
               <li>
                 {index < crumbs.length - 1 ? <a href={crumb.href}>{crumb.name}</a> : <span aria-current="page">{crumb.name}</span>}

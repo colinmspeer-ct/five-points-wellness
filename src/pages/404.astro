@@ -1,24 +1,24 @@
 ---
 import Base from "../layouts/Base.astro";
 import Actions from "../components/Actions.astro";
+import PageHero from "../components/PageHero.astro";
 
 const title = "Page not found | Five Points Wellness";
 const description = "That page is not on the Five Points Wellness site. Go back to acupuncture in Fishtown, the services list, or booking.";
 ---
 
 <Base title={title} description={description}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <h1>That page is not here</h1>
-      <p class="lede">The address may have changed when the site was rebuilt. The office has not moved.</p>
+  <PageHero eyebrow="Page not found" lede="The address may have changed when the site was rebuilt. The office has not moved.">That page is <span class="accent">not here</span></PageHero>
+  <section class="band">
+    <div class="narrow" style="text-align:center">
       <Actions />
-    </header>
-    <ul class="checklist">
-      <li><a href="/">Acupuncture in Fishtown</a></li>
-      <li><a href="/services">Services</a></li>
-      <li><a href="/locations">Neighborhoods</a></li>
-      <li><a href="/book-appointment">Book an appointment</a></li>
-      <li><a href="/sitemap">Sitemap</a></li>
-    </ul>
-  </article>
+      <ul class="chips center" style="margin-top:2rem">
+        <li><a href="/">Acupuncture in Fishtown</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/locations">Neighborhoods</a></li>
+        <li><a href="/book-appointment">Book an appointment</a></li>
+        <li><a href="/sitemap">Sitemap</a></li>
+      </ul>
+    </div>
+  </section>
 </Base>

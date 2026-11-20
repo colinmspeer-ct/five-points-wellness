@@ -1,12 +1,25 @@
 ---
 import { hours } from "../data/site";
+interface Props { note?: boolean; compact?: boolean }
+const { note = true, compact = false } = Astro.props;
+type Row = { day: string; time: string };
+let rows: Row[] = hours.map((row) => ({ day: row.day, time: row.time }));
+if (compact) {
+  const grouped: { first: string; last: string; time: string }[] = [];
+  for (const row of hours) {
+    const prev = grouped[grouped.length - 1];
+    if (prev && prev.time === row.time) prev.last = row.day;
+    else grouped.push({ first: row.day, last: row.day, time: row.time });
+  }
+  rows = grouped.map((g) => ({ day: g.first === g.last ? g.first : `${g.first}–${g.last}`, time: g.time }));
+}
 ---
 <dl class="hours">
-  {hours.map((row) => (
+  {rows.map((row) => (
     <div>
       <dt>{row.day}</dt>
       <dd>{row.time}</dd>
     </div>
   ))}
 </dl>
-<p class="fine">Hours are by appointment.</p>
+{note && <p class="hours-note">By appointment only.</p>}

@@ -1,0 +1,62 @@
+---
+import { testimonials } from "../data/site";
+interface Props { id?: string }
+const { id = "patients" } = Astro.props;
+---
+<div class="quotes" data-quotes>
+  <div class="q-track" data-track tabindex="0" role="region" aria-roledescription="carousel" aria-label="Patient testimonials">
+    {testimonials.map((item, index) => (
+      <div class="q-slide" id={`${id}-${index + 1}`} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${testimonials.length}`}>
+        <figure class="card q-card">
+          <svg class="q-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+          <blockquote><p>{item.quote}</p></blockquote>
+          <figcaption>— {item.author}</figcaption>
+        </figure>
+      </div>
+    ))}
+  </div>
+  <nav class="q-dots" aria-label="Choose a testimonial">
+    {testimonials.map((item, index) => (
+      <a href={`#${id}-${index + 1}`} aria-current={index === 0 ? "true" : "false"} data-dot={index}>
+        <span></span><span class="sr-only">Testimonial {index + 1}, from {item.author}</span>
+      </a>
+    ))}
+  </nav>
+</div>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll("[data-quotes]").forEach(function (root) {
+      var track = root.querySelector("[data-track]");
+      var dots = Array.prototype.slice.call(root.querySelectorAll("[data-dot]"));
+      if (!track || !dots.length) return;
+      function setActive(i) {
+        dots.forEach(function (dot, n) { dot.setAttribute("aria-current", n === i ? "true" : "false"); });
+      }
+      dots.forEach(function (dot, i) {
+        dot.addEventListener("click", function (event) {
+          event.preventDefault();
+          track.scrollTo({ left: track.clientWidth * i });
+          setActive(i);
+        });
+      });
+      var ticking = false;
+      track.addEventListener("scroll", function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          setActive(Math.round(track.scrollLeft / Math.max(track.clientWidth, 1)));
+          ticking = false;
+        });
+      }, { passive: true });
+      track.addEventListener("keydown", function (event) {
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        event.preventDefault();
+        var i = Math.round(track.scrollLeft / track.clientWidth) + (event.key === "ArrowRight" ? 1 : -1);
+        i = Math.max(0, Math.min(dots.length - 1, i));
+        track.scrollTo({ left: track.clientWidth * i });
+        setActive(i);
+      });
+    });
+  })();
+</script>

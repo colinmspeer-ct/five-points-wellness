@@ -1,12 +1,12 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Actions from "../../components/Actions.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import FaqList from "../../components/FaqList.astro";
 import Hours from "../../components/Hours.astro";
 import { areas, areaBySlug } from "../../data/areas";
 import { mainServiceHref, offeredServices } from "../../data/offeredServices";
-import { bridge, lede, pageDescription, pageTitle, pairEssay, pairFaq } from "../../lib/areaPageCopy";
+import { lede, pageDescription, pageTitle, pairFaq } from "../../lib/areaPageCopy";
 import { addressLine, practice } from "../../data/site";
 
 export function getStaticPaths() {
@@ -20,6 +20,59 @@ export function getStaticPaths() {
 const area = areaBySlug.get(Astro.params.area ?? "");
 const service = offeredServices.find((item) => item.slug === Astro.params.service);
 if (!area || !service) throw new Error("Missing area service page");
+
+/* Visible service copy for the area pages: her own services-list wording. */
+const serviceCopy: Record<string, { text: string; points: string[] }> = {
+  "acupuncture": {
+    text: "Needle therapy that stimulates specific points along the body's meridian system to restore natural energy flow, promote healing and address various health conditions. Traditional Chinese Medicine (TCM), 5 Element Acupuncture, and Kiiko-style may be used depending on the patient.",
+    points: ["50 minute session", "Rest on the table for 15–40 minutes while the needles work", "A complement to medical care, not a replacement for it"],
+  },
+  "dry-needling": {
+    text: "Needling technique focused on musculoskeletal conditions, targeting motor and trigger points and areas of tension to provide relief from chronic pain, sports injuries and movement restrictions.",
+    points: ["Neck, shoulder, and back pain", "Sciatica and nerve-related pain patterns", "Hip, knee, and joint dysfunction", "Sports injuries, muscle tightness, headaches, and TMJ-related pain", "Restricted mobility or movement imbalance"],
+  },
+  "moxibustion": {
+    text: "Traditional heat therapy using dried mugwort burned on acupuncture points for various effects.",
+    points: ["Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "gua-sha": {
+    text: "Ancient scraping technique using a smooth-edged tool to release muscle tension, improve circulation and promote detoxification through gentle pressure along the skin's surface.",
+    points: ["Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "cupping": {
+    text: "Therapeutic suction therapy that draws blood to targeted areas, helping to release deep muscle tension and improve circulation to reduce pain.",
+    points: ["Marks can follow because blood is drawn to the area", "Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "facial-cupping": {
+    text: "Gentle suction therapy specifically designed for drainage or lifting of the face and neck.",
+    points: ["Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "herbal-liniments": {
+    text: "External-use herbal liniments applied to areas of the body to reduce inflammation, ease pain and promote recovery.",
+    points: ["For external use only", "Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "tuina": {
+    text: "Traditional Chinese therapeutic massage to harmonize qi flow, release blockages and restore balance throughout the body.",
+    points: ["Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "nutrition": {
+    text: "Traditional Chinese nutrition therapy focusing on food as medicine, providing personalized dietary guidance based on constitutional assessment and seasonal principles to support optimal health and healing.",
+    points: ["Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "qigong": {
+    text: "Ancient practice combining gentle movements, breathing techniques and meditation to cultivate and balance life energy, promoting physical vitality, mental clarity, and spiritual well-being through mindful exercise.",
+    points: ["Included in an acupuncture session at the practitioner's discretion"],
+  },
+  "microneedling": {
+    text: "Microneedling, also known as collagen induction therapy, is a minimally invasive skin treatment that uses fine needles to create controlled micro-channels in the skin's surface. This process stimulates the body's natural healing response, promoting the production of collagen and elastin for smoother, firmer, and more even-toned skin.",
+    points: ["Single session $350, or $1,200 for four sessions", "A topical numbing cream is applied before treatment", "Not performed on the same day as facial rejuvenation acupuncture", "Individual results may vary"],
+  },
+  "pediatric-acupuncture": {
+    text: "Gentle care for children, including Shonishin and other non-needle methods.",
+    points: ["For children under 7, or a child who is anxious or not comfortable with needles, needles are not used", "Infants through adolescents"],
+  },
+};
+const visible = serviceCopy[service.slug] ?? { text: service.summary, points: [] };
 
 const nearby = area.nearby.map((item) => areaBySlug.get(item)).filter((item) => item != null);
 const siblings = offeredServices.filter((item) => item.slug !== service.slug);
@@ -63,66 +116,53 @@ const extraGraph = [
 ---
 
 <Base title={pageTitle(area, service)} description={pageDescription(area, service)} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">{practice.name} · {practice.phoneDisplay}</p>
-      <h1>{h1}</h1>
-      <p class="lede">{lede(area, service)}</p>
-      <Actions />
-    </header>
-    <h2>{service.h1Name} and the trip from {area.name}</h2>
-    <p>{bridge(area, service)}</p>
-    <h3>Planning {service.h1Name.toLowerCase()} from {area.name}</h3>
-    <p>{pairEssay(area, service)}</p>
-    <h2>What {area.name} is like on the way to the studio</h2>
-    <p>{area.character}</p>
-    <h3>Distance</h3>
-    <p>{area.distance}</p>
-    <h3>Commute from {area.name}</h3>
-    <p>{area.commute}</p>
-    <p>{area.drive}</p>
-    <h3>Transit</h3>
-    <p>{area.transit}</p>
-    <h3>Landmarks in {area.name}</h3>
-    <ul class="checklist">
-      {area.landmarks.map((item) => <li>{item}</li>)}
-    </ul>
-    <p>ZIP codes associated with {area.name}: {area.zips}. The studio is {addressLine}.</p>
-    <h2>What {service.name.toLowerCase()} means at Five Points Wellness</h2>
-    {service.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-    <h3>Published details</h3>
-    <ul class="checklist">
-      {service.points.map((item) => <li>{item}</li>)}
-    </ul>
-    <p>
-      The main {service.name.toLowerCase()} page is <a href={mainServiceHref(service.slug)}>{service.h1Name} in Philadelphia</a>.
-      More about this area is on <a href={`/${area.slug}`}>{area.name}</a>.
-    </p>
-    <h2>Hours and phone</h2>
-    <p>Call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>. Email <a href={`mailto:${practice.email}`}>{practice.email}</a>.</p>
-    <Hours />
-    <h2>Other services for {area.name}</h2>
-    <ul class="checklist">
-      {siblings.map((item) => (
-        <li><a href={`/${area.slug}/${item.slug}`}>{item.h1Name} in {area.h1Place}</a></li>
-      ))}
-    </ul>
-    {nearby.length > 0 && (
-      <>
-        <h2>{service.h1Name} from nearby areas</h2>
+  <PageHero eyebrow={area.atStudio ? `${service.h1Name} · ${practice.street}` : `${service.h1Name} · Serving ${area.name}`} lede={lede(area, service)}>{h1}</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      <dl class="facts card" style="padding:1.25rem 1.5rem">
+        <div><dt>Distance</dt><dd>{area.distance}</dd></div>
+        <div><dt>ZIP codes</dt><dd>{area.zips} · studio 19125</dd></div>
+      </dl>
+      <h2>{service.h1Name} at Five Points Wellness</h2>
+      <p>{visible.text}</p>
+      {visible.points.length > 0 && (
         <ul class="checklist">
-          {nearby.map((item) => (
-            <li><a href={`/${item.slug}/${service.slug}`}>{service.h1Name} in {item.h1Place}</a></li>
-          ))}
+          {visible.points.map((item) => <li>{item}</li>)}
         </ul>
-      </>
-    )}
-    <FaqList items={faqs} heading={`${service.h1Name} questions from ${area.name}`} />
-    <CtaBand
-      heading={`Book ${service.name.toLowerCase()}`}
-      text={area.atStudio
-        ? `The studio is ${addressLine}. Call or text ${practice.phoneDisplay}.`
-        : `Come to the Fishtown studio at ${addressLine}. There is no office in ${area.name}. Call or text ${practice.phoneDisplay}.`}
-    />
-  </article>
+      )}
+      <p>
+        Read more on our main <a href={mainServiceHref(service.slug)}>{service.h1Name.toLowerCase()} in Philadelphia</a> page.
+      </p>
+      <h2>Getting Here from {area.name}</h2>
+      <p>{area.commute}</p>
+      <p>{area.drive}</p>
+      <p>{area.transit}</p>
+      <h3>Landmarks in {area.name}</h3>
+      <ul class="checklist cols">
+        {area.landmarks.map((item) => <li>{item}</li>)}
+      </ul>
+      <p>More about the area is on our <a href={`/${area.slug}`}>{area.name}</a> page.</p>
+      <h2>Hours</h2>
+      <p>Call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>, or email <a href={`mailto:${practice.email}`}>{practice.email}</a>.</p>
+      <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>
+      <FaqList items={faqs} heading={`${service.h1Name} questions from ${area.name}`} />
+      <CtaBand />
+      <p class="subhead">Other Services for {area.name}</p>
+      <ul class="chips">
+        {siblings.map((item) => (
+          <li><a href={`/${area.slug}/${item.slug}`}>{item.h1Name}</a></li>
+        ))}
+      </ul>
+      {nearby.length > 0 && (
+        <>
+          <p class="subhead">{service.h1Name} from Nearby Areas</p>
+          <ul class="chips">
+            {nearby.map((item) => (
+              <li><a href={`/${item.slug}/${service.slug}`}>{item.name}</a></li>
+            ))}
+          </ul>
+        </>
+      )}
+    </article>
+  </section>
 </Base>

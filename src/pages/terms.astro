@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
 import { addressLine, practice } from "../data/site";
 
 const title = "Terms of Use | Five Points Wellness LLC";
@@ -12,11 +13,10 @@ const crumbs = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <h1>Terms of use</h1>
-      <p class="fine">Last updated November 12, 2026. These terms cover the website. They are not a patient consent form.</p>
-    </header>
+  <PageHero eyebrow="Five Points Wellness LLC">Terms of use</PageHero>
+  <section class="band">
+  <article class="narrow prose">
+    <p class="fine">Last updated November 12, 2026. These terms cover the website. They are not a patient consent form.</p>
     <h2>Who this site belongs to</h2>
     <p>
       This website is published by <strong>{practice.name}</strong>, {addressLine}. Care is provided by <strong>{practice.practitionerFull}</strong>, a licensed acupuncturist. Phone and text: <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a>. Email: <a href={`mailto:${practice.email}`}>{practice.email}</a>.
@@ -49,4 +49,5 @@ const crumbs = [
       An attorney has not reviewed this page. It was written so the new site would have terms where the previous site had none. Ask the office if you need a signed policy for a specific use.
     </p>
   </article>
+  </section>
 </Base>

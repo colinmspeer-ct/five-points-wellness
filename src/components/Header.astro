@@ -1,10 +1,11 @@
 ---
 import Picture from "./Picture.astro";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
-import { areas } from "../data/areas";
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const current = (href: string) => (path === href ? "page" : undefined);
+const inAcupuncture =
+  path.startsWith("/acupuncture") || path.startsWith("/dry-needling") || path === "/locations";
 const logoAlt =
   "Five Points Wellness logo: a circular yin-yang drawn as a fine black and white grid, with a ring of small marks around the edge. Choose it to return to the Fishtown acupuncture homepage.";
 ---
@@ -15,86 +16,98 @@ const logoAlt =
     <a class="brand" href="/" aria-current={current("/")}>
       <Picture
         name="five-points-wellness-logo"
-        width="56"
-        height="56"
+        width={76}
+        height={76}
         alt={logoAlt}
         loading="eager"
         class="logo"
       />
-      <span>Five Points Wellness<small>Fishtown acupuncture</small></span>
+      <span>Five Points Wellness</span>
     </a>
 
-    <nav class="desktop" aria-label="Primary">
+    <nav class="primary-nav" aria-label="Primary">
       <a href="/about" aria-current={current("/about")}>About</a>
       <a href="/services" aria-current={current("/services")}>Services</a>
-      <a href="/dry-needling" aria-current={current("/dry-needling")}>Dry needling</a>
-      <details class="menu">
-        <summary>Acupuncture</summary>
-        <div class="panel">
-          <a href="/acupuncture">Acupuncture in Philadelphia</a>
-          <a href="/dry-needling">Orthopedic dry needling</a>
+      <details class:list={["menu", { "is-current": inAcupuncture }]} data-hover-menu>
+        <summary>
+          Acupuncture
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="menu-panel">
+          <a href="/acupuncture" aria-current={current("/acupuncture")}>Acupuncture in Philadelphia</a>
+          <hr />
           {conditionOrder.map((slug) => (
-            <a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a>
+            <a href={`/acupuncture/${slug}`} aria-current={current(`/acupuncture/${slug}`)}>{conditionMeta[slug].label}</a>
           ))}
+          <a href="/dry-needling" aria-current={current("/dry-needling")}>Dry Needling</a>
+          <hr />
+          <a href="/locations" aria-current={current("/locations")}>Neighborhoods we serve</a>
         </div>
       </details>
-      <details class="menu">
-        <summary>Locations</summary>
-        <div class="panel">
-          <a href="/locations">All areas</a>
-          {areas.map((area) => (
-            <a href={`/${area.slug}`}>{area.name}</a>
-          ))}
-        </div>
-      </details>
+      <a href="/microneedling" aria-current={current("/microneedling")}>Microneedling</a>
       <a href="/contact" aria-current={current("/contact")}>Contact</a>
-      <a class="btn btn-primary" href="/book-appointment">Book now</a>
+      <a class="btn btn-primary" href="/book-appointment">Book Appointment</a>
     </nav>
 
-    <div class="mobile-tools">
-      <a class="btn btn-secondary" href="tel:+16107425810" aria-label="Call Five Points Wellness at 610-742-5810">Call</a>
-      <a class="btn btn-primary" href="/book-appointment">Book now</a>
-      <details class="burger">
-        <summary>Menu</summary>
-        <div class="mobile-panel">
-          <a href="/about">About Cara Speer</a>
-          <a href="/services">Services</a>
-          <a href="/acupuncture">Acupuncture</a>
-          <a href="/dry-needling">Dry needling</a>
-          <a href="/microneedling">Microneedling</a>
-          <a href="/locations">Locations</a>
-          <a href="/contact">Contact</a>
-          <a href="sms:+16107425810">Text (610) 742-5810</a>
-          <details>
-            <summary>All acupuncture topics</summary>
-            <div>
-              {conditionOrder.map((slug) => (
-                <a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a>
-              ))}
-            </div>
-          </details>
-          <details>
-            <summary>Neighborhoods</summary>
-            <div>
-              {areas.map((area) => (
-                <a href={`/${area.slug}`}>{area.name}</a>
-              ))}
-            </div>
-          </details>
-          <details>
-            <summary>Dry needling by neighborhood</summary>
-            <div>
-              {areas.map((area) => (
-                <a href={`/${area.slug}/dry-needling`}>{area.name}</a>
-              ))}
-            </div>
-          </details>
-        </div>
-      </details>
-    </div>
+    <details class="burger mobile-nav">
+      <summary aria-label="Menu">
+        <svg class="icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </summary>
+      <nav class="sheet" aria-label="Mobile">
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <details>
+          <summary>
+            Acupuncture
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="sub">
+            <a href="/acupuncture">Acupuncture in Philadelphia</a>
+            {conditionOrder.map((slug) => (
+              <a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a>
+            ))}
+            <a href="/dry-needling">Dry Needling</a>
+            <a href="/locations">Neighborhoods we serve</a>
+          </div>
+        </details>
+        <a href="/microneedling">Microneedling</a>
+        <a href="/contact">Contact</a>
+        <a class="btn btn-primary btn-lg" href="/book-appointment">Book Appointment</a>
+        <p class="sheet-contact">Call or text <a href="tel:+16107425810">(610) 742-5810</a></p>
+      </nav>
+    </details>
   </div>
 </header>
 
-<style>
-  .logo { width: 56px; height: 56px; }
-</style>
+<script is:inline>
+  (function () {
+    var menus = document.querySelectorAll("[data-hover-menu]");
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    menus.forEach(function (menu) {
+      var timer;
+      menu.addEventListener("mouseenter", function () {
+        if (!fine.matches) return;
+        clearTimeout(timer);
+        menu.open = true;
+      });
+      menu.addEventListener("mouseleave", function () {
+        if (!fine.matches) return;
+        timer = setTimeout(function () { menu.open = false; }, 160);
+      });
+    });
+    document.addEventListener("click", function (event) {
+      document.querySelectorAll(".menu[open], .burger[open]").forEach(function (open) {
+        if (!open.contains(event.target)) open.open = false;
+      });
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      document.querySelectorAll(".menu[open], .burger[open]").forEach(function (open) {
+        open.open = false;
+        var summary = open.querySelector("summary");
+        if (summary) summary.focus();
+      });
+    });
+  })();
+</script>

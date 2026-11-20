@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Actions from "../../components/Actions.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import ServiceLinks from "../../components/ServiceLinks.astro";
 import { conditionsTreated, practice, visitSteps } from "../../data/site";
@@ -27,59 +27,77 @@ const extraGraph = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">{practice.practitionerFull} · Fishtown</p>
-      <h1>Acupuncture in Philadelphia</h1>
-      <p class="lede">
-        Acupuncture is an ancient healing practice rooted in Traditional Chinese Medicine that promotes natural healing and improved functioning of the body's systems.
-      </p>
-      <Actions />
-    </header>
-    <h2>How acupuncture is practiced here</h2>
-    <p>
-      Acupuncture therapy involves the gentle insertion of very thin, sterile needles into specific points on the body to stimulate the flow of qi (pronounced "chee"), your body's vital energy. By restoring balance to your energy pathways, acupuncture helps activate your body's natural healing abilities.
-    </p>
-    <p>
-      Modern research has shown that acupuncture triggers the release of endorphins, improves circulation, and helps regulate the nervous system, making it an effective complement to modern medical care.
-    </p>
-    <p>
-      On the services list, acupuncture is needle therapy that stimulates specific points along the body's meridian system to restore natural energy flow, promote healing, and address health conditions. <strong>Traditional Chinese Medicine (TCM)</strong>, <strong>5 Element acupuncture</strong>, and <strong>Kiiko-style</strong> may be used depending on the patient. A session is <strong>50 minutes</strong>.
-    </p>
-    <h2>Benefits named by the practice</h2>
-    <ul class="checklist">
-      <li>Pain relief</li>
-      <li>Stress reduction</li>
-      <li>Improved energy</li>
-      <li>Holistic wellness</li>
-    </ul>
-    <h2>Conditions treated and managed</h2>
-    <p>Acupuncture can address a wide range of health concerns, from acute conditions to chronic disorders. Each line below opens the page that goes into that concern.</p>
-    <ul class="checklist">
-      {conditionsTreated.map((item) => (
-        <li><a href={item.href}>{item.label}</a></li>
-      ))}
-    </ul>
-    <h2>What to expect at your acupuncture visit</h2>
-    <p>Your visit is built around your own symptoms, lifestyle, and goals.</p>
-    <ol class="steps">
-      {visitSteps.map((step) => (
-        <li>
-          <h3>{step.title}</h3>
-          <p>{step.text}</p>
-        </li>
-      ))}
-    </ol>
-    <h2>Techniques that may be added</h2>
-    <p>
-      Moxibustion, gua sha, cupping, facial cupping, herbal liniments, tuina, nutrition guidance, and qigong are included in an acupuncture session at the practitioner's discretion. Orthopedic dry needling and pediatric acupuncture, including Shonishin, have their own pages because patients ask for them by name.
-    </p>
-    <ServiceLinks except="/acupuncture" />
-    <h2>Where to come for acupuncture</h2>
-    <p>
-      <strong>{practice.name}</strong>, {practice.street}, {practice.city}, {practice.region} {practice.postal}.
-      Start with <a href="/acupuncture-fishtown">acupuncture in Fishtown</a> if you are nearby, or the <a href="/locations">neighborhood guide</a> if you are coming from elsewhere in Philadelphia.
-    </p>
-    <CtaBand heading="Book an acupuncture session" />
-  </article>
+  <PageHero
+    eyebrow="Understanding acupuncture"
+    lede="Acupuncture is an ancient healing practice rooted in Traditional Chinese Medicine that promotes natural healing and improved functioning of the body's systems."
+  >Acupuncture in <span class="accent">Philadelphia</span></PageHero>
+
+  <section class="band">
+    <div class="mid" style="max-width:50rem">
+      <div class="card prose" style="padding:2rem 2.25rem">
+        <p>
+          Acupuncture therapy involves the gentle insertion of very thin, sterile needles into specific points on the body to stimulate the flow of qi (pronounced "chee"), your body's vital energy. By restoring balance to your energy pathways, acupuncture helps activate your body's natural healing abilities.
+        </p>
+        <p>
+          Modern research has shown that acupuncture triggers the release of endorphins, improves circulation and helps regulate the nervous system, making it an effective complement to modern medical intervention.
+        </p>
+        <p>
+          A session is <strong>50 minutes</strong>. Traditional Chinese Medicine (TCM), 5 Element Acupuncture, and Kiiko-style may be used depending on the patient.
+        </p>
+      </div>
+
+      <div style="text-align:center;margin-top:4.5rem">
+        <h2>Benefits of <span class="accent">Acupuncture</span></h2>
+      </div>
+      <div class="card" style="max-width:26rem;margin:1.75rem auto 0">
+        <ul class="dots" style="font-size:1rem;margin:0;gap:0.7rem">
+          <li>Pain Relief</li>
+          <li>Stress Reduction</li>
+          <li>Improved Energy</li>
+          <li>Holistic Wellness</li>
+        </ul>
+      </div>
+
+      <div class="section-head" style="margin:4.5rem 0 1.75rem">
+        <h2>Conditions We <span class="accent">Treat and Manage</span></h2>
+        <p>Acupuncture can effectively address a wide range of health concerns, from acute conditions to chronic disorders.</p>
+      </div>
+      <div class="card">
+        <ul class="checklist cols" style="margin:0">
+          {conditionsTreated.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="section-head" style="margin:4.5rem 0 1.75rem">
+        <h2>What to <span class="accent">Expect</span></h2>
+        <p>Your visit is built around your own symptoms, lifestyle, and goals.</p>
+      </div>
+      <ol class="steps">
+        {visitSteps.map((step) => (
+          <li class="card">
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div style="text-align:center;margin-top:4.5rem">
+        <h2>Techniques That <span class="accent">May Be Added</span></h2>
+        <p class="lede" style="font-size:1.0625rem">
+          Moxibustion, gua sha, cupping, facial cupping, herbal liniments, tuina, nutrition guidance, and qigong are included in an acupuncture session at the practitioner's discretion.
+        </p>
+        <ServiceLinks except="/acupuncture" center />
+      </div>
+
+      <div class="narrow" style="width:100%">
+        <CtaBand
+          heading="Ready to Begin?"
+          text="Schedule your appointment online and take the first step toward feeling your best."
+        />
+        <p class="actions-note"><a href="/acupuncture-fishtown">Acupuncture in Fishtown</a> · <a href="/locations">Neighborhoods we serve</a></p>
+      </div>
+    </div>
+  </section>
 </Base>

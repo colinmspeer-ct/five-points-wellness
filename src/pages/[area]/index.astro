@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Actions from "../../components/Actions.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import FaqList from "../../components/FaqList.astro";
 import Hours from "../../components/Hours.astro";
@@ -58,54 +58,50 @@ const extraGraph = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">{practice.name} · {addressLine}</p>
-      <h1>{area.atStudio ? `Acupuncture in ${area.h1Place}` : `Acupuncture for ${area.h1Place}`}</h1>
-      <p class="lede">
-        {area.atStudio
-          ? `This is the area page for ${area.name}. The studio is here: ${addressLine}. Phone ${practice.phoneDisplay}.`
-          : `There is no Five Points Wellness office in ${area.name}. Residents are seen at the Fishtown studio, ${addressLine}. Phone ${practice.phoneDisplay}.`}
-      </p>
-      <Actions />
-    </header>
-    <h2>{area.name} and the trip to East Huntingdon Street</h2>
-    <p>{area.character}</p>
-    <p><strong>{area.distance}</strong></p>
-    <h3>Getting there</h3>
-    <p>{area.commute}</p>
-    <p>{area.drive}</p>
-    <p>{area.transit}</p>
-    <h3>Landmarks people use for {area.name}</h3>
-    <ul class="checklist">
-      {area.landmarks.map((item) => <li>{item}</li>)}
-    </ul>
-    <p>ZIP codes associated with this area: {area.zips}. The studio ZIP is 19125.</p>
-    <h2>Services at the Fishtown studio for {area.name}</h2>
-    <p>
-      Dry needling is one of the practice’s main service pages. Every service below is one Cara already offers. Each link stays inside {area.name} and opens that service’s own page.
-    </p>
-    <ul class="checklist">
-      {offeredServices.map((service) => (
-        <li><a href={`/${area.slug}/${service.slug}`}>{service.h1Name} in {area.h1Place}</a></li>
-      ))}
-    </ul>
-    <h2>Hours at the studio</h2>
-    <Hours />
-    {nearby.length > 0 && (
-      <>
-        <h2>Nearby area pages</h2>
-        <ul class="checklist">
-          {nearby.map((item) => (
-            <li><a href={`/${item.slug}`}>{item.name}</a></li>
-          ))}
-        </ul>
-      </>
-    )}
-    <FaqList items={faqs} heading={`Questions about coming from ${area.name}`} />
-    <CtaBand
-      heading={area.atStudio ? `Book in ${area.name}` : `Book from ${area.name}`}
-      text={`The only studio is ${addressLine}. Call or text ${practice.phoneDisplay}.`}
-    />
-  </article>
+  <PageHero
+    eyebrow={area.atStudio ? `Five Points Wellness · ${practice.street}` : `Serving ${area.name}`}
+    lede={area.atStudio
+      ? `Our studio is right here, at ${addressLine}. Call or text ${practice.phoneDisplay}.`
+      : `We don't have an office in ${area.name}. Patients from ${area.name} visit our Fishtown studio at ${addressLine}. Call or text ${practice.phoneDisplay}.`}
+  >{area.atStudio ? `Acupuncture in ${area.h1Place}` : `Acupuncture for ${area.h1Place}`}</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      <dl class="facts card" style="padding:1.25rem 1.5rem">
+        <div><dt>Distance</dt><dd>{area.distance}</dd></div>
+        <div><dt>ZIP codes</dt><dd>{area.zips} · studio 19125</dd></div>
+      </dl>
+      <h2>{area.name} and the Studio</h2>
+      <p>{area.character}</p>
+      <h3>Getting here</h3>
+      <p>{area.commute}</p>
+      <p>{area.drive}</p>
+      <p>{area.transit}</p>
+      <h3>Landmarks in {area.name}</h3>
+      <ul class="checklist cols">
+        {area.landmarks.map((item) => <li>{item}</li>)}
+      </ul>
+      <h2>Our Services for {area.name}</h2>
+      <p>Every service below is offered at our Fishtown studio.</p>
+      <ul class="chips">
+        {offeredServices.map((service) => (
+          <li><a href={`/${area.slug}/${service.slug}`}>{service.h1Name} in {area.name}</a></li>
+        ))}
+      </ul>
+      <h2>Hours</h2>
+      <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>
+      <FaqList items={faqs} heading={`Questions about coming from ${area.name}`} />
+      <CtaBand />
+      {nearby.length > 0 && (
+        <>
+          <p class="subhead">Nearby Areas</p>
+          <ul class="chips">
+            {nearby.map((item) => (
+              <li><a href={`/${item.slug}`}>{item.name}</a></li>
+            ))}
+            <li><a href="/locations">All areas</a></li>
+          </ul>
+        </>
+      )}
+    </article>
+  </section>
 </Base>

@@ -1,11 +1,11 @@
 ---
 import Base from "../../layouts/Base.astro";
-import Actions from "../../components/Actions.astro";
+import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import FaqList from "../../components/FaqList.astro";
 import { conditionMeta, conditionOrder } from "../../data/conditionMeta";
 import conditions from "../../data/conditions.json";
-import { addressLine, practice } from "../../data/site";
+import { practice } from "../../data/site";
 
 type Block = { title: string; description?: string; paragraphs?: string[]; items?: string[] };
 type Condition = {
@@ -59,56 +59,49 @@ const extraGraph = [
 ---
 
 <Base title={meta.title} description={meta.description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Acupuncture in Philadelphia · {practice.name}</p>
-      <h1>{meta.h1}</h1>
-      <p class="lede">{page.tagline}</p>
-      <Actions />
-    </header>
-    <p>
-      <strong>{practice.practitionerFull}</strong> provides this care at <strong>{practice.name}</strong>, <strong>{addressLine}</strong>, in <strong>Fishtown</strong>.
-      The visit is individualized. Acupuncture here is complementary care and does not replace your physician.
-    </p>
-    {page.overview.map((paragraph) => <p>{paragraph}</p>)}
-    {page.introSections?.map((section) => (
-      <section>
-        <h2>{section.title}</h2>
-        {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-        {section.description && <p>{section.description}</p>}
-        {section.items && (
-          <ul class="checklist">{section.items.map((item) => <li>{item}</li>)}</ul>
-        )}
-      </section>
-    ))}
-    <h2>Concerns this acupuncture care addresses</h2>
-    <ul class="checklist">
-      {page.addresses.map((item) => <li>{item}</li>)}
-    </ul>
-    {page.sections?.map((section) => (
-      <section>
-        <h2>{section.title}</h2>
-        {section.description && <p>{section.description}</p>}
-        {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-        {section.items && (
-          <ul class="checklist">{section.items.map((item) => <li>{item}</li>)}</ul>
-        )}
-      </section>
-    ))}
-    <h2>How acupuncture is used for this concern</h2>
-    <p>{page.howItHelps}</p>
-    <h2>What to expect at Five Points Wellness</h2>
-    <p>{page.whatToExpect}</p>
-    {page.faqs && <FaqList items={page.faqs} />}
-    <h2>Other acupuncture care in the same office</h2>
-    <ul class="checklist">
-      <li><a href="/acupuncture">Acupuncture in Philadelphia</a></li>
-      {conditionOrder.filter((item) => item !== slug).map((item) => (
-        <li><a href={`/acupuncture/${item}`}>{conditionMeta[item].label}</a></li>
+  <PageHero eyebrow="Acupuncture" lede={page.tagline}>{meta.h1}</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      {page.overview.map((paragraph) => <p>{paragraph}</p>)}
+      {page.introSections?.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {section.description && <p>{section.description}</p>}
+          {section.items && (
+            <ul class="checklist cols">{section.items.map((item) => <li>{item}</li>)}</ul>
+          )}
+        </section>
       ))}
-      <li><a href="/dry-needling">Orthopedic dry needling</a></li>
-      <li><a href="/acupuncture-fishtown">Acupuncture in Fishtown</a></li>
-    </ul>
-    <CtaBand heading="Book this visit" />
-  </article>
+      <h2>Conditions We Commonly Treat</h2>
+      <ul class="checklist cols">
+        {page.addresses.map((item) => <li>{item}</li>)}
+      </ul>
+      {page.sections?.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          {section.description && <p>{section.description}</p>}
+          {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {section.items && (
+            <ul class="checklist cols">{section.items.map((item) => <li>{item}</li>)}</ul>
+          )}
+        </section>
+      ))}
+      <h2>How Acupuncture Helps</h2>
+      <p>{page.howItHelps}</p>
+      <h2>What to Expect</h2>
+      <p>{page.whatToExpect}</p>
+      {page.faqs && <FaqList items={page.faqs} />}
+      <CtaBand />
+      <p class="subhead">Other Conditions We Treat</p>
+      <ul class="chips">
+        {conditionOrder.filter((item) => item !== slug).map((item) => (
+          <li><a href={`/acupuncture/${item}`}>{conditionMeta[item].label}</a></li>
+        ))}
+        <li><a href="/dry-needling">Dry Needling</a></li>
+        <li><a href="/acupuncture">Acupuncture in Philadelphia</a></li>
+        <li><a href="/acupuncture-fishtown">Acupuncture in Fishtown</a></li>
+      </ul>
+    </article>
+  </section>
 </Base>

@@ -1,22 +1,22 @@
 ---
 const links = [
-  { href: "/acupuncture", text: "acupuncture in Philadelphia" },
-  { href: "/dry-needling", text: "orthopedic dry needling" },
-  { href: "/moxibustion", text: "moxibustion" },
-  { href: "/gua-sha", text: "gua sha" },
-  { href: "/cupping", text: "cupping therapy" },
-  { href: "/facial-cupping", text: "facial cupping" },
-  { href: "/herbal-liniments", text: "herbal liniments" },
-  { href: "/tuina", text: "tuina" },
-  { href: "/nutrition", text: "traditional Chinese nutrition" },
-  { href: "/qigong", text: "qigong" },
-  { href: "/microneedling", text: "microneedling" },
-  { href: "/acupuncture/pediatric-acupuncture", text: "pediatric acupuncture and Shonishin" },
+  { href: "/acupuncture", text: "Acupuncture" },
+  { href: "/dry-needling", text: "Orthopedic Dry Needling" },
+  { href: "/moxibustion", text: "Moxibustion" },
+  { href: "/gua-sha", text: "Gua Sha" },
+  { href: "/cupping", text: "Cupping" },
+  { href: "/facial-cupping", text: "Facial Cupping" },
+  { href: "/herbal-liniments", text: "Herbal Liniments" },
+  { href: "/tuina", text: "Tuina" },
+  { href: "/nutrition", text: "Nutrition" },
+  { href: "/qigong", text: "Qigong" },
+  { href: "/microneedling", text: "Microneedling" },
+  { href: "/acupuncture/pediatric-acupuncture", text: "Pediatric Acupuncture" },
 ];
-interface Props { except?: string }
-const { except } = Astro.props;
+interface Props { except?: string; center?: boolean }
+const { except, center = false } = Astro.props;
 ---
-<ul class="checklist">
+<ul class:list={["chips", { center }]}>
   {links.filter((link) => link.href !== except).map((link) => (
     <li><a href={link.href}>{link.text}</a></li>
   ))}

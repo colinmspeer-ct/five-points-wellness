@@ -1,72 +1,70 @@
 ---
 import Hours from "./Hours.astro";
-import { addressLine, practice } from "../data/site";
+import { areas } from "../data/areas";
+import { practice } from "../data/site";
+
 const year = 2026;
+const cityAreas = areas.filter((area) => area.group === "philadelphia");
 ---
 
 <footer class="site-footer">
-  <div class="wrap foot-grid">
-    <div>
-      <h2>Five Points Wellness LLC</h2>
-      <p>
-        <strong>{practice.practitionerFull}</strong><br />
-        Licensed acupuncturist<br />
-        {addressLine}<br />
-        {practice.areaNote}
-      </p>
-      <p>
-        <a href={`tel:${practice.phoneTel}`}>Call {practice.phoneDisplay}</a><br />
-        <a href={`sms:${practice.phoneTel}`}>Text {practice.phoneDisplay}</a><br />
-        <a href={`mailto:${practice.email}`}>{practice.email}</a>
-      </p>
-      <p>{practice.parking}</p>
-      <p><a class="btn btn-on-dark" href="/book-appointment">Book now</a></p>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-brand">
+          <img src="/images/five-points-wellness-logo-64.webp" width="34" height="34" alt="" loading="lazy" decoding="async" />
+          Five Points Wellness, LLC
+        </p>
+        <address>
+          {practice.street}<br />
+          {practice.city}, {practice.region} {practice.postal}<br />
+          {practice.areaNote}
+        </address>
+        <p>{practice.practitionerFull}<br />Licensed Acupuncturist</p>
+        <p><a href={practice.mapLink}>Open in Google Maps</a></p>
+      </div>
+
+      <div>
+        <h2>Quick Links</h2>
+        <ul class="foot-links">
+          <li><a href="/about">About Cara Speer</a></li>
+          <li><a href="/services">Our Services</a></li>
+          <li><a href="/acupuncture">Acupuncture</a></li>
+          <li><a href="/dry-needling">Dry Needling</a></li>
+          <li><a href="/microneedling">Microneedling</a></li>
+          <li><a href="/book-appointment">Book an Appointment</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Contact Information</h2>
+        <p class="contact-line">Phone: <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> <span aria-hidden="true">·</span> <a href={`sms:${practice.phoneTel}`}>Text</a></p>
+        <p class="contact-line">Email: <a href={`mailto:${practice.email}`}>{practice.email}</a></p>
+        <p class="foot-hours-label">Hours, by appointment only:</p>
+        <Hours note={false} compact />
+      </div>
     </div>
-    <div>
-      <h2>Hours by appointment</h2>
-      <Hours />
-      <ul class="foot-links">
-        <li><a href="/privacy-policy">Privacy</a></li>
-        <li><a href="/terms">Terms</a></li>
-        <li><a href="/sitemap/">Sitemap</a></li>
-        <li><a href="/sitemap-index.xml">sitemap-index.xml</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/locations">Locations</a></li>
+
+    <div class="foot-areas">
+      <span class="label">Neighborhoods we serve:</span>
+      <ul>
+        {cityAreas.map((area) => (
+          <li><a href={`/${area.slug}`}>{area.name}</a></li>
+        ))}
+        <li><a href="/locations">All areas</a></li>
       </ul>
     </div>
-    <div>
-      <h2>Map</h2>
-      <div class="map-facade" data-map-slot>
-        <svg class="map-pin" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="#f4f0e6" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/>
-        </svg>
-        <p>{addressLine}</p>
-        <button type="button" class="btn btn-on-dark" data-load-map>Load Google Map</button>
-        <p><a href={practice.mapLink}>Open the address in Google Maps</a></p>
-      </div>
-      <noscript>
-        <p><a href={practice.mapLink}>Google Map of Five Points Wellness LLC</a></p>
-      </noscript>
+
+    <div class="legal">
+      <p>&copy; {year} Five Points Wellness, LLC. All rights reserved.</p>
+      <ul>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/locations">Locations</a></li>
+        <li><a href="/sitemap/">Sitemap</a></li>
+      </ul>
+      <p class="disclaimer">Acupuncture is complementary care and does not replace emergency or primary medical care.</p>
     </div>
   </div>
-  <div class="wrap legal">
-    <p>© {year} Five Points Wellness LLC. All rights reserved. Acupuncture is complementary care and does not replace emergency or primary medical care.</p>
-  </div>
-  <script is:inline define:vars={{ mapSrc: practice.mapEmbed }}>
-    var button = document.querySelector("[data-load-map]");
-    if (button) {
-      button.addEventListener("click", function () {
-        var slot = document.querySelector("[data-map-slot]");
-        if (!slot) return;
-        var frame = document.createElement("iframe");
-        frame.src = mapSrc;
-        frame.title = "Google Map of Five Points Wellness LLC at 2137 E Huntingdon St, Philadelphia";
-        frame.loading = "lazy";
-        frame.referrerPolicy = "no-referrer-when-downgrade";
-        frame.width = "600";
-        frame.height = "280";
-        slot.replaceChildren(frame);
-      });
-    }
-  </script>
 </footer>

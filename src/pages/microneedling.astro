@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "../components/Actions.astro";
+import PageHero from "../components/PageHero.astro";
 import CtaBand from "../components/CtaBand.astro";
 import FaqList from "../components/FaqList.astro";
 import Picture from "../components/Picture.astro";
@@ -24,10 +24,10 @@ const concerns = [
   "Stretch marks",
 ];
 const areas = [
-  "Face, for full-face work or a targeted zone",
+  "Face: full face rejuvenation, targeted zones",
   "Neck and décolletage",
-  "Scalp, for hair thinning support",
-  "Body, for scars, stretch marks, and texture",
+  "Scalp: for hair thinning support",
+  "Body: scars, stretch marks, and texture concerns",
 ];
 const contraindications = [
   "High blood pressure",
@@ -43,8 +43,8 @@ const contraindications = [
   "Vertigo",
   "Hemophilia",
   "Botox treatments",
-  "Dermal filler (Restylane, Juvederm, Radiesse, and similar products)",
-  "Any skin diseases, including poison ivy, eczema, and hives",
+  "Dermal filler (Restylane, Juvederm, Radiesse, etc.)",
+  "Any skin diseases (poison ivy, eczema, hives)",
   "Pregnancy",
   "Cold or flu",
   "Herpes outbreak",
@@ -83,110 +83,131 @@ const extraGraph = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Skin · collagen induction</p>
-      <h1>Microneedling in Philadelphia</h1>
-      <p class="lede">Collagen induction therapy for skin health and rejuvenation, with an acupuncture practice behind it.</p>
-      <Actions />
-    </header>
-    <h2>Results after 3 treatments</h2>
-    <p>Individual results vary. These are the practice's own before-and-after graphics, labeled before and after 3 treatments.</p>
-    <div class="photo-grid">
-      <figure>
-        <Picture
-          name="microneedling-before-after-front-view"
-          width="960"
-          height="640"
-          alt="Front-view microneedling comparison from Five Points Wellness. Two portraits of the same woman sit side by side, labeled Before and After 3 treatments. The before photo shows more visible lines and uneven tone; the after photo shows her with the hair lighter and the skin looking smoother. Individual results vary."
-        />
-        <figcaption>Front view, labeled before and after 3 treatments.</figcaption>
-      </figure>
-      <figure>
-        <Picture
-          name="microneedling-before-after-side-view"
-          width="960"
-          height="640"
-          alt="Side-view microneedling comparison from Five Points Wellness, labeled Before and After 3 treatments. The before profile shows cheek and jaw lines more clearly; the after profile shows the same woman turned slightly toward the camera with smoother-looking skin. Individual results vary, and lighting differs between the two photos."
-        />
-        <figcaption>Side view, labeled before and after 3 treatments.</figcaption>
-      </figure>
+  <PageHero eyebrow="Aesthetic & Wellness" lede="Collagen Induction Therapy for Skin Health & Rejuvenation">Microneedling in Philadelphia</PageHero>
+
+  <section class="band">
+    <div class="wrap" style="max-width:60rem">
+      <h2 style="text-align:center;font-size:1.6rem;margin-bottom:1.5rem">Real <span class="accent">Results</span></h2>
+      <div class="results">
+        <figure>
+          <Picture
+            name="microneedling-before-after-front-view"
+            width={960}
+            height={640}
+            loading="eager"
+            alt="Front-view microneedling comparison from Five Points Wellness. Two portraits of the same woman sit side by side, labeled Before and After 3 treatments. The before photo shows more visible lines and uneven tone; the after photo shows her with the hair lighter and the skin looking smoother. Individual results vary."
+          />
+          <figcaption>Front view · before and after 3 treatments</figcaption>
+        </figure>
+        <figure>
+          <Picture
+            name="microneedling-before-after-side-view"
+            width={960}
+            height={640}
+            loading="eager"
+            alt="Side-view microneedling comparison from Five Points Wellness, labeled Before and After 3 treatments. The before profile shows cheek and jaw lines more clearly; the after profile shows the same woman turned slightly toward the camera with smoother-looking skin. Individual results vary, and lighting differs between the two photos."
+          />
+          <figcaption>Side view · before and after 3 treatments</figcaption>
+        </figure>
+      </div>
+      <p class="fine" style="text-align:center;margin-top:1rem">Individual results may vary.</p>
     </div>
-    <h2>What microneedling is at this office</h2>
-    <p>
-      Microneedling, also called collagen induction therapy, is a minimally invasive skin treatment. Fine needles create controlled micro-channels in the skin. That process stimulates the body's healing response and the production of collagen and elastin, with the aim of smoother, firmer, more even-toned skin.
-    </p>
-    <p>
-      At Five Points Wellness, microneedling is done with an integrative view: the surface of the skin, and the health patterns underneath that affect skin quality, healing, and how skin looks.
-    </p>
-    <h2>How the treatment works</h2>
-    <p>A device with ultra-fine sterile needles makes many microscopic punctures in the treatment area. The practice says those micro-injuries trigger the skin's wound-healing cascade and stimulate:</p>
-    <ul class="checklist">
-      <li>New collagen and elastin</li>
-      <li>Cell turnover and skin renewal</li>
-      <li>Absorption of topical serums and nutrients</li>
-      <li>Circulation to the skin</li>
-      <li>Gradual remodeling of scar tissue and uneven texture</li>
-    </ul>
-    <h2>Skin concerns commonly treated</h2>
-    <ul class="checklist">
-      {concerns.map((item) => <li>{item}</li>)}
-    </ul>
-    <h2>Where it can be used</h2>
-    <ul class="checklist">
-      {areas.map((item) => <li>{item}</li>)}
-    </ul>
-    <h2>Microneedling with acupuncture</h2>
-    <p>
-      Skin is tied to the rest of the body. Hormones, stress, circulation, sleep, and nutrition all show up in how skin looks and heals. Microneedling here can be paired with acupuncture for those factors.
-    </p>
-    <ul class="checklist">
-      <li>Acupuncture for circulation and nervous system regulation</li>
-      <li>Hormonal balance support for acne-prone or aging skin</li>
-      <li>Stress reduction aimed at inflammation and cortisol-related skin concerns</li>
-      <li>Whole-body care meant to extend what a surface treatment can do</li>
-    </ul>
-    <p>
-      Facial rejuvenation acupuncture and microneedling are not performed on the same day. When acupuncture happens on a microneedling day, only body points are used.
-    </p>
-    <h2>During and after the session</h2>
-    <p>
-      A topical numbing cream is applied first. The device is then moved across the area. The practice says sessions typically last 30–60 minutes depending on the area. The booking card lists the appointment as 50 minutes. Both figures are what the current site publishes.
-    </p>
-    <p>After treatment you may have:</p>
-    <ul class="checklist">
-      <li>Mild redness and warmth, similar to a light sunburn</li>
-      <li>Minor swelling that typically settles within 24–48 hours</li>
-      <li>Skin that feels tighter or smoother within days</li>
-      <li>Texture and tone that keep changing over several weeks</li>
-    </ul>
-    <h2>What the practice says about results</h2>
-    <p>Results develop over time because the method relies on the skin's own repair. Most patients, in the practice's words, notice:</p>
-    <ul class="checklist">
-      <li>Smoother texture after the first session</li>
-      <li>Collagen remodeling that continues for 4–6 weeks</li>
-      <li>Best results from a series of 4–6 sessions, spaced 4–6 weeks apart</li>
-      <li>Longer-lasting change, up to 5 years, with periodic maintenance</li>
-    </ul>
-    <p>Individual results vary. The priced package is four sessions, while the series described for best results is 4–6.</p>
-    <h2>Published prices</h2>
-    <div class="grid cards">
-      <div class="card">
-        <h3>Single session</h3>
-        <p>$350 · listed as 50 minutes</p>
+
+    <article class="narrow prose" style="margin-top:3.5rem">
+      <p>
+        Microneedling, also known as collagen induction therapy, is a minimally invasive skin treatment that uses fine needles to create controlled micro-channels in the skin's surface. This process stimulates the body's natural healing response, promoting the production of collagen and elastin for smoother, firmer, and more even-toned skin.
+      </p>
+      <p>
+        At Five Points Wellness, microneedling is performed with an integrative perspective, addressing both the surface of the skin and the underlying health patterns that influence skin quality, healing capacity, and overall radiance.
+      </p>
+
+      <h2>How Microneedling Works</h2>
+      <p>A specialized device with ultra-fine sterile needles creates thousands of microscopic punctures across the treatment area. These micro-injuries trigger the skin's natural wound-healing cascade, stimulating:</p>
+      <ul class="checklist">
+        <li>New collagen and elastin production</li>
+        <li>Increased cellular turnover and skin renewal</li>
+        <li>Enhanced absorption of topical serums and nutrients</li>
+        <li>Improved circulation to the skin</li>
+        <li>Gradual remodeling of scar tissue and texture irregularities</li>
+      </ul>
+
+      <h2>Conditions We Commonly Treat</h2>
+      <ul class="checklist cols">
+        {concerns.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <h2>Treatment Areas</h2>
+      <p>Microneedling can be applied to a variety of areas depending on your goals:</p>
+      <ul class="checklist">
+        {areas.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <h2>An Integrative Approach to Skin Health</h2>
+      <p>
+        Skin health is closely connected to internal health. Hormonal balance, stress levels, circulation, sleep quality, and nutritional status all influence how the skin looks, feels, and heals. At Five Points Wellness, microneedling treatments can be paired with acupuncture to support the whole-body factors that contribute to skin quality.
+      </p>
+      <ul class="checklist">
+        <li>Acupuncture to support circulation and nervous system regulation</li>
+        <li>Hormonal balance support for acne-prone or aging skin</li>
+        <li>Stress reduction to minimize inflammation and cortisol-related skin concerns</li>
+        <li>Whole-body care that extends the results of surface treatment</li>
+      </ul>
+
+      <h2>What to Expect During Treatment</h2>
+      <p>
+        A topical numbing cream is applied prior to treatment to ensure your comfort. The microneedling device is then gently moved across the treatment area. Sessions typically last 30–60 minutes depending on the area being treated.
+      </p>
+      <p>After treatment, you may experience:</p>
+      <ul class="checklist">
+        <li>Mild redness and warmth, similar to a light sunburn</li>
+        <li>Minor swelling that typically resolves within 24–48 hours</li>
+        <li>Skin feeling tighter or smoother within days</li>
+        <li>Progressive improvement in texture and tone over several weeks</li>
+      </ul>
+
+      <h2>What Results Can I Expect?</h2>
+      <p>Because microneedling works by stimulating the skin's natural repair process, results develop gradually over time. Most patients notice:</p>
+      <ul class="checklist">
+        <li>Improved skin texture and smoothness after the first session</li>
+        <li>Continued collagen remodeling over 4–6 weeks post-treatment</li>
+        <li>Best results with a series of 4–6 sessions spaced 4–6 weeks apart</li>
+        <li>Long-lasting improvements up to 5 years with periodic maintenance treatments</li>
+      </ul>
+
+      <h2>Pricing</h2>
+      <div class="price-grid">
+        <div class="card price-card">
+          <h3>Single Session</h3>
+          <p>50 minutes</p>
+          <p class="price">$350</p>
+        </div>
+        <div class="card price-card">
+          <span class="tag">Save $200</span>
+          <h3>4-Session Package</h3>
+          <p>50 minutes each · 4 appointments</p>
+          <p class="price">$1,200</p>
+        </div>
+      </div>
+
+      <FaqList items={faqs} />
+
+      <CtaBand text="Book your appointment online to begin. If you'd like to talk through your skin goals before committing, you're welcome to schedule a complimentary session first." />
+    </article>
+
+    <div class="mid" style="max-width:52rem;margin-top:5rem">
+      <div class="section-head" style="margin-bottom:1.75rem">
+        <h2>Contraindications for <span class="accent">Treatment</span></h2>
+        <p>Microneedling is not appropriate for everyone. Please review the following before booking.</p>
       </div>
       <div class="card">
-        <h3>4-session package</h3>
-        <p>$1,200 · 50 minutes each · save $200</p>
+        <ul class="dots cols" style="margin:0">
+          {contraindications.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="fine" style="margin:1.25rem 0 0">If you have any of the above conditions, please contact us before scheduling so we can advise on the most appropriate treatment for you.</p>
       </div>
+      <p class="fine" style="text-align:center;margin-top:2rem">
+        Looking for something gentler? See <a href="/acupuncture/facial-rejuvenation-cosmetic">facial rejuvenation and cosmetic acupuncture</a> or <a href="/facial-cupping">facial cupping</a>.
+      </p>
     </div>
-    <FaqList items={faqs} />
-    <h2>Contraindications</h2>
-    <p>Microneedling is not appropriate for everyone. Please review this list before booking. If any item applies, contact the office before you schedule.</p>
-    <ul class="checklist">
-      {contraindications.map((item) => <li>{item}</li>)}
-    </ul>
-    <p>Cosmetic acupuncture is a different service: <a href="/acupuncture/facial-rejuvenation-cosmetic">facial rejuvenation and cosmetic acupuncture</a>. Gentle suction for the face is <a href="/facial-cupping">facial cupping</a>.</p>
-    <CtaBand heading="Book microneedling" text="Book online, or schedule a complimentary session first if you want to talk through skin goals." />
-  </article>
+  </section>
 </Base>

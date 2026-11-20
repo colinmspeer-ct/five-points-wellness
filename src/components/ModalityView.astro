@@ -1,16 +1,18 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "./Actions.astro";
+import PageHero from "./PageHero.astro";
 import CtaBand from "./CtaBand.astro";
 import FaqList from "./FaqList.astro";
 import ServiceLinks from "./ServiceLinks.astro";
 import { modalities } from "../data/modalities";
+import { modalityCopy } from "../data/modalityCopy";
 import { addressLine, practice } from "../data/site";
 
 interface Props { slug: string }
 const { slug } = Astro.props;
 const page = modalities.find((item) => item.slug === slug);
 if (!page) throw new Error(`Missing modality ${slug}`);
+const copy = modalityCopy[slug] ?? { lede: page.lede, sections: page.sections };
 
 const url = `${practice.url}/${page.slug}`;
 const crumbs = [
@@ -40,26 +42,23 @@ const extraGraph = [
 ---
 
 <Base title={page.title} description={page.description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Five Points Wellness LLC · Fishtown</p>
-      <h1>{page.h1}</h1>
-      <p class="lede">{page.lede}</p>
-      <Actions />
-    </header>
-    {page.sections.map((section) => (
-      <section>
-        <h2>{section.heading}</h2>
-        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-      </section>
-    ))}
-    <h2>Where this care happens</h2>
-    <p>
-      <strong>{practice.name}</strong> is at <strong>{addressLine}</strong>. <strong>{practice.practitionerFull}</strong> is the licensed acupuncturist. Read <a href="/acupuncture-fishtown">acupuncture in Fishtown</a> for the El stop, parking, and hours, or start from another neighborhood on the <a href="/locations">locations</a> page.
-    </p>
-    <h2>Other services at the same office</h2>
-    <ServiceLinks except={`/${page.slug}`} />
-    <FaqList items={page.faqs} />
-    <CtaBand />
-  </article>
+  <PageHero eyebrow="Our Services" lede={copy.lede}>{page.h1}</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      {copy.sections.map((section) => (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+      ))}
+      <FaqList items={page.faqs} />
+      <CtaBand />
+      <p class="subhead">Where to Find Us</p>
+      <p>
+        {page.name} is offered at <strong>{practice.name}</strong>, {addressLine}, with {practice.practitionerFull}. See <a href="/acupuncture-fishtown">acupuncture in Fishtown</a> for parking, the El stop, and hours, or start from your own neighborhood on the <a href="/locations">locations</a> page.
+      </p>
+      <p class="subhead">Other Services</p>
+      <ServiceLinks except={`/${page.slug}`} />
+    </article>
+  </section>
 </Base>

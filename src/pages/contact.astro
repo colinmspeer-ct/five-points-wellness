@@ -1,8 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "../components/Actions.astro";
 import Hours from "../components/Hours.astro";
-import { addressLine, practice } from "../data/site";
+import PageHero from "../components/PageHero.astro";
+import YinYang from "../components/YinYang.astro";
+import { practice } from "../data/site";
 
 const title = "Contact Five Points Wellness in Fishtown | Acupuncture";
 const description =
@@ -14,38 +15,74 @@ const crumbs = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Fishtown, Philadelphia</p>
-      <h1>Contact Five Points Wellness</h1>
-      <p class="lede">We are here to answer your questions. Call, text, or email, or book in the patient portal.</p>
-      <Actions />
-    </header>
-    <h2>Office</h2>
-    <p>
-      <strong>{practice.name}</strong><br />
-      {practice.practitionerFull}, {practice.jobTitle}<br />
-      {addressLine}<br />
-      {practice.neighborhood} neighborhood, {practice.areaNote}<br />
-      {practice.parking}
-    </p>
-    <h2>Phone, text, and email</h2>
-    <p>
-      <a href={`tel:${practice.phoneTel}`}>Call {practice.phoneDisplay}</a><br />
-      <a href={`sms:${practice.phoneTel}`}>Text {practice.phoneDisplay}</a><br />
-      <a href={`mailto:${practice.email}`}>{practice.email}</a>
-    </p>
-    <p>{practice.response}.</p>
-    <h2>Hours</h2>
-    <Hours />
-    <h2>Finding the door</h2>
-    <p>
-      Huntingdon Station on the Market-Frankford Line is about half a mile west, at Kensington Avenue and Huntingdon Street. Walk east to the 2100 block.
-      Step-by-step notes for each neighborhood start on the <a href="/locations">locations</a> page. The page meant for the Google Business Profile is <a href="/acupuncture-fishtown">acupuncture in Fishtown</a>.
-    </p>
-    <p>
-      Insurance and a general acupuncture fee are not listed on this website. Ask when you call if you need either number before you book. Microneedling prices are on the <a href="/microneedling">microneedling</a> page, and the race-day package price is on the <a href="/acupuncture/sports-performance-recovery">sports acupuncture</a> page.
-    </p>
-    <p><a href={practice.mapLink}>Open 2137 E Huntingdon St in Google Maps</a>. The map in the footer loads only after you ask for it.</p>
-  </article>
+  <div style="position:relative">
+    <YinYang size={170} style="top:4rem;right:6%" />
+    <PageHero eyebrow="Get in touch" lede="We are here to answer your questions.">
+      Contact <span class="accent">Five Points Wellness</span>
+    </PageHero>
+  </div>
+
+  <section class="band">
+    <div class="mid" style="max-width:48rem">
+      <h2 style="text-align:center;font-size:1.6rem;margin-bottom:2rem">Connect with Five Points Wellness</h2>
+      <div class="contact-list">
+        <div class="card contact-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div>
+            <h3>Location</h3>
+            <p>{practice.street}, {practice.city}, {practice.region} {practice.postal}</p>
+            <p>Fishtown neighborhood, on the East Kensington edge</p>
+            <p>Free street parking readily available</p>
+            <p>Huntingdon Station on the Market-Frankford Line is about half a mile west, at Kensington Avenue and Huntingdon Street. Walk east to the 2100 block.</p>
+            <div class="actions">
+              <a class="btn btn-outline btn-sm" href={practice.mapLink}>Open in Google Maps</a>
+              <a class="btn btn-outline btn-sm" href="/locations">Directions from your neighborhood</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card contact-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+          <div>
+            <h3>Phone</h3>
+            <p>{practice.phoneDisplay}</p>
+            <p>Call or Text for Appointments or Questions</p>
+            <div class="actions">
+              <a class="btn btn-outline btn-sm" href={`tel:${practice.phoneTel}`}>Call Now</a>
+              <a class="btn btn-outline btn-sm" href={`sms:${practice.phoneTel}`}>Send a Text</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card contact-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+          <div>
+            <h3>Email</h3>
+            <p>{practice.email}</p>
+            <p>We typically respond within one business day.</p>
+            <div class="actions">
+              <a class="btn btn-outline btn-sm" href={`mailto:${practice.email}`}>Send Email</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card contact-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+          <div>
+            <h3>Hours</h3>
+            <p>By Appointment</p>
+            <div style="max-width:20rem;margin-top:0.5rem"><Hours note={false} compact /></div>
+            <div class="actions">
+              <a class="btn btn-primary btn-sm" href="/book-appointment">Book Appointment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="fine" style="text-align:center;margin-top:2.5rem">
+        Insurance and a general acupuncture fee are not listed on this website, so please ask when you call if you need either before you book.
+        Microneedling prices are on the <a href="/microneedling">microneedling</a> page.
+      </p>
+    </div>
+  </section>
 </Base>

@@ -1,6 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
+import BookingPanel from "../components/BookingPanel.astro";
 import Hours from "../components/Hours.astro";
+import PageHero from "../components/PageHero.astro";
 import { practice } from "../data/site";
 
 const title = "Book Acupuncture in Philadelphia | Five Points Wellness";
@@ -13,65 +15,52 @@ const crumbs = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Patient portal · phone · text</p>
-      <h1>Book an appointment</h1>
-      <p class="lede">
-        Book online through the patient portal, or text, call, or email. A complimentary session is available if you want to ask questions before you commit.
-      </p>
-    </header>
-    <div class="actions">
-      <a class="btn btn-primary" href={`tel:${practice.phoneTel}`}>Call {practice.phoneDisplay}</a>
-      <a class="btn btn-secondary" href={`sms:${practice.phoneTel}`}>Text {practice.phoneDisplay}</a>
-      <a class="btn btn-secondary" href={`mailto:${practice.email}`}>Email the office</a>
-    </div>
-    <h2>Hours</h2>
-    <Hours />
-    <h2>Microneedling fees</h2>
-    <div class="grid cards">
-      <div class="card">
-        <h3>Single session</h3>
-        <p>50 minutes · $350</p>
+  <PageHero
+    eyebrow="Patient portal · phone · text"
+    lede="Book online through our patient portal below, or text, call or email us directly."
+  >Book an <span class="accent">Appointment</span></PageHero>
+
+  <section class="band">
+    <div class="mid" style="max-width:52rem">
+      <BookingPanel
+        heading="Book Online via Patient Portal"
+        lead="Book your appointment online and manage your health information using our patient portal."
+        small="Not sure yet? You can also use the portal to schedule a complimentary session to ask questions before you commit."
+      />
+
+      <div class="grid two" style="margin-top:2rem">
+        <div class="card">
+          <h2 style="font-size:1.25rem;font-weight:600">Schedule Your Session</h2>
+          <p style="color:var(--muted)">Text, call or email us for availability and to book your appointment.</p>
+          <div class="contact-list" style="gap:0.9rem">
+            <p style="margin:0"><strong>Phone</strong><br /><a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> · <a href={`sms:${practice.phoneTel}`}>Text</a></p>
+            <p style="margin:0"><strong>Email</strong><br /><a href={`mailto:${practice.email}`}>{practice.email}</a></p>
+          </div>
+        </div>
+        <div class="card">
+          <h2 style="font-size:1.25rem;font-weight:600">Hours</h2>
+          <Hours />
+        </div>
       </div>
-      <div class="card">
-        <h3>4-session package</h3>
-        <p>50 minutes each · 4 appointments · $1,200 · save $200</p>
+
+      <h2 style="text-align:center;margin:4rem 0 0.5rem;font-size:1.6rem">Microneedling <span class="accent">Services</span></h2>
+      <div class="price-grid">
+        <div class="card price-card">
+          <h3>Single Session</h3>
+          <p>50 minutes</p>
+          <p class="price">$350</p>
+        </div>
+        <div class="card price-card">
+          <span class="tag">Save $200</span>
+          <h3>4-Session Package</h3>
+          <p>50 minutes each · 4 appointments</p>
+          <p class="price">$1,200</p>
+        </div>
       </div>
-    </div>
-    <p>
-      A general acupuncture price is not published. The sports page lists a race-day package at $325, booked by phone or text only.
-      Choose microneedling as a single session or a package inside the portal.
-    </p>
-    <h2>Book online</h2>
-    <p>The AcuBliss calendar stays unloaded until you open it, so this page remains fast.</p>
-    <div class="note" data-booking>
-      <button type="button" class="btn btn-primary" data-load-booking>Load the booking calendar</button>
-      <p>
-        <a href={practice.bookingUrl}>Open the patient portal on its own page</a> if you would rather not load it here.
+      <p class="fine" style="text-align:center;margin-top:1.25rem">
+        You can also book microneedling through our online portal above, where you can choose between a single session or package.
+        A general acupuncture price is not published here. The race-day package on the <a href="/acupuncture/sports-performance-recovery">sports page</a> is $325, booked by phone or text only.
       </p>
     </div>
-    <noscript>
-      <p><a href={practice.bookingUrl}>Open the Five Points Wellness patient portal</a></p>
-    </noscript>
-  </article>
-  <script is:inline define:vars={{ src: practice.bookingUrl }}>
-    var button = document.querySelector("[data-load-booking]");
-    if (button) {
-      button.addEventListener("click", function () {
-        var slot = document.querySelector("[data-booking]");
-        if (!slot) return;
-        var frame = document.createElement("iframe");
-        frame.src = src;
-        frame.title = "Five Points Wellness patient portal for booking";
-        frame.loading = "lazy";
-        frame.width = "100%";
-        frame.height = "750";
-        frame.style.border = "0";
-        frame.style.width = "100%";
-        frame.style.minHeight = "750px";
-        slot.replaceChildren(frame);
-      });
-    }
-  </script>
+  </section>
 </Base>

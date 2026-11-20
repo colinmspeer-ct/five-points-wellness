@@ -1,11 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "./Actions.astro";
+import PageHero from "./PageHero.astro";
 import CtaBand from "./CtaBand.astro";
 import FaqList from "./FaqList.astro";
 import Hours from "./Hours.astro";
 import LocationLinks from "./LocationLinks.astro";
 import ServiceLinks from "./ServiceLinks.astro";
+import { conditionMeta, conditionOrder } from "../data/conditionMeta";
 import { locations } from "../data/locations";
 import { addressLine, practice } from "../data/site";
 
@@ -41,50 +42,40 @@ const extraGraph = [
 ---
 
 <Base title={page.title} description={page.description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Five Points Wellness LLC · {addressLine}</p>
-      <h1>{page.h1}</h1>
-      <p class="lede">{page.lede}</p>
-      <Actions />
-    </header>
-    <p><strong>{page.distance}</strong> ZIP codes patients use for this trip: <strong>{page.zips}</strong>. The office ZIP code is <strong>19125</strong>.</p>
-    {page.sections.map((section) => (
-      <section>
-        <h2>{section.heading}</h2>
-        {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-      </section>
-    ))}
-    <h2>Landmarks people name in {page.name}</h2>
-    <ul class="checklist">
-      {page.landmarks.map((item) => <li>{item}</li>)}
-    </ul>
-    <h2>Hours at the Fishtown office</h2>
-    <Hours />
-    <h2>Acupuncture and related care for {page.name}</h2>
-    <p>
-      Every service below is offered from the same office. Anchor text matches the service so you can open the page that fits the question you actually have.
-    </p>
-    <ServiceLinks />
-    <h3>Condition pages</h3>
-    <ul class="checklist">
-      <li><a href="/acupuncture/pain-injury-recovery">acupuncture for pain and injury</a></li>
-      <li><a href="/acupuncture/stress-sleep-wellness">acupuncture for stress and sleep</a></li>
-      <li><a href="/acupuncture/womens-health-fertility">women's health and fertility acupuncture</a></li>
-      <li><a href="/acupuncture/digestive-support">acupuncture for digestion</a></li>
-      <li><a href="/acupuncture/immune-autoimmune">immune and autoimmune support</a></li>
-      <li><a href="/acupuncture/neurological-health">neurological acupuncture</a></li>
-      <li><a href="/acupuncture/sports-performance-recovery">sports acupuncture and recovery</a></li>
-      <li><a href="/acupuncture/facial-rejuvenation-cosmetic">cosmetic acupuncture</a></li>
-      <li><a href="/acupuncture/surgical-recovery-scar-treatment">surgical recovery and scar acupuncture</a></li>
-    </ul>
-    <h2>Dry needling in {page.name}</h2>
-    <p>
-      Orthopedic dry needling for trigger points, motor points, and movement pain is at this same office. <a href={`/dry-needling-${page.slug.slice("acupuncture-".length)}`}>Dry needling in {page.name}</a> has the trip from {page.name}. The full service page is <a href="/dry-needling">orthopedic dry needling in Philadelphia</a>.
-    </p>
-    <h2>Acupuncture in other Philadelphia neighborhoods</h2>
-    <LocationLinks except={page.slug} />
-    <FaqList items={page.faqs} heading={`Questions about acupuncture in ${page.name}`} />
-    <CtaBand heading={`Book from ${page.name}`} text={`The office is ${addressLine}. Call or text ${practice.phoneDisplay}, or use the patient portal.`} />
-  </article>
+  <PageHero eyebrow={`Five Points Wellness · ${practice.street}`} lede={page.lede}>{page.h1}</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      <dl class="facts card" style="padding:1.25rem 1.5rem">
+        <div><dt>Distance</dt><dd>{page.distance}</dd></div>
+        <div><dt>ZIP codes</dt><dd>{page.zips} · studio 19125</dd></div>
+      </dl>
+      {page.sections.map((section) => (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+      ))}
+      <h2>Landmarks in {page.name}</h2>
+      <ul class="checklist cols">
+        {page.landmarks.map((item) => <li>{item}</li>)}
+      </ul>
+      <h2>Hours</h2>
+      <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>
+      <h2>Dry Needling from {page.name}</h2>
+      <p>
+        Orthopedic dry needling is offered at the same studio. See <a href={`/dry-needling-${page.slug.slice("acupuncture-".length)}`}>dry needling in {page.name}</a>, or the main <a href="/dry-needling">orthopedic dry needling</a> page.
+      </p>
+      <FaqList items={page.faqs} heading={`Questions about acupuncture in ${page.name}`} />
+      <CtaBand text={`We're at ${addressLine}. Call or text ${practice.phoneDisplay}, or book online.`} />
+      <p class="subhead">Our Services</p>
+      <ServiceLinks />
+      <p class="subhead">Conditions We Treat</p>
+      <ul class="chips">
+        {conditionOrder.map((item) => (
+          <li><a href={`/acupuncture/${item}`}>{conditionMeta[item].label}</a></li>
+        ))}
+      </ul>
+      <LocationLinks except={page.slug} />
+    </article>
+  </section>
 </Base>

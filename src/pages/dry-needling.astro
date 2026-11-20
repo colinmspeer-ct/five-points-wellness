@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "../components/Actions.astro";
+import PageHero from "../components/PageHero.astro";
+import { conditionMeta, conditionOrder } from "../data/conditionMeta";
 import CtaBand from "../components/CtaBand.astro";
 import DryNeedlingLinks from "../components/DryNeedlingLinks.astro";
 import FaqList from "../components/FaqList.astro";
@@ -43,101 +44,128 @@ const extraGraph = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs} extraGraph={extraGraph}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">Acupuncture · trigger and motor points</p>
-      <h1>Orthopedic dry needling in Philadelphia</h1>
-      <p class="lede">Trigger and motor point therapy for pain and movement.</p>
-      <Actions />
-    </header>
-    <p>
-      Dry needling is a technique used to treat muscular pain, trigger points, and movement dysfunction using fine, sterile needles. It is based on the same foundational principles and tools used in acupuncture and is considered one application within acupuncture-based treatment approaches.
-    </p>
-    <p>At Five Points Wellness, dry needling is performed within the broader framework of acupuncture and integrative musculoskeletal care.</p>
-    <h2>Clinical training behind the dry needling</h2>
-    <p>Treatment is provided by a licensed acupuncturist with advanced clinical training including:</p>
-    <ul class="checklist">
-      {training.map((item) => <li>{item}</li>)}
-    </ul>
-    <p>This training is the practice's foundation in both traditional acupuncture theory and modern biomedical approaches to pain and movement dysfunction.</p>
-    <h2>How dry needling works</h2>
-    <p>Dry needling is commonly used to address areas of tight, overactive muscle tissue known as trigger points. These points may contribute to:</p>
-    <ul class="checklist">
-      <li>Localized pain</li>
-      <li>Muscle stiffness</li>
-      <li>Reduced range of motion</li>
-      <li>Referred pain patterns, meaning pain that travels to other areas of the body</li>
-    </ul>
-    <p>
-      When a fine needle is inserted into these areas, the muscle may respond with a brief involuntary twitch. The practice describes that response as a way to help reset abnormal muscle activity, improve circulation, and reduce localized tension. Many patients report a sensation of release during or shortly after treatment.
-    </p>
-    <h2>Trigger points and motor point therapy</h2>
-    <p>
-      Many painful muscles contain sensitive areas patients call knots or trigger points. Those areas can contribute to pain, stiffness, restricted movement, and symptoms that travel.
-    </p>
-    <p>
-      Motor point acupuncture uses specific points where a nerve enters and communicates with a muscle. Because those points play a role in muscle activation, treatment can help release tension through the muscle from a single point. The practice uses this for muscle tightness, movement dysfunction, and sports-related injuries.
-    </p>
-    <p>
-      Some patients notice the overlap with dry needling. The practice's distinction is this: dry needling focuses on trigger points in the affected muscle, while acupuncture can also use motor points, traditional points, and a look at how the rest of the body is working. The visit can address the painful spot and the factors feeding it.
-    </p>
-    <h2>What dry needling is used for</h2>
-    <ul class="checklist">
-      <li>Neck and shoulder pain</li>
-      <li>Back pain and postural tension</li>
-      <li>Sciatica and nerve-related pain patterns</li>
-      <li>Hip, knee, and joint dysfunction</li>
-      <li>Sports injuries and overuse conditions</li>
-      <li>Muscle tightness and chronic tension</li>
-      <li>Headaches and TMJ-related pain</li>
-      <li>Restricted mobility or movement imbalance</li>
-    </ul>
-    <h2>What the session is like</h2>
-    <p>A detailed assessment looks at posture, movement, muscle tension, and the areas of pain or restriction. A fine sterile needle is then inserted into selected trigger points, motor points, or acupuncture points.</p>
-    <ul class="checklist">
-      <li>A brief muscle twitch response</li>
-      <li>Mild aching or pressure</li>
-      <li>A feeling of release in the muscle</li>
-      <li>Temporary soreness similar to post-exercise fatigue</li>
-    </ul>
-    <p>Treatments typically last between 20 and 60 minutes, depending on your needs and whether dry needling is combined with acupuncture, cupping, or manual work.</p>
-    <h2>How quickly people notice a change</h2>
-    <p>Many patients report noticeable improvements quickly, sometimes during or immediately after treatment. Common short-term effects are reduced muscle tension, improved range of motion, easier movement, and decreased pain intensity.</p>
-    <p>Acute or localized problems may change right away. Chronic conditions often improve over a series of treatments.</p>
-    <h2>Range of motion before and after one session</h2>
-    <p>The practice published these photos as images taken immediately before and after a single 20-minute dry needling session, to show a change in range of motion within one treatment. Individual results vary. The face is cropped out.</p>
-    <div class="photo-grid">
-      <figure>
-        <Picture
-          name="dry-needling-shoulder-range-of-motion-before"
-          width="720"
-          height="720"
-          alt="Before dry needling at Five Points Wellness, a person in a teal shirt and dark pants stands with both arms lifted out to the sides. One arm sits slightly lower, which is the restricted shoulder position in this range-of-motion pair. The face is cropped out of the frame, and the photo is labeled as the before image."
-        />
-        <figcaption>Before the session. One arm does not lift as high.</figcaption>
-      </figure>
-      <figure>
-        <Picture
-          name="dry-needling-shoulder-range-of-motion-after"
-          width="720"
-          height="720"
-          alt="After a single dry needling session at Five Points Wellness, the same person in a teal shirt holds both arms closer to shoulder height. The practice published this as the after photo from a 20-minute treatment. The face is cropped out, and the pair is meant to show shoulder range of motion."
-        />
-        <figcaption>After about 20 minutes. Both arms sit higher.</figcaption>
-      </figure>
+  <PageHero eyebrow="Acupuncture" lede="Trigger & Motor Point Therapy for Pain and Movement">Orthopedic dry needling in Philadelphia</PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      <p>
+        Dry needling is a technique used to treat muscular pain, trigger points, and movement dysfunction using fine, sterile needles. It is based on the same foundational principles and tools used in acupuncture and is considered one application within acupuncture-based treatment approaches.
+      </p>
+      <p>At Five Points Wellness, dry needling is performed within the broader framework of acupuncture and integrative musculoskeletal care.</p>
+
+      <h2>Clinical Training &amp; Credentials</h2>
+      <p>Treatment is provided by a licensed acupuncturist with advanced clinical training including:</p>
+      <ul class="checklist">
+        {training.map((item) => <li>{item}</li>)}
+      </ul>
+      <p>This training provides a comprehensive foundation in both traditional acupuncture theory and modern biomedical approaches to pain and movement dysfunction.</p>
+
+      <h2>How Dry Needling Works</h2>
+      <p>Dry needling is commonly used to address areas of tight, overactive muscle tissue known as trigger points. These points may contribute to:</p>
+      <ul class="checklist cols">
+        <li>Localized pain</li>
+        <li>Muscle stiffness</li>
+        <li>Reduced range of motion</li>
+        <li>Referred pain patterns (pain that travels to other areas of the body)</li>
+      </ul>
+      <p>
+        When a fine needle is inserted into these areas, the muscle may respond with a brief involuntary twitch response. This is thought to help reset abnormal muscle activity, improve circulation, and reduce localized tension.
+      </p>
+      <p>Many patients report a sensation of release during or shortly after treatment.</p>
+
+      <h2>Trigger Points &amp; Motor Point Therapy</h2>
+      <p>
+        Many painful muscles contain sensitive areas commonly referred to as "knots" or trigger points. These areas can contribute to pain, stiffness, restricted movement, and even symptoms that travel into other parts of the body.
+      </p>
+      <p>
+        Motor point acupuncture utilizes specific points where a nerve enters and communicates with a muscle. Because these points play a key role in muscle activation, treatment can often help release tension throughout the entire muscle with the stimulation of a single point. This approach is commonly used to address muscle tightness, movement dysfunction, and sports-related injuries.
+      </p>
+      <p>
+        Some patients may recognize similarities between this technique and dry needling. While dry needling primarily focuses on trigger points within affected muscles, acupuncture takes a broader approach that may incorporate trigger points, motor points, traditional acupuncture points, and an assessment of the body's overall function. This allows treatment to be tailored not only to the painful area itself but also to factors that may be contributing to the condition.
+      </p>
+
+      <h2>What Conditions Can Dry Needling Help With?</h2>
+      <p>Dry needling is commonly used for musculoskeletal and movement-related conditions, including:</p>
+      <ul class="checklist cols">
+        <li>Neck and shoulder pain</li>
+        <li>Back pain and postural tension</li>
+        <li>Sciatica and nerve-related pain patterns</li>
+        <li>Hip, knee, and joint dysfunction</li>
+        <li>Sports injuries and overuse conditions</li>
+        <li>Muscle tightness and chronic tension</li>
+        <li>Headaches and TMJ-related pain</li>
+        <li>Restricted mobility or movement imbalance</li>
+      </ul>
+
+      <h2>What to Expect During Treatment</h2>
+      <p>During your session, a detailed assessment is performed to evaluate posture, movement, muscle tension, and areas of pain or restriction.</p>
+      <p>A fine sterile needle is then inserted into selected trigger points, motor points, or acupuncture points depending on your condition.</p>
+      <p>You may experience:</p>
+      <ul class="checklist cols">
+        <li>A brief muscle twitch response</li>
+        <li>Mild aching or pressure sensation</li>
+        <li>A feeling of release in the muscle</li>
+        <li>Temporary soreness similar to post-exercise fatigue</li>
+      </ul>
+      <p>Treatments typically last between 20–60 minutes depending on your needs and whether dry needling is combined with other therapies such as acupuncture, cupping, or manual techniques.</p>
+
+      <h2>How Quickly Will I Notice Results?</h2>
+      <p>Many patients report noticeable improvements quickly, sometimes during or immediately after treatment.</p>
+      <p>Common short-term effects include:</p>
+      <ul class="checklist cols">
+        <li>Reduced muscle tension</li>
+        <li>Improved range of motion</li>
+        <li>Easier movement</li>
+        <li>Decreased pain intensity</li>
+      </ul>
+      <p>In some cases, especially with acute or localized dysfunction, results may be felt right away. Chronic or long-standing conditions often improve progressively over a series of treatments.</p>
+    </article>
+
+    <div class="wrap" style="max-width:52rem;margin-top:3.5rem">
+      <h2 style="text-align:center;font-size:1.6rem">Range of Motion: <span class="accent">Before &amp; After</span></h2>
+      <p class="fine" style="text-align:center;max-width:36rem;margin:0 auto 1.5rem">The images below were taken immediately before and after a single 20-minute dry needling session, demonstrating the improvement in range of motion that can occur within one treatment. Individual results may vary.</p>
+      <div class="results">
+        <figure>
+          <Picture
+            name="dry-needling-shoulder-range-of-motion-before"
+            width={720}
+            height={720}
+            alt="Before dry needling at Five Points Wellness, a person in a teal shirt and dark pants stands with both arms lifted out to the sides. One arm sits slightly lower, which is the restricted shoulder position in this range-of-motion pair. The face is cropped out of the frame, and the photo is labeled as the before image."
+          />
+          <figcaption>Before</figcaption>
+        </figure>
+        <figure>
+          <Picture
+            name="dry-needling-shoulder-range-of-motion-after"
+            width={720}
+            height={720}
+            alt="After a single dry needling session at Five Points Wellness, the same person in a teal shirt holds both arms closer to shoulder height. The practice published this as the after photo from a 20-minute treatment. The face is cropped out, and the pair is meant to show shoulder range of motion."
+          />
+          <figcaption>After</figcaption>
+        </figure>
+      </div>
     </div>
-    <h2>Dry needling and acupuncture</h2>
-    <p>
-      Dry needling is the name often used for treating muscular trigger points with thin needles. Acupuncture is the broader system, including musculoskeletal care and support for the nervous system, pain, stress, sleep, digestion, and general wellness. At this office the dry needling techniques sit inside that acupuncture approach, based on what the patient presents with.
-    </p>
-    <p>The shorter services-list description calls it orthopedic dry needling aimed at motor points, trigger points, and areas of tension for chronic pain, sports injuries, and movement restrictions.</p>
-    <FaqList items={faqs} />
-    <h2>Dry needling by Philadelphia neighborhood</h2>
-    <p>
-      The office is <strong>Five Points Wellness LLC</strong>, <strong>2137 E Huntingdon St, Philadelphia, PA 19125</strong>. Call or text <strong>(610) 742-5810</strong>. These pages use the same trip details as the acupuncture neighborhood pages, for people searching dry needling from a nearby neighborhood.
-    </p>
-    <DryNeedlingLinks except="dry-needling" />
-    <p>Pain care more broadly is on the <a href="/acupuncture/pain-injury-recovery">pain and injury acupuncture</a> page. Athletes can also read <a href="/acupuncture/sports-performance-recovery">sports acupuncture</a>.</p>
-    <CtaBand heading="Book dry needling" text="If you have pain, muscle tightness, or restricted movement, book a session at the Fishtown office." />
-  </article>
+
+    <article class="narrow prose" style="margin-top:1rem">
+      <h2>Dry Needling vs. Acupuncture</h2>
+      <p>
+        Dry needling is a term commonly used to describe the treatment of muscular trigger points using thin needles. Acupuncture is a broader clinical system that includes musculoskeletal treatment as well as support for nervous system regulation, pain modulation, stress, sleep, digestion, and overall wellness.
+      </p>
+      <p>At Five Points Wellness, dry needling techniques are integrated within a comprehensive acupuncture-based treatment approach depending on the patient's needs and presentation.</p>
+
+      <FaqList items={faqs} />
+
+      <CtaBand heading="Book a Session" text="If you're experiencing pain, muscle tightness, or movement restriction, dry needling may help restore function and reduce discomfort." />
+
+      <p class="subhead">Dry Needling by Neighborhood</p>
+      <p>We're at <strong>2137 E Huntingdon St, Philadelphia, PA 19125</strong>. These pages cover the trip from each area.</p>
+      <DryNeedlingLinks except="dry-needling" />
+
+      <p class="subhead">Other Conditions We Treat</p>
+      <ul class="chips">
+        {conditionOrder.map((item) => (
+          <li><a href={`/acupuncture/${item}`}>{conditionMeta[item].label}</a></li>
+        ))}
+      </ul>
+    </article>
+  </section>
 </Base>

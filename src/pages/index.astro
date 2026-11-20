@@ -1,12 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "../components/Actions.astro";
-import CtaBand from "../components/CtaBand.astro";
+import Hours from "../components/Hours.astro";
 import Picture from "../components/Picture.astro";
-import ServiceLinks from "../components/ServiceLinks.astro";
-import LocationLinks from "../components/LocationLinks.astro";
+import Testimonials from "../components/Testimonials.astro";
+import YinYang from "../components/YinYang.astro";
+import YinYangIcon from "../components/YinYangIcon.astro";
+import { areas } from "../data/areas";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
-import { addressLine, practice, testimonials } from "../data/site";
+import { practice } from "../data/site";
 
 const mapEmbed =
   "https://www.google.com/maps?q=Five+Points+Wellness+LLC,+2137+E+Huntingdon+St,+Philadelphia,+PA+19125&output=embed";
@@ -16,102 +17,121 @@ const reviewsUrl =
 const title = "Acupuncture in Fishtown, Philadelphia | Five Points Wellness";
 const description =
   "Licensed acupuncturist Cara Speer offers acupuncture and Chinese medicine at Five Points Wellness LLC, 2137 E Huntingdon St, Fishtown, Philadelphia. Call or text (610) 742-5810.";
+
+const nearbyAreas = areas.filter((area) => area.group === "philadelphia").slice(0, 8);
 ---
 
 <Base title={title} description={description}>
-  <section class="hero">
+  <section class="home-hero">
     <div class="wrap">
-      <p class="eyebrow">{practice.name} · {practice.areaNote}</p>
-      <h1>Acupuncture in Fishtown, Philadelphia</h1>
+      <p class="script">Five Points Wellness</p>
+      <h1>
+        Transform Your
+        <span class="accent-word">Wellness</span>
+        with Acupuncture
+      </h1>
+      <p class="local">Acupuncture in Fishtown, Philadelphia</p>
       <p class="lede">
-        Rooted in traditional Chinese medicine, <strong>Five Points Wellness LLC</strong> is committed to your journey towards balance and well-being.
-        Care is with <strong>{practice.practitionerFull}</strong>, a licensed acupuncturist, at <strong>{addressLine}</strong>.
+        Rooted in traditional Chinese medicine, we are committed to your journey towards balance and well-being.
       </p>
-      <Actions />
-      <p>
-        Not sure yet? <a href="/book-appointment">Schedule a complimentary session</a> to ask questions before you commit.
+      <div class="actions">
+        <a class="btn btn-primary btn-lg" href="/book-appointment">Book an Appointment</a>
+        <a class="btn btn-outline btn-lg" href="/acupuncture">Learn About Our Approach</a>
+      </div>
+      <p class="actions-note">
+        Not sure yet? <a href="/book-appointment#portal">Schedule a complimentary session</a> to ask questions before you commit.
       </p>
+      <div class="credentials">
+        <p class="small">Licensed Acupuncturist</p>
+        <p class="strong">Serving the Philadelphia Area</p>
+      </div>
     </div>
   </section>
 
-  <section class="wrap content">
-    <h2>A neighborhood acupuncture office</h2>
-    <p>
-      The office is on the <strong>Fishtown</strong> and <strong>East Kensington</strong> edge, a short walk east of <strong>Huntingdon Station</strong> on the Market-Frankford Line.
-      Hours are by appointment: Monday through Thursday 9 AM–7 PM, Friday 9 AM–3 PM,       Saturday 10 AM–2 PM, Sunday closed. {practice.parking}.
-    </p>
-    <p>
-      <a href="/acupuncture">Read how acupuncture works here</a>, or go straight to the <a href="/acupuncture-fishtown">Fishtown acupuncture page</a> for directions.
-    </p>
-
-    <h2>Acupuncture and Chinese medicine services</h2>
-    <p>
-      An acupuncture session is listed as 50 minutes. Traditional Chinese Medicine, 5 Element acupuncture, and Kiiko-style may be used depending on the patient.
-      The other hands-on methods are included in that visit when Cara decides they fit. Microneedling is booked on its own.
-    </p>
-    <ServiceLinks />
-
-    <h2>Concerns treated at the office</h2>
-    <div class="grid cards">
-      {conditionOrder.map((slug) => (
-        <a class="card" href={`/acupuncture/${slug}`}>
-          <h3>{conditionMeta[slug].label}</h3>
-          <p>{conditionMeta[slug].description}</p>
-        </a>
-      ))}
-    </div>
-
-    <div class="split" style="margin-top:2rem">
-      <Picture
-        name="cara-speer-licensed-acupuncturist"
-        width="640"
-        height="640"
-        class="portrait"
-        alt="Portrait of Cara Speer, M.Ac., L.Ac., the licensed acupuncturist at Five Points Wellness in Philadelphia. She has long blonde hair and wears a magenta top and a small gold pendant, photographed outdoors with trees behind her. The portrait introduces her on the practice homepage."
-      />
+  <section class="section" id="about" aria-labelledby="meet-heading">
+    <YinYang size={200} style="top:2.5rem;right:2.5rem" />
+    <div class="mid meet">
+      <div class="portrait-card">
+        <Picture
+          name="cara-speer-licensed-acupuncturist"
+          width={640}
+          height={640}
+          alt="Portrait of Cara Speer, M.Ac., L.Ac., the licensed acupuncturist at Five Points Wellness in Philadelphia. She has long blonde hair and wears a magenta top and a small gold pendant, photographed outdoors with trees behind her. The portrait introduces her on the practice homepage."
+        />
+      </div>
       <div>
-        <h2>Meet Cara Speer, M.Ac., L.Ac.</h2>
+        <h2 id="meet-heading">Meet <span class="accent">Cara Speer, M.Ac., L.Ac.</span></h2>
         <p>
           As a licensed acupuncturist, Cara is committed to serving her community with integrity and compassion, staying rooted in the wisdom of Traditional Chinese Medicine while continuously learning from her patients and adapting to their ever changing needs.
         </p>
-        <p><a href="/about">About Cara Speer</a></p>
+        <a class="text-link" href="/about">About Cara Speer <span aria-hidden="true">→</span></a>
       </div>
     </div>
+  </section>
 
-    <h2>What patients say</h2>
-    <p>These comments are published by the practice and signed with initials only.</p>
-    <div class="grid">
-      {testimonials.map((item) => (
-        <blockquote class="quote">
-          <p>{item.quote}</p>
-          <footer>— {item.author}</footer>
-        </blockquote>
-      ))}
+  <section class="section" id="testimonials" aria-labelledby="patients-heading" style="padding-top:2rem">
+    <YinYang size={180} style="top:2.5rem;left:5%" slow />
+    <YinYang size={120} style="bottom:5rem;right:9%" />
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="patients-heading" class="with-icon"><YinYangIcon size={40} /> <span>What Our <span class="accent">Patients Say</span></span></h2>
+        <p>Hear from those who have experienced healing and wellness at Five Points Wellness</p>
+      </div>
+      <Testimonials />
     </div>
+  </section>
 
-    <h2>Areas that come to the Fishtown studio</h2>
-    <p>
-      The practice has one office, at 2137 E Huntingdon St. Philadelphia neighborhood pages start there. Main Line and nearby town pages are for residents who travel to that studio. There is no second office.
-    </p>
-    <LocationLinks />
-
-    <section id="find-us">
-      <h2>Find us on Google</h2>
-      <p>
-        <strong>Five Points Wellness LLC</strong><br />
-        2137 E Huntingdon St, Philadelphia, PA 19125<br />
-        <a href="tel:+16107425810">(610) 742-5810</a>
+  <section class="section" aria-labelledby="help-heading" style="padding-top:1.5rem">
+    <div class="mid" style="text-align:center">
+      <h2 id="help-heading">Ways We Can <span class="accent">Help</span></h2>
+      <p class="lede" style="font-size:1.0625rem">
+        Acupuncture can address a wide range of health concerns, from acute conditions to chronic disorders.
       </p>
-      <div class="map-embed">
-        <iframe
-          src={mapEmbed}
-          title="Google Map of Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      <p><a href={reviewsUrl}>Read our reviews on Google</a></p>
-    </section>
+      <ul class="chips center" style="margin-top:1.75rem">
+        {conditionOrder.map((slug) => (
+          <li><a href={`/acupuncture/${slug}`}>{conditionMeta[slug].label}</a></li>
+        ))}
+        <li><a href="/dry-needling">Dry Needling</a></li>
+        <li><a href="/microneedling">Microneedling</a></li>
+      </ul>
+      <p style="margin-top:1.5rem"><a class="text-link" href="/services">See all of our services <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
 
-    <CtaBand />
+  <section class="section" id="find-us" aria-labelledby="visit-heading" style="padding-top:2rem">
+    <div class="wrap visit">
+      <div class="visit-copy">
+        <h2 id="visit-heading">Visit the <span class="accent">Studio</span></h2>
+        <p>
+          We're on East Huntingdon Street, where Fishtown meets East Kensington. Huntingdon Station on the Market-Frankford Line is about a half-mile walk west, and free street parking is readily available.
+        </p>
+        <address>
+          <strong>Five Points Wellness LLC</strong><br />
+          {practice.street}, {practice.city}, {practice.region} {practice.postal}<br />
+          <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> · call or text
+        </address>
+        <div class="card" style="padding:1.25rem 1.5rem">
+          <h3>Hours</h3>
+          <Hours compact />
+        </div>
+        <p style="margin-top:1.5rem;margin-bottom:0.25rem">Coming from another neighborhood? We see patients from all over the city.</p>
+        <ul class="chips">
+          {nearbyAreas.map((area) => (
+            <li><a href={`/${area.slug}`}>{area.name}</a></li>
+          ))}
+          <li><a href="/locations">All areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="map-embed">
+          <iframe
+            src={mapEmbed}
+            title="Google Map of Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <p style="margin-top:0.9rem;text-align:center"><a class="text-link" href={reviewsUrl}>Read our reviews on Google <span aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
   </section>
 </Base>

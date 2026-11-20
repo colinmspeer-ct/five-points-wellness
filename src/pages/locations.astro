@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
-import Actions from "../components/Actions.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
 import LocationLinks from "../components/LocationLinks.astro";
 import { addressLine, practice } from "../data/site";
 
@@ -14,26 +15,23 @@ const crumbs = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <article class="wrap content">
-    <header class="page-hero">
-      <p class="eyebrow">One studio · {addressLine}</p>
-      <h1>Areas served from the Fishtown studio</h1>
-      <p class="lede">
-        {practice.name} has one treatment room, at {addressLine}, phone {practice.phoneDisplay}. Philadelphia pages describe that neighborhood. Main Line and nearby town pages are for residents who travel in. None of those towns has a second office.
+  <PageHero
+    eyebrow={`One studio · ${practice.street}`}
+    lede={`We have one studio, at ${addressLine}. Patients come to us from neighborhoods across Philadelphia, the Main Line, and nearby towns. Call or text ${practice.phoneDisplay}.`}
+  >Areas served from the <span class="accent">Fishtown studio</span></PageHero>
+  <section class="band">
+    <article class="narrow prose">
+      <p>
+        Our home neighborhood is <a href="/fishtown">Fishtown</a>, and the page for acupuncture there is <a href="/fishtown/acupuncture">acupuncture in Fishtown</a>. Each page below covers the trip from that area.
       </p>
-      <Actions />
-    </header>
-    <p>
-      The Google Business Profile address is the Fishtown studio. The area hub for that neighborhood is <a href="/fishtown">Fishtown</a>, and the acupuncture page is <a href="/fishtown/acupuncture">acupuncture in Fishtown</a>.
-    </p>
-    <LocationLinks />
-    <h2>Bella Vista</h2>
-    <p>
-      Bella Vista is not in the new area set. The earlier pages are still here: <a href="/acupuncture-bella-vista">acupuncture in Bella Vista</a> and <a href="/dry-needling-bella-vista">dry needling in Bella Vista</a>.
-    </p>
-    <h2>What these pages are not</h2>
-    <p>
-      They are not extra clinics. If your town is not listed, you can still book. Call or text {practice.phoneDisplay} and come to Huntingdon Street.
-    </p>
-  </article>
+      <LocationLinks showAll={false} />
+      <p class="subhead">Bella Vista</p>
+      <p>
+        Our earlier Bella Vista pages are still here: <a href="/acupuncture-bella-vista">acupuncture in Bella Vista</a> and <a href="/dry-needling-bella-vista">dry needling in Bella Vista</a>.
+      </p>
+      <p class="subhead">Don't see your town?</p>
+      <p>You can still book. Call or text {practice.phoneDisplay} and come to Huntingdon Street.</p>
+      <CtaBand />
+    </article>
+  </section>
 </Base>
