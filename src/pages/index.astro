@@ -8,7 +8,7 @@ import YinYang from "../components/YinYang.astro";
 import YinYangIcon from "../components/YinYangIcon.astro";
 import { areas } from "../data/areas";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
-import { practice } from "../data/site";
+import { hours, practice } from "../data/site";
 
 const mapEmbed =
   "https://www.google.com/maps?q=Five+Points+Wellness+LLC,+2137+E+Huntingdon+St,+Philadelphia,+PA+19125&output=embed";
@@ -19,6 +19,17 @@ const title = "Acupuncture in Fishtown, Philadelphia | Five Points Wellness";
 const description =
   "Licensed acupuncturist Cara Speer offers acupuncture and Chinese medicine at Five Points Wellness LLC, 2137 E Huntingdon St, Fishtown, Philadelphia. Call or text (610) 742-5810.";
 
+// Plain-sentence hours for the answer paragraph, built from the same data as the hours table and schema.
+const open = hours.filter((row) => row.opens);
+const weekday = open.filter((row) => row.time === open[0].time);
+const rest = open.slice(weekday.length);
+const hoursSentence = [
+  `${weekday[0].day} through ${weekday[weekday.length - 1].day} ${weekday[0].time}`,
+  ...rest.map((row) => `${row.day} ${row.time}`),
+]
+  .join(", ")
+  .replace(/, ([^,]*)$/, ", and $1");
+
 const nearbyAreas = areas.filter((area) => area.group === "philadelphia").slice(0, 8);
 ---
 
@@ -26,12 +37,12 @@ const nearbyAreas = areas.filter((area) => area.group === "philadelphia").slice(
   <section class="home-hero">
     <div class="wrap">
       <p class="script">Five Points Wellness</p>
+      <p class="local">Acupuncture in Fishtown, Philadelphia</p>
       <h1>
         Transform Your
         <span class="accent-word">Wellness</span>
         with Acupuncture
       </h1>
-      <p class="local">Acupuncture in Fishtown, Philadelphia</p>
       <p class="lede">
         Rooted in traditional Chinese medicine, we are committed to your journey towards balance and well-being.
       </p>
@@ -103,6 +114,9 @@ const nearbyAreas = areas.filter((area) => area.group === "philadelphia").slice(
     <div class="wrap visit">
       <div class="visit-copy">
         <h2 id="visit-heading">Visit the <span class="accent">Studio</span></h2>
+        <p class="answer">
+          Five Points Wellness is an acupuncture practice at {practice.street} in Fishtown, Philadelphia. Cara Speer, M.Ac., L.Ac., is the licensed acupuncturist. She sees patients by appointment {hoursSentence}. Call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> to book.
+        </p>
         <p>
           We're on East Huntingdon Street, where Fishtown meets East Kensington. Huntingdon Station on the Market-Frankford Line is about a half-mile walk west, and free street parking is readily available.
         </p>
@@ -124,15 +138,35 @@ const nearbyAreas = areas.filter((area) => area.group === "philadelphia").slice(
         </ul>
       </div>
       <div>
-        <div class="map-embed">
-          <iframe
-            src={mapEmbed}
-            title="Google Map of Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-facade" data-map>
+          <svg class="map-pin" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <p class="map-name">Five Points Wellness LLC</p>
+          <p class="map-addr">{practice.street}<br />{practice.city}, {practice.region} {practice.postal}</p>
+          <p class="map-note">{practice.areaNote}</p>
+          <div class="map-actions">
+            <button type="button" class="btn btn-primary" data-show-map>Show map</button>
+            <a class="btn btn-outline" href={practice.mapLink}>Open in Google Maps</a>
+          </div>
         </div>
         <p style="margin-top:0.9rem;text-align:center"><a class="text-link" href={reviewsUrl}>Read our reviews on Google <span aria-hidden="true">→</span></a></p>
       </div>
     </div>
   </section>
 </Base>
+
+<script is:inline define:vars={{ mapEmbed }}>
+  (function () {
+    var button = document.querySelector("[data-show-map]");
+    if (!button) return;
+    button.addEventListener("click", function () {
+      var box = button.closest("[data-map]");
+      var frame = document.createElement("iframe");
+      frame.src = mapEmbed;
+      frame.title = "Google Map of Five Points Wellness LLC, 2137 E Huntingdon St, Philadelphia, PA 19125";
+      frame.referrerPolicy = "no-referrer-when-downgrade";
+      box.classList.add("is-loaded");
+      box.replaceChildren(frame);
+      frame.focus();
+    });
+  })();
+</script>

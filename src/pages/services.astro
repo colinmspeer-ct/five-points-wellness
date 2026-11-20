@@ -74,13 +74,14 @@ const services = [
   <div style="position:relative">
     <YinYang size={130} style="top:3.5rem;left:2.5%" />
     <PageHero
+      compact
       eyebrow="Acupuncture services in Philadelphia"
       lede="All services listed below are included in an acupuncture session at the practitioner's discretion."
     >Our <span class="accent">Services</span></PageHero>
   </div>
 
   <section class="band">
-    <div class="wrap" style="max-width:62rem">
+    <div class="wrap services-wrap">
       <div class="service-grid">
         {services.map((item) => (
           <article class="card service-card">
@@ -119,7 +120,7 @@ const services = [
         </ul>
       </div>
 
-      <div class="mid" style="margin-top:4.5rem;width:100%;max-width:48rem">
+      <div class="services-book">
         <BookingPanel id="book-consultation" />
       </div>
     </div>

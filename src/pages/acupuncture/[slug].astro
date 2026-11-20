@@ -60,7 +60,7 @@ const extraGraph = [
 ---
 
 <Base title={meta.title} description={meta.description} crumbs={crumbs} extraGraph={extraGraph}>
-  <PageHero eyebrow="Acupuncture" lede={page.tagline}>{meta.h1}</PageHero>
+  <PageHero eyebrow="Acupuncture" shortTitle={meta.label} lede={page.tagline}>{meta.h1}</PageHero>
   <section class="band">
     <article class="narrow prose">
       {page.overview.map((paragraph) => <p>{paragraph}</p>)}

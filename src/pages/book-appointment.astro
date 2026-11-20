@@ -1,9 +1,6 @@
 ---
 import { href } from "../lib/legacy";
 import Base from "../layouts/Base.astro";
-import BookingPanel from "../components/BookingPanel.astro";
-import Hours from "../components/Hours.astro";
-import PageHero from "../components/PageHero.astro";
 import { practice } from "../data/site";
 
 const title = "Book Acupuncture in Philadelphia | Five Points Wellness";
@@ -16,52 +13,64 @@ const crumbs = [
 ---
 
 <Base title={title} description={description} crumbs={crumbs}>
-  <PageHero
-    eyebrow="Patient portal · phone · text"
-    lede="Book online through our patient portal below, or text, call or email us directly."
-  >Book an <span class="accent">Appointment</span></PageHero>
+  <section class="book-page">
+    <div class="wrap">
+      <header class="book-hero">
+        <h1>Book <span class="accent">Appointment</span></h1>
+        <p>Book online through our patient portal below, or text, call or email us directly.</p>
+      </header>
 
-  <section class="band">
-    <div class="mid" style="max-width:52rem">
-      <BookingPanel
-        heading="Book Online via Patient Portal"
-        lead="Book your appointment online and manage your health information using our patient portal."
-        small="Not sure yet? You can also use the portal to schedule a complimentary session to ask questions before you commit."
-      />
+      <div class="card schedule-card">
+        <svg class="schedule-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        <h2>Schedule Your Session</h2>
+        <p class="schedule-lead">Text, call or email us for availability and to book your appointment.</p>
+        <a class="contact-tile" href={`tel:${practice.phoneTel}`}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>
+            <span class="tile-label">Phone</span>
+            <span class="tile-value">{practice.phoneDisplay}</span>
+            <span class="tile-note">Call or Text</span>
+          </span>
+        </a>
+        <a class="contact-tile" href={`mailto:${practice.email}`}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span>
+            <span class="tile-label">Email</span>
+            <span class="tile-value">{practice.email}</span>
+            <span class="tile-note">Send us a message</span>
+          </span>
+        </a>
+        <p class="schedule-hours"><strong>Hours:</strong> By appointment only</p>
+      </div>
 
-      <div class="grid two" style="margin-top:2rem">
-        <div class="card">
-          <h2 style="font-size:1.25rem;font-weight:600">Schedule Your Session</h2>
-          <p style="color:var(--muted)">Text, call or email us for availability and to book your appointment.</p>
-          <div class="contact-list" style="gap:0.9rem">
-            <p style="margin:0"><strong>Phone</strong><br /><a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> · <a href={`sms:${practice.phoneTel}`}>Text</a></p>
-            <p style="margin:0"><strong>Email</strong><br /><a href={`mailto:${practice.email}`}>{practice.email}</a></p>
+      <section class="portal-section" id="patient-portal" aria-labelledby="portal-heading">
+        <span id="portal" class="anchor" aria-hidden="true"></span>
+        <h2 id="portal-heading">Book Online via Patient <span class="accent">Portal</span></h2>
+        <p class="portal-lead">Book your appointment online and manage your health information using our patient portal.</p>
+        <div class="card portal-card">
+          <iframe src={practice.bookingUrl} title="Patient Portal" loading="lazy"></iframe>
+        </div>
+        <p class="portal-fallback">Calendar not showing? <a href={practice.bookingUrl}>Open the patient portal</a></p>
+      </section>
+
+      <section class="mn-prices" aria-labelledby="mn-heading">
+        <h2 id="mn-heading">Microneedling <span class="accent">Services</span></h2>
+        <div class="price-grid">
+          <div class="card price-card">
+            <h3>Single Session</h3>
+            <p class="duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 50 minutes</p>
+            <p class="price">$350</p>
+          </div>
+          <div class="card price-card">
+            <h3>4-Session Package <span class="tag">Save $200</span></h3>
+            <p class="duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 50 minutes each · 4 appointments</p>
+            <p class="price">$1,200</p>
           </div>
         </div>
-        <div class="card">
-          <h2 style="font-size:1.25rem;font-weight:600">Hours</h2>
-          <Hours />
-        </div>
-      </div>
-
-      <h2 style="text-align:center;margin:4rem 0 0.5rem;font-size:1.6rem">Microneedling <span class="accent">Services</span></h2>
-      <div class="price-grid">
-        <div class="card price-card">
-          <h3>Single Session</h3>
-          <p>50 minutes</p>
-          <p class="price">$350</p>
-        </div>
-        <div class="card price-card">
-          <span class="tag">Save $200</span>
-          <h3>4-Session Package</h3>
-          <p>50 minutes each · 4 appointments</p>
-          <p class="price">$1,200</p>
-        </div>
-      </div>
-      <p class="fine" style="text-align:center;margin-top:1.25rem">
-        You can also book microneedling through our online portal above, where you can choose between a single session or package.
-        A general acupuncture price is not published here. The race-day package on the <a href={href("/acupuncture/sports-performance-recovery")}>sports page</a> is $325, booked by phone or text only.
-      </p>
+        <p class="mn-note">
+          You can also book microneedling through our <a href="#patient-portal">online portal above</a>, where you can choose between a single session or package.
+        </p>
+      </section>
     </div>
   </section>
 </Base>

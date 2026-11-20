@@ -5,6 +5,7 @@ import PageHero from "../../components/PageHero.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import FaqList from "../../components/FaqList.astro";
 import Hours from "../../components/Hours.astro";
+import LocationLinks from "../../components/LocationLinks.astro";
 import { areas, areaBySlug } from "../../data/areas";
 import { offeredServices } from "../../data/offeredServices";
 import { addressLine, practice } from "../../data/site";
@@ -17,7 +18,6 @@ const slug = Astro.params.area ?? "";
 const area = areaBySlug.get(slug);
 if (!area) throw new Error(`Missing area ${slug}`);
 
-const nearby = area.nearby.map((item) => areaBySlug.get(item)).filter((item) => item != null);
 const title = area.atStudio
   ? `Acupuncture in ${area.h1Place} | Five Points Wellness`
   : `Acupuncture for ${area.h1Place} | Five Points Wellness`;
@@ -92,17 +92,10 @@ const extraGraph = [
       <div class="card" style="padding:1.25rem 1.5rem;max-width:26rem"><Hours compact /></div>
       <FaqList items={faqs} heading={`Questions about coming from ${area.name}`} />
       <CtaBand />
-      {nearby.length > 0 && (
-        <>
-          <p class="subhead">Nearby Areas</p>
-          <ul class="chips">
-            {nearby.map((item) => (
-              <li><a href={href(`/${item.slug}`)}>{item.name}</a></li>
-            ))}
-            <li><a href={href("/locations")}>All areas</a></li>
-          </ul>
-        </>
-      )}
+      <p class="subhead">Our Main Pages</p>
+      <p>Most of what we do is described on our main pages: <a href={href("/")}>acupuncture in Fishtown</a>, <a href={href("/acupuncture")}>acupuncture in Philadelphia</a>, <a href={href("/acupuncture/dry-needling")}>orthopedic dry needling</a>, <a href={href("/microneedling")}>microneedling</a>, and the full <a href={href("/services")}>list of services</a>.</p>
+      <h2>Other Neighborhoods We Serve</h2>
+      <LocationLinks except={area.slug} />
     </article>
   </section>
 </Base>

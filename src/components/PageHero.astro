@@ -1,10 +1,21 @@
 ---
-interface Props { eyebrow?: string; lede?: string }
-const { eyebrow, lede } = Astro.props;
+// shortTitle: the original site's short page title, shown large. The keyword heading stays the
+// page's only <h1>, set as the small line above it (where the old "ACUPUNCTURE" eyebrow sat).
+interface Props { eyebrow?: string; lede?: string; compact?: boolean; shortTitle?: string }
+const { eyebrow, lede, compact = false, shortTitle } = Astro.props;
 ---
-<header class="page-hero narrow">
-  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-  <h1><slot /></h1>
+<header class:list={["page-hero narrow", { compact }]}>
+  {shortTitle ? (
+    <>
+      <h1 class="eyebrow-h1"><slot /></h1>
+      <p class="short-title">{shortTitle}</p>
+    </>
+  ) : (
+    <>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1><slot /></h1>
+    </>
+  )}
   {lede && <p class="lede">{lede}</p>}
   <slot name="after" />
 </header>

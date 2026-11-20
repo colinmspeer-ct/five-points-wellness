@@ -48,7 +48,7 @@ const cityAreas = areas.filter((area) => area.group === "philadelphia");
     </div>
 
     <div class="foot-areas">
-      <span class="label">Neighborhoods we serve:</span>
+      <p class="label">Neighborhoods we serve</p>
       <ul>
         {cityAreas.map((area) => (
           <li><a href={href(`/${area.slug}`)}>{area.name}</a></li>
@@ -64,6 +64,7 @@ const cityAreas = areas.filter((area) => area.group === "philadelphia");
         <li><a href={href("/terms")}>Terms</a></li>
         <li><a href={href("/locations")}>Locations</a></li>
         <li><a href={href("/sitemap/")}>Sitemap</a></li>
+        <li><a href="/sitemap.xml">XML sitemap</a></li>
       </ul>
       <p class="disclaimer">Acupuncture is complementary care and does not replace emergency or primary medical care.</p>
     </div>

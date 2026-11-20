@@ -1,12 +1,13 @@
 ---
 import YinYangIcon from "./YinYangIcon.astro";
 import { practice } from "../data/site";
-interface Props { id?: string; heading?: string; lead?: string; small?: string }
+interface Props { id?: string; heading?: string; lead?: string; small?: string; frameTitle?: string }
 const {
   id = "portal",
   heading = "Book an Appointment",
   lead = "Schedule your appointment online using our patient portal.",
   small = "Have questions before committing? You can also use the portal to schedule a complimentary session to talk through what you're dealing with and whether acupuncture is a good fit.",
+  frameTitle = "Book Consultation or Appointment",
 } = Astro.props;
 ---
 <section class="card book-panel" id={id}>
@@ -14,31 +15,8 @@ const {
   <h2>{heading}</h2>
   <p class="lead">{lead}</p>
   <p class="small">{small}</p>
-  <div class="booking-slot" data-booking>
-    <div class="actions">
-      <button type="button" class="btn btn-primary btn-lg" data-load-booking>Open the booking calendar</button>
-      <a class="btn btn-outline btn-lg" href={practice.bookingUrl}>Open the patient portal</a>
-    </div>
-    <p class="actions-note">The calendar loads here only when you open it.</p>
+  <div class="booking-frame">
+    <iframe src={practice.bookingUrl} title={frameTitle} loading="lazy"></iframe>
   </div>
-  <noscript>
-    <p><a href={practice.bookingUrl}>Open the Five Points Wellness patient portal</a></p>
-  </noscript>
+  <p class="portal-fallback">Calendar not showing? <a href={practice.bookingUrl}>Open the patient portal</a></p>
 </section>
-<script is:inline define:vars={{ src: practice.bookingUrl }}>
-  var button = document.querySelector("[data-load-booking]");
-  if (button) {
-    button.addEventListener("click", function () {
-      var slot = button.closest("[data-booking]");
-      if (!slot) return;
-      var frame = document.createElement("iframe");
-      frame.src = src;
-      frame.title = "Five Points Wellness patient portal for booking";
-      frame.loading = "lazy";
-      frame.width = "100%";
-      frame.height = "750";
-      slot.replaceChildren(frame);
-      frame.focus();
-    });
-  }
-</script>
