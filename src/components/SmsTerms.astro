@@ -1,0 +1,15 @@
+---
+// Text-message terms, shown on both /terms and /privacy-policy so the wording stays identical.
+import { practice } from "../data/site";
+---
+<h2 id="text-messages">Text messages</h2>
+<p>
+  {practice.name} may text you about appointments, scheduling and reminders when you call or text <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> or give us your mobile number. Consent to receive texts is not a condition of purchase.
+</p>
+<ul class="dots">
+  <li>Message frequency varies.</li>
+  <li>Message and data rates may apply.</li>
+  <li>Reply STOP to opt out. Reply HELP for help, or call <a href={`tel:${practice.phoneTel}`}>{practice.phoneDisplay}</a> or email <a href={`mailto:${practice.email}`}>{practice.email}</a>.</li>
+  <li>Carriers are not liable for delayed or undelivered messages.</li>
+  <li>We do not share mobile numbers or text-message opt-in information with third parties for marketing.</li>
+</ul>

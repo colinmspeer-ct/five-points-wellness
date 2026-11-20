@@ -1,5 +1,6 @@
 ---
 import YinYangIcon from "./YinYangIcon.astro";
+import PortalFrame from "./PortalFrame.astro";
 import { practice } from "../data/site";
 interface Props { id?: string; heading?: string; lead?: string; small?: string; frameTitle?: string }
 const {
@@ -15,8 +16,6 @@ const {
   <h2>{heading}</h2>
   <p class="lead">{lead}</p>
   <p class="small">{small}</p>
-  <div class="booking-frame">
-    <iframe src={practice.bookingUrl} title={frameTitle} loading="lazy"></iframe>
-  </div>
+  <PortalFrame class="booking-frame" title={frameTitle} />
   <p class="portal-fallback">Calendar not showing? <a href={practice.bookingUrl}>Open the patient portal</a></p>
 </section>

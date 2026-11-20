@@ -20,8 +20,8 @@ export const practice = {
   parking: "Free street parking readily available",
   response: "Typical email response within one business day",
   bookingUrl: "https://fivepointswellness.acubliss.app/embedded-patient-portal/",
-  lat: 39.983754,
-  lng: -75.12276,
+  lat: 39.984157,
+  lng: -75.123057,
   mapEmbed:
     "https://maps.google.com/maps?q=Five%20Points%20Wellness%20LLC%2C%202137%20E%20Huntingdon%20St%2C%20Philadelphia%2C%20PA%2019125&z=16&output=embed",
   mapLink:

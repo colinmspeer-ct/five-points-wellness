@@ -40,6 +40,115 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Metric-matched local fallbacks (size/ascent/descent measured against Times New Roman / Arial,
+   whose metrics Liberation Serif / Liberation Sans share). Text keeps the same box while the
+   self-hosted fonts swap in, so no layout shift. */
+@font-face {
+  font-family: "Source Serif Fallback";
+  font-weight: 600;
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("LiberationSerif-Bold");
+  size-adjust: 111.65%;
+  ascent-override: 92.79%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Source Serif Fallback";
+  font-weight: 700;
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("LiberationSerif-Bold");
+  size-adjust: 113.67%;
+  ascent-override: 91.14%;
+  descent-override: 29.47%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Source Serif Fallback";
+  font-weight: 400 500;
+  src: local("Times New Roman"), local("TimesNewRomanPSMT"), local("Liberation Serif"), local("LiberationSerif");
+  size-adjust: 117.43%;
+  ascent-override: 88.22%;
+  descent-override: 28.53%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Fallback";
+  font-weight: 400 500;
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
+  size-adjust: 106.13%;
+  ascent-override: 91.28%;
+  descent-override: 22.73%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Fallback";
+  font-weight: 600 700;
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold");
+  size-adjust: 101.22%;
+  ascent-override: 95.71%;
+  descent-override: 23.83%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Playfair Display Fallback";
+  font-style: italic;
+  font-weight: 400 700;
+  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT"), local("Liberation Serif Italic"), local("LiberationSerif-Italic");
+  size-adjust: 106.85%;
+  ascent-override: 101.26%;
+  descent-override: 23.49%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Playfair Display Fallback";
+  font-style: normal;
+  font-weight: 400 700;
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("LiberationSerif-Bold");
+  size-adjust: 104.98%;
+  ascent-override: 103.07%;
+  descent-override: 23.91%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Inter Caps Fallback";
+  font-weight: 400 500;
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans");
+  size-adjust: 99.47%;
+  ascent-override: 97.39%;
+  descent-override: 24.25%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Caps Fallback";
+  font-weight: 600 700;
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold");
+  size-adjust: 98.6%;
+  ascent-override: 98.25%;
+  descent-override: 24.46%;
+  line-gap-override: 0%;
+}
+/* Tuned to the home headline ("Transform Your Wellness with Acupuncture") so it wraps the same
+   way before and after Source Serif 4 arrives. */
+@font-face {
+  font-family: "Source Serif Hero Fallback";
+  font-weight: 700;
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("LiberationSerif-Bold");
+  size-adjust: 115.54%;
+  ascent-override: 89.66%;
+  descent-override: 28.99%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Source Serif Title Fallback";
+  font-weight: 700;
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("LiberationSerif-Bold");
+  size-adjust: 112.53%;
+  ascent-override: 92.06%;
+  descent-override: 29.77%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Original tokens: background hsl(60 20% 99%), foreground hsl(210 15% 25%),
      primary hsl(141 18% 64%). Darker sage steps keep text at WCAG AA. */
@@ -60,9 +169,10 @@
   --radius: 10px;
   --max: 76rem;
   --prose: 44rem;
-  --serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
-  --display: "Playfair Display", Georgia, serif;
-  --sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Source Serif 4", "Source Serif Fallback", Georgia, serif;
+  --display: "Playfair Display", "Playfair Display Fallback", Georgia, serif;
+  --sans: Inter, "Inter Fallback", Arial, sans-serif;
+  --sans-caps: Inter, "Inter Caps Fallback", Arial, sans-serif;
   color-scheme: light;
 }
 
@@ -423,9 +533,22 @@ a.btn.btn-on-dark:hover, button.btn.btn-on-dark:hover { background: #ffffff; col
   border-left: 1px solid var(--line);
 }
 .sheet .sub a { font-weight: 400; font-size: 0.9375rem; color: var(--muted); min-height: 44px; }
-.sheet .btn { width: 100%; margin-top: 0.75rem; color: #fff; justify-content: center; }
-.sheet .sheet-contact { margin: 0.9rem 0.75rem 0; font-size: 0.9375rem; color: var(--muted); }
-.sheet .sheet-contact a { display: inline; padding: 0; min-height: 0; color: var(--sage-ink); font-weight: 500; }
+.sheet-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+.sheet .sheet-actions .btn {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.5rem 0.75rem;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+.sheet .sheet-text { justify-content: center; margin-top: 0.35rem; color: var(--sage-ink); font-size: 0.9375rem; }
 
 /* ---------- Breadcrumbs ---------- */
 
@@ -1147,6 +1270,25 @@ a.btn.btn-on-dark:hover, button.btn.btn-on-dark:hover { background: #ffffff; col
 .portal-card { padding: 0; overflow: hidden; background: #ffffff; }
 .portal-card iframe, .booking-frame iframe { display: block; width: 100%; height: 750px; border: 0; background: #ffffff; }
 .booking-frame { margin-top: 1.5rem; height: 750px; border-radius: 8px; overflow: hidden; }
+/* Neutral skeleton shown in the white 750px card until the portal finishes loading. */
+.portal-frame { position: relative; }
+.portal-frame::before {
+  content: "";
+  position: absolute;
+  inset: 2rem 2rem auto;
+  height: 14rem;
+  border-radius: 6px;
+  background:
+    linear-gradient(#eef0ee, #eef0ee) 0 0 / 45% 1.25rem no-repeat,
+    linear-gradient(#f3f4f3, #f3f4f3) 0 2.5rem / 100% 0.875rem no-repeat,
+    linear-gradient(#f3f4f3, #f3f4f3) 0 4rem / 80% 0.875rem no-repeat,
+    linear-gradient(#f3f4f3, #f3f4f3) 0 6.5rem / 100% 7.5rem no-repeat;
+  pointer-events: none;
+}
+.portal-frame.is-loaded::before { content: none; }
+.portal-frame iframe { position: relative; background: transparent; }
+.portal-frame.is-loaded iframe { background: #ffffff; }
+.portal-noscript { position: absolute; inset: 17rem 1rem auto; margin: 0; text-align: center; }
 .portal-fallback { margin: 0.75rem 0 0; font-size: 0.8125rem; color: var(--muted); text-align: center; }
 .mn-prices { max-width: 64rem; margin: 4rem auto 0; text-align: center; }
 .mn-prices h2 { font-size: 1.5rem; margin: 0 0 1.5rem; }
@@ -1176,3 +1318,38 @@ a.btn.btn-on-dark:hover, button.btn.btn-on-dark:hover { background: #ffffff; col
   .primary-nav > a, .menu > summary { padding: 0 0.5rem; font-size: 1rem; font-weight: 500; }
   .primary-nav > .btn { margin-left: 1rem; padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500; }
 }
+
+/* Text-message consent line under phone details (book + contact). */
+.sms-note { margin: 0.75rem 0 0; font-size: 0.8125rem; line-height: 1.5; color: var(--muted); }
+.sms-note a { color: var(--sage-ink); }
+.schedule-card .tile-sms { max-width: 30rem; margin: 0.75rem auto 0; text-align: center; }
+/* Standalone phone/email links: 44px tap height without changing the line's layout. */
+.tap-link { display: inline-flex; align-items: center; min-height: 44px; margin-block: -10px; }
+
+/* Touch screens: every standalone link gets a 44px-tall tap target. */
+@media (max-width: 1023px) {
+  .dots li > a:only-child,
+  .checklist li > a:only-child,
+  .service-card h2 > a,
+  .service-card h3 > a,
+  .site-footer p > a:only-child,
+  .foot-areas a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .dots li::before { top: 19px; }
+  .checklist li:has(> a:only-child)::before { top: 13px; }
+}
+
+/* Uppercase labels use caps-matched fallback metrics. */
+.eyebrow, .menu-panel .menu-label, .home-hero .local, .page-hero .eyebrow-h1, .facts dt, .site-footer .foot-areas .label { font-family: var(--sans-caps); }
+.home-hero h1 { font-family: "Source Serif 4", "Source Serif Hero Fallback", Georgia, serif; }
+.page-hero .short-title { font-family: "Source Serif 4", "Source Serif Title Fallback", Georgia, serif; }
+@media (max-width: 359px) {
+  .bar { width: calc(100% - 1.5rem); }
+  .brand { font-size: 1rem; gap: 0.5rem; }
+  .brand .logo { width: 44px; height: 44px; }
+}
+.contact-card .sms-note { margin-top: 1rem; }
+.tile-value { overflow-wrap: normal; word-break: normal; }

@@ -13,8 +13,8 @@ const cityAreas = areas.filter((area) => area.group === "philadelphia");
     <div class="foot-grid">
       <div>
         <p class="foot-brand">
-          <img src="/images/five-points-wellness-logo-64.webp" width="34" height="34" alt="" loading="lazy" decoding="async" />
-          Five Points Wellness, LLC
+          <img src="/images/five-points-wellness-logo-64.webp" width="34" height="34" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          {practice.name}
         </p>
         <address>
           {practice.street}<br />
@@ -58,7 +58,7 @@ const cityAreas = areas.filter((area) => area.group === "philadelphia");
     </div>
 
     <div class="legal">
-      <p>&copy; {year} Five Points Wellness, LLC. All rights reserved.</p>
+      <p>&copy; {year} {practice.name}. All rights reserved.</p>
       <ul>
         <li><a href={href("/privacy-policy")}>Privacy Policy</a></li>
         <li><a href={href("/terms")}>Terms</a></li>

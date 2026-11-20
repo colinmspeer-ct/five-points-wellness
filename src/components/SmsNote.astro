@@ -1,0 +1,9 @@
+---
+import { href } from "../lib/legacy";
+import { practice } from "../data/site";
+interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<p class:list={["sms-note", className]}>
+  If you text us, {practice.name} may text you back about appointments and scheduling. Consent is not a condition of purchase. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. See our <a href={href("/privacy-policy")}>Privacy Policy</a> and <a href={href("/terms")}>Terms</a>.
+</p>

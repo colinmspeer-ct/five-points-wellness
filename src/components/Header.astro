@@ -2,6 +2,7 @@
 import { href } from "../lib/legacy";
 import Picture from "./Picture.astro";
 import { conditionMeta, conditionOrder } from "../data/conditionMeta";
+import { practice } from "../data/site";
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const current = (href: string) => (path === href ? "page" : undefined);
@@ -74,8 +75,11 @@ const logoAlt =
         </details>
         <a href={href("/microneedling")}>Microneedling</a>
         <a href={href("/contact")}>Contact</a>
-        <a class="btn btn-primary btn-lg" href={href("/book-appointment")}>Book Appointment</a>
-        <p class="sheet-contact">Call or text <a href="tel:+16107425810">(610) 742-5810</a></p>
+        <div class="sheet-actions">
+          <a class="btn btn-outline" href={`tel:${practice.phoneTel}`}>Call {practice.phoneDisplay}</a>
+          <a class="btn btn-primary" href={href("/book-appointment")}>Book Appointment</a>
+        </div>
+        <a class="sheet-text" href={`sms:${practice.phoneTel}`}>Text {practice.phoneDisplay}</a>
       </nav>
     </details>
   </div>
